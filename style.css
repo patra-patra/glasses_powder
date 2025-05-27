@@ -654,3 +654,26 @@ section {
         flex-wrap: wrap;
     }
 }
+
+.cart-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #e75480;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.cart-link:hover {
+    color: #7a3e6e;
+}
+
+.cart-link .fa-shopping-cart {
+    font-size: 1.1em;
+}
+
+@media (max-width: 700px) {
+    .cart-text {
+        display: none;
+    }
+}

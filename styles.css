@@ -1,16 +1,17 @@
 :root {
-    --primary-color: #d63384;
-    --secondary-color: #6b21a8;
-    --primary-light: #f8d7e4;
-    --secondary-light: #e9d8fd;
-    --text-color: #2d3748;
-    --text-light: #718096;
-    --bg-color: #fff8fa;
-    --gray-100: #f7fafc;
-    --gray-200: #edf2f7;
+    /* Новая женственная цветовая палитра */
+    --primary-color: #e08bb7; /* Нежно-розовый */
+    --secondary-color: #9370db; /* Средний пурпурный */
+    --primary-light: #f7e1ee; /* Очень светлый розовый */
+    --secondary-light: #e9e1f7; /* Светлый лавандовый */
+    --text-color: #42374a; /* Тёмно-пурпурный для текста */
+    --text-light: #7c7087; /* Средний серо-пурпурный */
+    --bg-color: #fef9fc; /* Почти белый с розовым оттенком */
+    --gray-100: #f8f5fa; /* Светло-серый с лавандовым оттенком */
+    --gray-200: #efe9f5; /* Серый с пурпурным оттенком */
     --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
     --radius-sm: 0.25rem;
     --radius-md: 0.5rem;
     --radius-lg: 1rem;
@@ -116,13 +117,13 @@ h1, h2, h3, h4 {
     position: relative;
     padding: 180px 0 100px;
     overflow: hidden;
-    background: linear-gradient(135deg, #fff1f6, #faf5ff);
+    background: linear-gradient(135deg, #f9e9f3, #efeaf7);
 }
 
 .hero-content {
     position: relative;
     z-index: 1;
-    max-width: 600px;
+    max-width: 600px;       
 }
 
 .hero h2 {
@@ -436,7 +437,7 @@ section {
 
 /* Footer */
 .footer {
-    background-color: #2d3748;
+    background-color: #4a3c5a;
     color: white;
     padding: 60px 0 20px;
 }
@@ -454,7 +455,7 @@ section {
 }
 
 .footer-column p {
-    color: #cbd5e0;
+    color: #e0d7eb;
     margin-bottom: 20px;
 }
 
@@ -469,7 +470,7 @@ section {
     justify-content: center;
     width: 40px;
     height: 40px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.15);
     color: white;
     border-radius: 50%;
     transition: var(--transition);
@@ -489,7 +490,7 @@ section {
 }
 
 .footer-column a {
-    color: #cbd5e0;
+    color: #e0d7eb;
     text-decoration: none;
     transition: var(--transition);
 }
@@ -513,7 +514,7 @@ section {
     text-align: center;
     padding-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: #cbd5e0;
+    color: #d4c9e0;
     font-size: 0.9rem;
 }
 
