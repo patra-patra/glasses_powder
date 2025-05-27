@@ -67,17 +67,56 @@
 
     <main>
         <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <h2>Красота и стиль<br>в каждом взгляде</h2>
-                    <p>Откройте для себя премиальные косметические средства и дизайнерские очки</p>
-                    <div class="hero-buttons">
-                        <a href="#cosmetics" class="btn btn-primary">Смотреть коллекцию</a>
-                        <a href="#about" class="btn btn-secondary">Узнать больше</a>
+            <div class="hero-carousel">
+                <div class="hero-slide active">
+                    <div class="hero-background" style="background-image: url('img/hero/slide1.jpg')"></div>
+                    <div class="container">
+                        <div class="hero-content">
+                            <h2>Красота и стиль<br>в каждом взгляде</h2>
+                            <p>Откройте для себя премиальные косметические средства и дизайнерские очки</p>
+                            <div class="hero-buttons">
+                                <a href="#cosmetics" class="btn btn-primary">Смотреть коллекцию</a>
+                                <a href="#about" class="btn btn-secondary">Узнать больше</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="hero-slide">
+                    <div class="hero-background" style="background-image: url('img/hero/slide2.jpg')"></div>
+                    <div class="container">
+                        <div class="hero-content">
+                            <h2>Стильные оправы<br>для особого образа</h2>
+                            <p>Эксклюзивные модели очков от ведущих мировых дизайнеров</p>
+                            <div class="hero-buttons">
+                                <a href="#glasses" class="btn btn-primary">Выбрать очки</a>
+                                <a href="#contact" class="btn btn-secondary">Получить консультацию</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slide">
+                    <div class="hero-background" style="background-image: url('img/hero/slide3.jpg')"></div>
+                    <div class="container">
+                        <div class="hero-content">
+                            <h2>Косметика<br>премиум-класса</h2>
+                            <p>Натуральные ингредиенты и инновационные формулы для вашей красоты</p>
+                            <div class="hero-buttons">
+                                <a href="#bestsellers" class="btn btn-primary">Бестселлеры</a>
+                                <a href="#cosmetics" class="btn btn-secondary">Все товары</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="hero-arrow hero-prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="hero-arrow hero-next"><i class="fas fa-chevron-right"></i></button>
+
+                <div class="hero-dots">
+                    <span class="hero-dot active" data-slide="0"></span>
+                    <span class="hero-dot" data-slide="1"></span>
+                    <span class="hero-dot" data-slide="2"></span>
+                </div>
             </div>
-            <div class="hero-shape"></div>
         </section>
 
         <section id="featured" class="featured">

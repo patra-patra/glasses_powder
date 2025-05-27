@@ -1,7 +1,7 @@
 :root {
     --primary-color: #e07a5f; /* Тёплый коралловый */
     --secondary-color: #b56576; /* Пыльно-розовый*/
-    --primary-light: #f9e1dd; /* Светло-персиковый */
+    --primary-light: #f9e1dd; /* Светло-периковый */
     --secondary-light: #f4d8e8; /* Светло-розовый */
     --text-color: #33272a; /* Тёмно-коричневый  */
     --text-light: #7d6167; /* Тёплый серый с розовым оттенком */
@@ -112,104 +112,452 @@ h1, h2, h3, h4 {
     display: none;
 }
 
-/* Hero Section */
+/* Hero Section - Carousel */
 .hero {
     position: relative;
-    padding: 180px 0 100px;
+    padding: 0;
+    height: 100vh;
+    min-height: 600px;
     overflow: hidden;
-    background: linear-gradient(135deg, #fff1f6, #faf5ff);
+    margin-top: 0;
+}
+    
+.hero-carousel {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s;
+    display: flex;
+    align-items: center;
+}
+
+.hero-slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    z-index: -1;
+}
+
+.hero-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,250,245,0.9) 0%, rgba(255,250,245,0.7) 50%, rgba(255,250,245,0.3) 100%);
+    z-index: -1;
 }
 
 .hero-content {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     max-width: 600px;
+    padding: 0 20px;
+    animation-duration: 1s;
+    animation-fill-mode: both;
 }
 
-.hero h2 {
+.hero-slide.active .hero-content {
+    animation-name: fadeInUp;
+}
+
+.hero-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+}
+
+.hero-arrow:hover {
+    background-color: white;
+    box-shadow: var(--shadow-lg);
+}
+
+.hero-prev {
+    left: 20px;
+}
+
+.hero-next {
+    right: 20px;
+}
+
+.hero-dots {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    z-index: 10;
+}
+
+.hero-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.hero-dot.active {
+    background-color: var(--primary-color);
+    transform: scale(1.2);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 50px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+/* Улучшенное оформление текста для hero слайдов */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    padding: 0 20px;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+/* Общие стили для всех слайдов */
+.hero-slide h2 {
     font-size: 3.5rem;
     margin-bottom: 20px;
+    font-weight: 700;
+    line-height: 1.1;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.hero-slide p {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 30px;
+    max-width: 80%;
+    font-weight: 400;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+}
+
+/* Индивидуальные стили для каждого слайда */
+/* Первый слайд - Красота и стиль */
+.hero-slide:nth-child(1) h2 {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    line-height: 1.1;
 }
 
-.hero p {
-    font-size: 1.2rem;
+.hero-slide:nth-child(1) p {
     color: var(--text-light);
-    margin-bottom: 30px;
-    max-width: 80%;
 }
 
-.hero-shape {
+/* Второй слайд - Стильные оправы */
+.hero-slide:nth-child(2) h2 {
+    color: #2b4353;
+    position: relative;
+}
+
+.hero-slide:nth-child(2) h2::after {
+    content: '';
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 50%;
-    height: 100%;
-    background: url('hero-bg.jpg') no-repeat center/cover;
-    clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
-    z-index: 0;
+    bottom: -10px;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background-color: var(--accent-gold);
 }
 
+.hero-slide:nth-child(2) p {
+    color: #495867;
+}
+
+/* Третий слайд - Косметика премиум */
+.hero-slide:nth-child(3) h2 {
+    color: var(--secondary-color);
+    border-left: 5px solid var(--primary-color);
+    padding-left: 15px;
+}
+
+.hero-slide:nth-child(3) p {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+/* Специальное оформление для третьего слайда с фоном для текста */
+.hero-slide:nth-child(3) .hero-content {
+    background-color: rgba(255, 250, 245, 0.85); /* Полупрозрачный фоновый цвет */
+    border-radius: var(--radius-md);
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px); /* Эффект размытия фона */
+}
+
+.hero-slide:nth-child(3) h2 {
+    color: var(--secondary-color);
+    border-left: 5px solid var(--primary-color);
+    padding-left: 15px;
+    margin-bottom: 20px;
+}
+
+.hero-slide:nth-child(3) p {
+    color: var(--text-color);
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+
+/* Улучшение стилей кнопок для всех слайдов */
 .hero-buttons {
     display: flex;
     gap: 15px;
 }
 
-.btn {
-    display: inline-block;
-    padding: 12px 30px;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: var(--transition);
-    cursor: pointer;
-    border: none;
-    text-align: center;
+/* Улучшенные стили для кнопок в hero секции */
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
 }
 
-.btn-primary {
+.hero-buttons .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 180px;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-radius: var(--radius-md);
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 14px 24px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.hero-buttons .btn-primary {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    box-shadow: var(--shadow-md);
+    border: none;
+    box-shadow: 0 5px 15px rgba(224, 122, 95, 0.3);
 }
 
-    .btn-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-lg);
-    }
+.hero-buttons .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
 
-.btn-secondary {
-    background-color: transparent;
+.hero-buttons .btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(224, 122, 95, 0.4);
+}
+
+.hero-buttons .btn-primary:hover::before {
+    opacity: 1;
+}
+
+.hero-buttons .btn-primary:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(224, 122, 95, 0.4);
+}
+
+.hero-buttons .btn-secondary {
+    background-color: rgba(255, 255, 255, 0.85);
     color: var(--primary-color);
     border: 2px solid var(--primary-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(3px);
 }
 
-    .btn-secondary:hover {
-        background-color: var(--primary-light);
-    }
-
-.btn-outline {
-    display: inline-block;
-    padding: 8px 20px;
-    border: 1px solid var(--primary-color);
+.hero-buttons .btn-secondary:hover {
+    background-color: var(--primary-light);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     color: var(--primary-color);
-    border-radius: var(--radius-sm);
-    text-decoration: none;
-    text-align: center;
-    font-weight: 500;
-    font-size: 0.9rem;
-    transition: var(--transition);
 }
 
-    .btn-outline:hover {
-        background-color: var(--primary-color);
-        color: white;
+.hero-buttons .btn-secondary:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Адаптивность для кнопок */
+@media (max-width: 768px) {
+    .hero-buttons {
+        justify-content: center;
+        flex-wrap: wrap;
     }
+    
+    .hero-buttons .btn {
+        min-width: 160px;
+        font-size: 0.95rem;
+        padding: 12px 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 280px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .hero-buttons .btn {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
+/* Анимация появления контента */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 50px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.hero-slide.active .hero-content {
+    animation-name: fadeInUp;
+}
+
+/* Адаптивность для текста в hero секции */
+@media (max-width: 992px) {
+    .hero-slide h2 {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        height: 80vh;
+    }
+    
+    .hero-slide::before {
+        background: linear-gradient(0deg, rgba(255,250,245,0.9) 0%, rgba(255,250,245,0.7) 100%);
+    }
+    
+    .hero-content {
+        max-width: 100%;
+        text-align: center;
+        padding: 0 40px;
+    }
+    
+    .hero h2 {
+        font-size: 2rem;
+    }
+    
+    .hero-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .hero-slide h2 {
+        font-size: 2.2rem;
+    }
+    
+    .hero-slide p {
+        max-width: 100%;
+        font-size: 1.1rem;
+    }
+    
+    .hero-buttons {
+        justify-content: center;
+    }
+    
+    /* Адаптация индивидуальных стилей для мобильных */
+    .hero-slide:nth-child(2) h2::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .hero-slide:nth-child(3) h2 {
+        border-left: none;
+        border-bottom: 3px solid var(--primary-color);
+        padding-left: 0;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .hero-slide:nth-child(3) .hero-content {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-slide h2 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-slide p {
+        font-size: 1rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+    }
+    
+    .hero-buttons .btn {
+        width: 100%;
+    }
+}
 
 /* Shared Section Styles */
 section {
@@ -612,17 +960,27 @@ section {
     }
 
     .hero {
-        padding: 150px 0 70px;
+        height: 80vh;
     }
-
-    .hero-shape {
-        width: 100%;
-        opacity: 0.3;
-        clip-path: none;
+    
+    .hero-slide::before {
+        background: linear-gradient(0deg, rgba(255,250,245,0.9) 0%, rgba(255,250,245,0.7) 100%);
     }
-
+    
     .hero-content {
         max-width: 100%;
+        text-align: center;
+        padding: 0 40px;
+    }
+    
+    .hero h2 {
+        font-size: 2rem;
+    }
+    
+    .hero-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
     }
 
     .product-list {

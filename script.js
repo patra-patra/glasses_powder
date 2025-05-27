@@ -1,30 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Функционал табов для фильтрации товаров
-    const tabs = document.querySelectorAll(".tab");
-    const products = document.querySelectorAll(".product");
-
-    tabs.forEach((tab) => {
-        tab.addEventListener("click", () => {
-            const category = tab.dataset.category;
-
-            // Активный таб
-            tabs.forEach((t) => t.classList.remove("active"));
-            tab.classList.add("active");
-
-            // Фильтрация товаров
-            products.forEach((product) => {
-                if (
-                    category.includes("all") ||
-                    product.dataset.category === category
-                ) {
-                    product.style.display = "block";
-                } else {
-                    product.style.display = "none";
-                }
-            });
-        });
-    });
-
     // Функционал корзины
     function getCart() {
         const cart = localStorage.getItem("beautyVisionCart");
@@ -70,6 +44,80 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     }
+
+    // Функция для установки активного слайда отзывов
+    function showSlide(index) {
+        if (index < 0) {
+            index = totalItems - 1;
+        } else if (index >= totalItems) {
+            index = 0;
+        }
+
+        currentIndex = index;
+
+        // Перемещаем слайдер
+        reviewItems.forEach((item, i) => {
+            if (i === currentIndex) {
+                item.style.display = "block";
+            } else {
+                item.style.display = "none";
+            }
+        });
+
+        // Обновляем точки
+        dots.forEach((dot, i) => {
+            dot.classList.toggle("active", i === currentIndex);
+        });
+    }
+
+    // Функция для переключения слайдов hero
+    function showHeroSlide(index) {
+        // Сначала скрываем все слайды и убираем активный класс у точек
+        heroSlides.forEach(slide => slide.classList.remove('active'));
+        heroDots.forEach(dot => dot.classList.remove('active'));
+        
+        // Обрабатываем индекс слайда
+        if (index < 0) index = heroSlides.length - 1;
+        if (index >= heroSlides.length) index = 0;
+        
+        // Показываем нужный слайд и делаем активной соответствующую точку
+        heroCurrentSlide = index;
+        heroSlides[heroCurrentSlide].classList.add('active');
+        heroDots[heroCurrentSlide].classList.add('active');
+    }
+
+    // Автоматическое переключение слайдов hero
+    function startHeroCarousel() {
+        heroSlideInterval = setInterval(() => {
+            showHeroSlide(heroCurrentSlide + 1);
+        }, 6000); // 6 секунд на один слайд
+    }
+
+    // Функционал табов для фильтрации товаров
+    const tabs = document.querySelectorAll(".tab");
+    const products = document.querySelectorAll(".product");
+
+    tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+            const category = tab.dataset.category;
+
+            // Активный таб
+            tabs.forEach((t) => t.classList.remove("active"));
+            tab.classList.add("active");
+
+            // Фильтрация товаров
+            products.forEach((product) => {
+                if (
+                    category.includes("all") ||
+                    product.dataset.category === category
+                ) {
+                    product.style.display = "block";
+                } else {
+                    product.style.display = "none";
+                }
+            });
+        });
+    });
 
     // Добавление товаров в корзину со страницы
     const addToCartButtons = document.querySelectorAll(".btn-outline");
@@ -122,31 +170,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentIndex = 0;
     const totalItems = reviewItems.length;
 
-    // Функция для установки активного слайда - перенесена в корень тела функции
-    function showSlide(index) {
-        if (index < 0) {
-            index = totalItems - 1;
-        } else if (index >= totalItems) {
-            index = 0;
-        }
-
-        currentIndex = index;
-
-        // Перемещаем слайдер
-        reviewItems.forEach((item, i) => {
-            if (i === currentIndex) {
-                item.style.display = "block";
-            } else {
-                item.style.display = "none";
-            }
-        });
-
-        // Обновляем точки
-        dots.forEach((dot, i) => {
-            dot.classList.toggle("active", i === currentIndex);
-        });
-    }
-
     if (reviewSlider && reviewItems.length > 0) {
         // Инициализация слайдера
         showSlide(currentIndex);
@@ -175,5 +198,46 @@ document.addEventListener("DOMContentLoaded", function () {
         setInterval(() => {
             showSlide(currentIndex + 1);
         }, 5000);
+    }
+
+    // Функционал для hero карусели
+    const heroSlides = document.querySelectorAll('.hero-slide');
+    const heroDots = document.querySelectorAll('.hero-dot');
+    const heroPrevBtn = document.querySelector('.hero-prev');
+    const heroNextBtn = document.querySelector('.hero-next');
+    let heroCurrentSlide = 0;
+    let heroSlideInterval;
+
+    // Инициализируем карусель если элементы найдены
+    if (heroSlides.length > 0) {
+        // Останавливаем автопереключение при ховере на карусель
+        const heroCarousel = document.querySelector('.hero-carousel');
+        heroCarousel.addEventListener('mouseenter', () => {
+            clearInterval(heroSlideInterval);
+        });
+        
+        heroCarousel.addEventListener('mouseleave', () => {
+            startHeroCarousel();
+        });
+        
+        // Клики по кнопкам вперед/назад
+        heroPrevBtn.addEventListener('click', () => {
+            showHeroSlide(heroCurrentSlide - 1);
+        });
+        
+        heroNextBtn.addEventListener('click', () => {
+            showHeroSlide(heroCurrentSlide + 1);
+        });
+        
+        // Клики по индикаторам (точкам)
+        heroDots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const slideIndex = parseInt(this.getAttribute('data-slide'));
+                showHeroSlide(slideIndex);
+            });
+        });
+        
+        // Запуск автоматической смены слайдов
+        startHeroCarousel();
     }
 });
