@@ -111,4 +111,69 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Обновляем иконку корзины при загрузке страницы
     updateCartIcon();
+
+    // Добавляем код для слайдера отзывов
+    const reviewSlider = document.querySelector(".reviews-slider");
+    const reviewItems = document.querySelectorAll(".review-item");
+    const prevButton = document.querySelector(".review-prev");
+    const nextButton = document.querySelector(".review-next");
+    const dots = document.querySelectorAll(".review-dot");
+
+    let currentIndex = 0;
+    const totalItems = reviewItems.length;
+
+    // Функция для установки активного слайда - перенесена в корень тела функции
+    function showSlide(index) {
+        if (index < 0) {
+            index = totalItems - 1;
+        } else if (index >= totalItems) {
+            index = 0;
+        }
+
+        currentIndex = index;
+
+        // Перемещаем слайдер
+        reviewItems.forEach((item, i) => {
+            if (i === currentIndex) {
+                item.style.display = "block";
+            } else {
+                item.style.display = "none";
+            }
+        });
+
+        // Обновляем точки
+        dots.forEach((dot, i) => {
+            dot.classList.toggle("active", i === currentIndex);
+        });
+    }
+
+    if (reviewSlider && reviewItems.length > 0) {
+        // Инициализация слайдера
+        showSlide(currentIndex);
+
+        // Обработчики для кнопок навигации
+        if (prevButton) {
+            prevButton.addEventListener("click", () => {
+                showSlide(currentIndex - 1);
+            });
+        }
+
+        if (nextButton) {
+            nextButton.addEventListener("click", () => {
+                showSlide(currentIndex + 1);
+            });
+        }
+
+        // Обработчики для точек
+        dots.forEach((dot, i) => {
+            dot.addEventListener("click", () => {
+                showSlide(i);
+            });
+        });
+
+        // Автоматическое переключение слайдов каждые 5 секунд
+        setInterval(() => {
+            showSlide(currentIndex + 1);
+        }, 5000);
+    }
 });

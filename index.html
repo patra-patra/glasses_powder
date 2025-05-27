@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Очки и Пудра</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="menu_style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
@@ -21,8 +22,36 @@
                 </label>
                 <ul>
                     <li><a href="#about">О нас</a></li>
-                    <li><a href="#cosmetics">Косметика</a></li>
-                    <li><a href="#glasses">Очки</a></li>
+                    <li>
+                        <a href="#cosmetics" class="has-submenu">Косметика</a>
+                        <ul class="sub-menu">
+                            <li><a href="#">Лицо</a></li>
+                            <li>
+                                <a href="#" class="has-submenu">Глаза</a>
+                                <ul class="sub-menu">
+                                    <li><a href="#">Тушь для ресниц</a></li>
+                                    <li><a href="#">Подводки для глаз</a></li>
+                                    <li><a href="#">Карандаши для глаз</a></li>
+                                    <li><a href="#">Тени для век</a></li>
+                                    <li><a href="#">База под тени</a></li>
+                                    <li><a href="#">Средства для ухода за ресницами</a></li>
+                                    <li><a href="#">Накладные ресницы и клей</a></li>
+                                    <li><a href="#">Для снятия макияжа</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Брови</a></li>
+                            <li><a href="#">Губы</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#glasses" class="has-submenu">Очки</a>
+                        <ul class="sub-menu">
+                            <li><a href="#">Солнцезащитные</a></li>
+                            <li><a href="#">Оптические</a></li>
+                            <li><a href="#">Компьютерные</a></li>
+                            <li><a href="#">Спортивные</a></li>
+                        </ul>
+                    </li>
                     <li><a href="#bestsellers">Бестселлеры</a></li>
                     <li><a href="contact/contact.html">Контакты</a></li>
                     <li>
@@ -215,6 +244,87 @@
                 </div>
                 <div class="view-more-wrapper">
                     <a href="#" class="btn">Показать все</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="reviews" class="reviews-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Отзывы</span>
+                    <h2>Что говорят наши клиенты</h2>
+                </div>
+
+                <div class="reviews-slider">
+                    <div class="review-item">
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="review-content">
+                            <p>"Очень довольна покупкой! Очки сидят идеально и выглядят стильно. Особенно радует защита от синего света — теперь глаза не устают при работе за компьютером."</p>
+                        </div>
+                        <div class="review-author">
+                            <img src="img/portrait/anna.jpg" alt="Анна М." class="author-avatar">
+                            <div class="author-info">
+                                <h4>Анна М.</h4>
+                                <p>Москва</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="review-content">
+                            <p>"Палетка теней просто великолепна! Оттенки насыщенные, хорошо пигментированы и прекрасно смешиваются. Отдельное спасибо за быструю доставку и приятный бонус в виде пробников."</p>
+                        </div>
+                        <div class="review-author">
+                            <img src="img/portrait/katya.jpg" alt="Екатерина Д." class="author-avatar">
+                            <div class="author-info">
+                                <h4>Екатерина Д.</h4>
+                                <p>Санкт-Петербург</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="review-item">
+                        <div class="review-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="review-content">
+                            <p>"Заказывал солнцезащитные очки Milano, качество выше всяких похвал! Линзы действительно защищают глаза от ультрафиолета, а материал оправы очень приятный и прочный. Рекомендую!"</p>
+                        </div>
+                        <div class="review-author">
+                            <img src="img/portrait/dmitr.jpg" alt="Дмитрий К." class="author-avatar">
+                            <div class="author-info">
+                                <h4>Дмитрий К.</h4>
+                                <p>Казань</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reviews-navigation">
+                    <button class="review-prev"><i class="fas fa-chevron-left"></i></button>
+                    <div class="review-dots">
+                        <span class="review-dot active"></span>
+                        <span class="review-dot"></span>
+                        <span class="review-dot"></span>
+                    </div>
+                    <button class="review-next"><i class="fas fa-chevron-right"></i></button>
                 </div>
             </div>
         </section>

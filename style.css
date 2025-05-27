@@ -1,13 +1,13 @@
 :root {
-    --primary-color: #d63384;
-    --secondary-color: #6b21a8;
-    --primary-light: #f8d7e4;
-    --secondary-light: #e9d8fd;
-    --text-color: #2d3748;
-    --text-light: #718096;
-    --bg-color: #fff8fa;
-    --gray-100: #f7fafc;
-    --gray-200: #edf2f7;
+    --primary-color: #e07a5f; /* Тёплый коралловый */
+    --secondary-color: #b56576; /* Пыльно-розовый*/
+    --primary-light: #f9e1dd; /* Светло-персиковый */
+    --secondary-light: #f4d8e8; /* Светло-розовый */
+    --text-color: #33272a; /* Тёмно-коричневый  */
+    --text-light: #7d6167; /* Тёплый серый с розовым оттенком */
+    --bg-color: #fffaf5; /* Тёплый кремовый фон */
+    --gray-100: #faf3f0; /* Светло-кремовый */
+    --gray-200: #f5e8e4; /* Светло-персиковый */
     --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
     --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
     --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
@@ -15,6 +15,7 @@
     --radius-md: 0.5rem;
     --radius-lg: 1rem;
     --transition: all 0.3s ease;
+    --accent-gold: #edae49; /* Золотистый акцент для особых элементов */
 }
 
 * {
@@ -675,5 +676,131 @@ section {
 @media (max-width: 700px) {
     .cart-text {
         display: none;
+    }
+}
+
+/* Секция отзывов */
+.reviews-section {
+    background-color: var(--gray-100);
+    padding: 80px 0;
+}
+
+.reviews-slider {
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    margin: 0 auto;
+    max-width: 900px;
+}
+
+.review-item {
+    flex: 0 0 100%;
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 30px;
+    transition: transform 0.5s ease;
+    margin: 0 15px;
+}
+
+.review-rating {
+    color: #ffba42;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.review-content {
+    font-style: italic;
+    color: var(--text-color);
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.review-author {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.author-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-light);
+}
+
+.author-info h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
+.author-info p {
+    margin: 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.reviews-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+.review-prev, .review-next {
+    background: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--primary-color);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.review-prev:hover, .review-next:hover {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: var(--shadow-md);
+}
+
+.review-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.review-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--gray-200);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.review-dot.active {
+    background-color: var(--primary-color);
+    transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+    .reviews-slider {
+        flex-direction: column;
+    }
+    
+    .review-item {
+        margin-bottom: 20px;
+    }
+    
+    .review-content {
+        font-size: 1rem;
     }
 }
