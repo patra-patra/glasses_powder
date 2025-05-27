@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты — Очки и Пудра</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="contact.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo"><a href="../index.html">Очки & Пудра</a></h1>
+            <nav class="nav">
+                <input type="checkbox" id="nav-toggle" class="nav-toggle">
+                <label for="nav-toggle" class="nav-toggle-label">
+                    <span></span>
+                </label>
+                <ul>
+                    <li><a href="../index.html#about">О нас</a></li>
+                    <li><a href="../index.html#cosmetics">Косметика</a></li>
+                    <li><a href="../index.html#glasses">Очки</a></li>
+                    <li><a href="../index.html#bestsellers">Бестселлеры</a></li>
+                    <li><a href="contact.html" class="active">Контакты</a></li>
+                    <li>
+                        <a href="../cart/cart.html" class="cart-link" title="Корзина">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-text">Корзина</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="contact-page">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Остались вопросы?</span>
+                <h2>Связаться с нами</h2>
+            </div>
+
+            <div class="contact-content">
+                <div class="contact-info-wrapper">
+                    <div class="contact-info">
+                        <h3>Наши контакты</h3>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div>
+                                <h4>Адрес</h4>
+                                <p>Москва, Мясницкая ул., 13 строение 2</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div>
+                                <h4>Телефон</h4>
+                                <p><a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div>
+                                <h4>Email</h4>
+                                <p><a href="mailto:info@beautyvision.ru">info@beautyvision.ru</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-clock"></i>
+                            <div>
+                                <h4>Время работы</h4>
+                                <p>Пн-Пт: 10:00 - 20:00</p>
+                                <p>Сб-Вс: 11:00 - 18:00</p>
+                            </div>
+                        </div>
+
+                        <div class="social-links">
+                            <div>
+                                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                                <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+                                <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
+                                <a href="#" title="ВКонтакте"><i class="fab fa-vk"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1923.9602966406653!2d37.63272267068749!3d55.76220739578183!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a5df8a882ab%3A0x95b3dcaaa593b770!2z0JzRj9GB0L3QuNGG0LrQsNGPINGD0LsuLCAxMyDRgdGC0YDQvtC10L3QuNC1IDIsINCc0L7RgdC60LLQsCwg0KDQvtGB0YHQuNGPLCAxMDEwMDA!5e0!3m2!1sru!2sde!4v1748316809832!5m2!1sru!2sde" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrapper">
+                    <div class="contact-form">
+                        <h3>Отправьте сообщение</h3>
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <label for="name">Ваше имя</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Телефон</label>
+                                <input type="tel" id="phone" name="phone">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subject">Тема</label>
+                                <select id="subject" name="subject">
+                                    <option value="question">Вопрос о продукции</option>
+                                    <option value="order">Вопрос по заказу</option>
+                                    <option value="partnership">Сотрудничество</option>
+                                    <option value="other">Другое</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Сообщение</label>
+                                <textarea id="message" name="message" rows="5" required></textarea>
+                            </div>
+
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="consent" name="consent" required>
+                                <label for="consent">Я согласен на обработку персональных данных</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Отправить сообщение</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-section">
+                <div class="section-header">
+                    <span class="section-tag">FAQ</span>
+                    <h2>Часто задаваемые вопросы</h2>
+                </div>
+
+                <div class="faq-items">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h4>Как выбрать правильные очки?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Для выбора идеальных очков рекомендуем учитывать форму лица, стиль одежды и цветотип. Наши консультанты всегда готовы помочь вам с выбором подходящей модели при посещении нашего магазина или при онлайн-консультации.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h4>Как осуществляется доставка?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Мы предлагаем несколько вариантов доставки: курьерская доставка по Москве (1-2 дня), доставка по России (3-7 дней) и самовывоз из нашего магазина. Стоимость и сроки доставки зависят от региона и выбранного способа.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h4>Какая косметика подходит для чувствительной кожи?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Для чувствительной кожи мы рекомендуем гипоаллергенную косметику без отдушек и агрессивных компонентов. В нашем ассортименте представлены специальные линейки для чувствительной кожи с успокаивающими компонентами.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h4>Можно ли вернуть товар?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Да, возврат товара возможен в течение 14 дней с момента покупки при сохранении товарного вида, упаковки и чека. Косметика принимается к возврату только в случае, если не нарушена целостность упаковки.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3 class="logo">Beauty & Vision</h3>
+                    <p>Ваш источник лучших косметических средств и стильных очков.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#cosmetics">Косметика</a></li>
+                        <li><a href="#glasses">Очки</a></li>
+                        <li><a href="#blog">Блог</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Контакты</h4>
+                    <ul class="contact--info">
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, Мясницкая ул., 13 строение 2</li>
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@beautyvision.ru</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Beauty & Vision. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="contact.js"></script>
+</body>
+</html>
