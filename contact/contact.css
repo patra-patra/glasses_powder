@@ -249,6 +249,104 @@
     margin: 0;
 }
 
+
+/* Улучшенные стили для кнопок формы контактов */
+.contact-form .btn-primary {
+    display: inline-block;
+    width: 100%;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 4px 12px rgba(224, 122, 95, 0.3);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    margin-top: 10px;
+    letter-spacing: 0.5px;
+    outline: none;
+}
+
+    .contact-form .btn-primary::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .contact-form .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(224, 122, 95, 0.4);
+    }
+
+        .contact-form .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+    .contact-form .btn-primary:active {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 10px rgba(224, 122, 95, 0.4);
+    }
+
+    .contact-form .btn-primary:disabled {
+        background: #cccccc;
+        box-shadow: none;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+
+    /* Анимация при отправке формы */
+    .contact-form .btn-primary.sending {
+        position: relative;
+        pointer-events: none;
+    }
+
+        .contact-form .btn-primary.sending::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: rotate 1s linear infinite;
+        }
+
+@keyframes rotate {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Медиа-запросы для адаптивности */
+@media (max-width: 768px) {
+    .contact-form .btn-primary {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+    }
+}
+
+
 /* Адаптивные стили */
 @media (max-width: 768px) {
     .contact-content {
