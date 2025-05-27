@@ -641,6 +641,38 @@ section {
     position: relative;
 }
 
+.products::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to right, var(--bg-color) 0%, rgba(255,255,255,0) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.products::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    background: linear-gradient(to left, var(--bg-color) 0%, rgba(255,255,255,0) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.cosmetics-section::before, .cosmetics-section::after {
+    background: linear-gradient(to right, var(--gray-100) 0%, rgba(250,243,240,0) 100%);
+}
+
+.glasses-section::before, .glasses-section::after {
+    background: linear-gradient(to right, white 0%, rgba(255,255,255,0) 100%);
+}
+
 .cosmetics-section {
     background-color: var(--gray-100);
 }
@@ -676,9 +708,17 @@ section {
     }
 
 .product-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 30px;
+    display: flex;
+    overflow-x: auto;
+    gap: 25px;
+    padding: 10px 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+}
+
+.product-list::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
 
 .product {
@@ -1350,4 +1390,260 @@ section {
         max-width: 280px;
         margin: 0 auto;
     }
+}
+
+/* Карточки категорий */
+.category-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex: 0 0 300px;
+    scroll-snap-align: start;
+    margin-bottom: 20px;
+}
+
+.cosmetics-section .category-card {
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.glasses-section .category-card {
+    border-bottom: 3px solid var(--secondary-color);
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.category-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+
+.category-card:hover .category-image img {
+    transform: scale(1.05);
+}
+
+.category-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.4) 100%);
+    opacity: 0.7;
+    transition: var(--transition);
+}
+
+.category-card:hover .category-overlay {
+    opacity: 0.5;
+}
+
+.category-info {
+    padding: 25px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.9), white);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(65%);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.category-card:hover .category-info {
+    transform: translateY(0);
+}
+
+.category-info h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: var(--text-color);
+    position: relative;
+    display: inline-block;
+}
+
+.cosmetics-section .category-info h3::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background: var(--primary-color);
+}
+
+.glasses-section .category-info h3::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 2px;
+    background: var(--secondary-color);
+}
+
+.category-info p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease 0.1s;
+}
+
+.category-card:hover .category-info p {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.category-info .btn-outline {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s ease 0.2s;
+    display: inline-block;
+    padding: 10px 25px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+.cosmetics-section .category-info .btn-outline {
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.glasses-section .category-info .btn-outline {
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+}
+
+.category-info .btn-outline:hover {
+    background-color: var(--primary-light);
+    transform: translateY(-3px);
+}
+
+.category-card:hover .category-info .btn-outline {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Адаптивность для карточек категорий */
+@media (max-width: 992px) {
+    .product-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .category-card {
+        flex: 0 0 250px;
+    }
+}
+
+@media (max-width: 576px) {
+    .product-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .category-card {
+        max-width: 320px;
+        margin: 0 auto;
+        flex: 0 0 230px;
+    }
+    
+    .category-info {
+        transform: translateY(55%);
+    }
+}
+
+/* Стили для кнопки "В корзину" */
+.btn-outline {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: var(--radius-md);
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    outline: none;
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(224, 122, 95, 0.3);
+}
+
+.btn-outline:active {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(224, 122, 95, 0.3);
+}
+
+.glasses-section .btn-outline {
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+.glasses-section .btn-outline:hover {
+    background-color: var(--secondary-color);
+    color: white;
+    box-shadow: 0 4px 8px rgba(181, 101, 118, 0.3);
+}
+
+/* Анимация добавления в корзину */
+.cart-notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 25px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    font-weight: 500;
+    z-index: 2000;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+}
+
+.cart-notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Стили для кнопок в секции новинок */
+.new-arrival-item .btn-outline {
+    width: 100%;
+    margin-top: 5px;
 }

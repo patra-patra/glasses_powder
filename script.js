@@ -45,6 +45,79 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Обновляем иконку корзины при загрузке страницы
+    updateCartIcon();
+
+    // Общая функция для добавления обработчиков на кнопки "В корзину"
+    function initAddToCartButtons(selector) {
+        const buttons = document.querySelectorAll(selector);
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                // Получаем родительский элемент (карточку товара)
+                const productCard =
+                    this.closest(".product") ||
+                    this.closest(".new-arrival-item");
+
+                if (productCard) {
+                    // Извлекаем данные о товаре
+                    const title = productCard.querySelector("h3").textContent;
+                    const priceText = productCard.querySelector(
+                        ".product-price, .new-arrival-price"
+                    ).textContent;
+                    const price = parseInt(priceText.replace(/\D/g, ""));
+                    const image = productCard.querySelector("img").src;
+
+                    // Формируем уникальный ID товара
+                    const category = productCard.dataset.category || "new";
+                    const id = category + "-" + title;
+
+                    // Добавляем товар в корзину
+                    addToCart(id, title, price, image);
+
+                    // Показываем уведомление
+                    showNotification("Товар добавлен в корзину!");
+                }
+            });
+        });
+    }
+
+    // Функция для отображения уведомления
+    function showNotification(message) {
+        // Проверяем, существует ли уже уведомление
+        let notification = document.querySelector(".cart-notification");
+
+        // Если нет, создаем новое
+        if (!notification) {
+            notification = document.createElement("div");
+            notification.className = "cart-notification";
+            document.body.appendChild(notification);
+        }
+
+        notification.textContent = message;
+
+        // Показываем уведомление
+        setTimeout(() => {
+            notification.classList.add("show");
+        }, 100);
+
+        // Скрываем через 2 секунды
+        setTimeout(() => {
+            notification.classList.remove("show");
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 300);
+        }, 2000);
+    }
+
+    // Инициализация кнопок для всех секций
+    initAddToCartButtons(".product .btn-outline");
+    initAddToCartButtons(".new-arrival-item .btn-outline");
+
     // Функция для установки активного слайда отзывов
     function showSlide(index) {
         if (index < 0) {
@@ -73,17 +146,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // Функция для переключения слайдов hero
     function showHeroSlide(index) {
         // Сначала скрываем все слайды и убираем активный класс у точек
-        heroSlides.forEach(slide => slide.classList.remove('active'));
-        heroDots.forEach(dot => dot.classList.remove('active'));
-        
+        heroSlides.forEach((slide) => slide.classList.remove("active"));
+        heroDots.forEach((dot) => dot.classList.remove("active"));
+
         // Обрабатываем индекс слайда
         if (index < 0) index = heroSlides.length - 1;
         if (index >= heroSlides.length) index = 0;
-        
+
         // Показываем нужный слайд и делаем активной соответствующую точку
         heroCurrentSlide = index;
-        heroSlides[heroCurrentSlide].classList.add('active');
-        heroDots[heroCurrentSlide].classList.add('active');
+        heroSlides[heroCurrentSlide].classList.add("active");
+        heroDots[heroCurrentSlide].classList.add("active");
     }
 
     // Автоматическое переключение слайдов hero
@@ -201,42 +274,42 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Функционал для hero карусели
-    const heroSlides = document.querySelectorAll('.hero-slide');
-    const heroDots = document.querySelectorAll('.hero-dot');
-    const heroPrevBtn = document.querySelector('.hero-prev');
-    const heroNextBtn = document.querySelector('.hero-next');
+    const heroSlides = document.querySelectorAll(".hero-slide");
+    const heroDots = document.querySelectorAll(".hero-dot");
+    const heroPrevBtn = document.querySelector(".hero-prev");
+    const heroNextBtn = document.querySelector(".hero-next");
     let heroCurrentSlide = 0;
     let heroSlideInterval;
 
     // Инициализируем карусель если элементы найдены
     if (heroSlides.length > 0) {
         // Останавливаем автопереключение при ховере на карусель
-        const heroCarousel = document.querySelector('.hero-carousel');
-        heroCarousel.addEventListener('mouseenter', () => {
+        const heroCarousel = document.querySelector(".hero-carousel");
+        heroCarousel.addEventListener("mouseenter", () => {
             clearInterval(heroSlideInterval);
         });
-        
-        heroCarousel.addEventListener('mouseleave', () => {
+
+        heroCarousel.addEventListener("mouseleave", () => {
             startHeroCarousel();
         });
-        
+
         // Клики по кнопкам вперед/назад
-        heroPrevBtn.addEventListener('click', () => {
+        heroPrevBtn.addEventListener("click", () => {
             showHeroSlide(heroCurrentSlide - 1);
         });
-        
-        heroNextBtn.addEventListener('click', () => {
+
+        heroNextBtn.addEventListener("click", () => {
             showHeroSlide(heroCurrentSlide + 1);
         });
-        
+
         // Клики по индикаторам (точкам)
-        heroDots.forEach(dot => {
-            dot.addEventListener('click', function() {
-                const slideIndex = parseInt(this.getAttribute('data-slide'));
+        heroDots.forEach((dot) => {
+            dot.addEventListener("click", function () {
+                const slideIndex = parseInt(this.getAttribute("data-slide"));
                 showHeroSlide(slideIndex);
             });
         });
-        
+
         // Запуск автоматической смены слайдов
         startHeroCarousel();
     }
