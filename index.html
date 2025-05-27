@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Косметика и Очки</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Beauty & Vision</h1>
+            <nav class="nav">
+                <input type="checkbox" id="nav-toggle" class="nav-toggle">
+                <label for="nav-toggle" class="nav-toggle-label">
+                    <span></span>
+                </label>
+                <ul>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#cosmetics">Косметика</a></li>
+                    <li><a href="#glasses">Очки</a></li>
+                    <li><a href="#bestsellers">Бестселлеры</a></li>
+                    <li><a href="#contact">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Красота и стиль<br>в каждом взгляде</h2>
+                <p>Откройте для себя премиальные косметические средства и дизайнерские очки</p>
+                <div class="hero-buttons">
+                    <a href="#cosmetics" class="btn btn-primary">Смотреть коллекцию</a>
+                    <a href="#about" class="btn btn-secondary">Узнать больше</a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-shape"></div>
+    </section>
+
+    <section id="featured" class="featured">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Популярно</span>
+                <h2>Выбор наших клиентов</h2>
+            </div>
+            <div class="featured-items">
+                <div class="feature-item" style="--accent-color: #ffccd5">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Нежные оттенки</h3>
+                    <p>Палетки теней с модными оттенками этого сезона</p>
+                </div>
+                <div class="feature-item" style="--accent-color: #c8e7ff">
+                    <div class="feature-icon">
+                        <i class="fas fa-glasses"></i>
+                    </div>
+                    <h3>Трендовые оправы</h3>
+                    <p>Ультрасовременные дизайнерские очки для любого образа</p>
+                </div>
+                <div class="feature-item" style="--accent-color: #d8f3dc">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Органические формулы</h3>
+                    <p>Натуральные компоненты для здоровья вашей кожи</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция Косметики -->
+    <section id="cosmetics" class="products cosmetics-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Косметика</span>
+                <h2>Косметические средства</h2>
+            </div>
+            <div class="product-tabs">
+                <button class="tab active" data-category="all-cosmetics">Все</button>
+                <button class="tab" data-category="face">Для лица</button>
+                <button class="tab" data-category="eyes">Для глаз</button>
+                <button class="tab" data-category="lips">Для губ</button>
+                <button class="tab" data-category="skincare">Уход за кожей</button>
+            </div>
+            <div class="product-list">
+                <div class="product" data-category="face">
+                    <div class="product-image">
+                        <span class="product-badge">Новинка</span>
+                        <img src="cosmetics-1.jpg" alt="Тональный крем">
+                    </div>
+                    <div class="product-info">
+                        <h3>Тональный крем</h3>
+                        <p>Ультрастойкая формула с увлажняющим эффектом</p>
+                        <div class="product-price">1 490 ₽</div>
+                        <a href="#" class="btn-outline">В корзину</a>
+                    </div>
+                </div>
+                <div class="product" data-category="eyes">
+                    <div class="product-image">
+                        <span class="product-badge">Хит</span>
+                        <img src="cosmetics-2.jpg" alt="Палетка теней">
+                    </div>
+                    <div class="product-info">
+                        <h3>Палетка теней</h3>
+                        <p>Набор из 12 оттенков с шиммером и матовым покрытием</p>
+                        <div class="product-price">2 190 ₽</div>
+                        <a href="#" class="btn-outline">В корзину</a>
+                    </div>
+                </div>
+                <div class="product" data-category="lips">
+                    <div class="product-image">
+                        <img src="cosmetics-3.jpg" alt="Помада-бальзам">
+                    </div>
+                    <div class="product-info">
+                        <h3>Помада-бальзам</h3>
+                        <p>Питает и придает натуральный оттенок</p>
+                        <div class="product-price">990 ₽</div>
+                        <a href="#" class="btn-outline">В корзину</a>
+                    </div>
+                </div>
+                <div class="product" data-category="skincare">
+                    <div class="product-image">
+                        <img src="cosmetics-4.jpg" alt="Крем для лица">
+                    </div>
+                    <div class="product-info">
+                        <h3>Крем для лица</h3>
+                        <p>Увлажнение 24 часа с гиалуроновой кислотой</p>
+                        <div class="product-price">1 790 ₽</div>
+                        <a href="#" class="btn-outline">В корзину</a>
+                    </div>
+                </div>
+            </div>
+            <div class="view-more-wrapper">
+                <a href="#" class="btn">Показать все</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция Очков -->
+    <section id="glasses" class="products glasses-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Очки</span>
+                <h2>Коллекция очков</h2>
+            </div>
+            <div class="product-tabs">
+                <button class="tab active" data-category="all-glasses">Все</button>
+                <button class="tab" data-category="sunglasses">Солнцезащитные</button>
+                <button class="tab" data-category="optical">Оптические</button>
+                <button class="tab" data-category="computer">Компьютерные</button>
+                <button class="tab" data-category="sport">Спортивные</button>
+            </div>
+            <div class="product-list">
+                <div class="product" data-category="sunglasses">
+                    <div class="product-image">
+                        <span class="product-badge">Тренд</span>
+                        <img src="glasses-1.jpg" alt="Очки Milano">
+                    </div>
+                    <div class="product-info">
+                        <h3>Очки Milano</h3>
+                        <p>Итальянский дизайн с защитой от ультрафиолета</p>
+                        <div class="product-price">3 490 ₽</div>
+                        <a href="#" class="btn-outline">В корзину</a>
+                    </div>
+                </div>
+                <div class="product" data-category="optical">
+                    <div class="product-image">
+                        <img src="glasses-2.jpg" alt="Оправа Classic">
+                    </div>
+                    <div class="product-info">
+                        <h3>Оправа Classic</h3>
+                        <p>Классическая форма с гибкими дужками</p>
+                        <div class="product-price">2 790 ₽</div>
+                        <a href="#" class="btn-outline">В корзину</a>
+                    </div>
+                </div>
+                <div class="product" data-category="computer">
+                    <div class="product-image">
+                        <span class="product-badge">Новинка</span>
+                        <img src="glasses-3.jpg" alt="Компьютерные очки">
+                    </div>
+                    <div class="product-info">
+                        <h3>Очки Digital Pro</h3>
+                        <p>С защитой от синего света для работы за компьютером</p>
+                        <div class="product-price">2 190 ₽</div>
+                        <a href="#" class="btn-outline">В корзину</a>
+                    </div>
+                </div>
+                <div class="product" data-category="sport">
+                    <div class="product-image">
+                        <img src="glasses-4.jpg" alt="Спортивные очки">
+                    </div>
+                    <div class="product-info">
+                        <h3>Очки Sport Pro</h3>
+                        <p>Легкие и прочные для активного образа жизни</p>
+                        <div class="product-price">3 290 ₽</div>
+                        <a href="#" class="btn-outline">В корзину</a>
+                    </div>
+                </div>
+            </div>
+            <div class="view-more-wrapper">
+                <a href="#" class="btn">Показать все</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Подпишитесь на новости</h2>
+                <p>Будьте в курсе наших новинок и получите скидку 10% на первый заказ</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Ваш email" required>
+                    <button type="submit" class="btn">Подписаться</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3 class="logo">Beauty & Vision</h3>
+                    <p>Ваш источник лучших косметических средств и стильных очков.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#cosmetics">Косметика</a></li>
+                        <li><a href="#glasses">Очки</a></li>
+                        <li><a href="#blog">Блог</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Контакты</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Красная, 10</li>
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@beautyvision.ru</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Beauty & Vision. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
