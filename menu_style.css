@@ -110,3 +110,60 @@ li:hover ul {
         padding-left: 15px;
     }
 }
+
+/* Поиск */
+.search-block {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    top: 145%;
+    background-color: var( --primary-color);
+    width: 100%;
+    padding: 10px;
+    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+    margin-bottom: 20px;
+    margin-top: 0;
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    display: none;
+}
+
+.search-form {
+    position: relative;
+    width: 100%;
+}
+
+.search-input {
+    width: 100%;
+    padding: 13px 20px; /* Немного уменьшим высоту поля, если нужно */
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+    font-size: 1rem;
+}
+    .search-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(224, 122, 95, 0.1);
+    }
+
+.search-button {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    bottom: 5px;
+    width: 50px;
+    border: none;
+    background: var(--primary-color);
+    color: white;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .search-button:hover {
+        background: var(--secondary-color);
+    }

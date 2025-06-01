@@ -25,33 +25,33 @@
                 <ul>
                     <li><a href="#about">О нас</a></li>
                     <li>
-                        <a href="#cosmetics" class="has-submenu">Косметика</a>
+                        <a href="category_page/empty_category_page.html" class="has-submenu">Косметика</a>
                         <ul class="sub-menu">
-                            <li><a href="#">Лицо</a></li>
+                            <li><a href="category_page/empty_category_page.html">Лицо</a></li>
                             <li>
-                                <a href="#" class="has-submenu">Глаза</a>
-                                <ul class="sub-menu">
-                                    <li><a href="#">Тушь для ресниц</a></li>
-                                    <li><a href="#">Подводки для глаз</a></li>
-                                    <li><a href="#">Карандаши для глаз</a></li>
-                                    <li><a href="#">Тени для век</a></li>
-                                    <li><a href="#">База под тени</a></li>
-                                    <li><a href="#">Средства для ухода<br>за ресницами</a></li>
-                                    <li><a href="#">Накладные ресницы<br>и клей</a></li>
-                                    <li><a href="#">Для снятия макияжа</a></li>
-                                </ul>
+                                <a href="category_page/empty_category_page.html" class="has-submenu">Глаза</a>
+                                <!--<ul class="sub-menu">
+                                    <li><a href="category_page/empty_category_page.html">Тушь для ресниц</a></li>
+                                    <li><a href="category_page/empty_category_page.html">Подводки для глаз</a></li>
+                                    <li><a href="category_page/empty_category_page.html">Карандаши для глаз</a></li>
+                                    <li><a href="category_page/empty_category_page.html">Тени для век</a></li>
+                                    <li><a href="category_page/empty_category_page.html">База под тени</a></li>
+                                    <li><a href="category_page/empty_category_page.html">Средства для ухода<br>за ресницами</a></li>
+                                    <li><a href="category_page/empty_category_page.html">Накладные ресницы<br>и клей</a></li>
+                                    <li><a href="category_page/empty_category_page.html">Для снятия макияжа</a></li>
+                                </ul>-->
                             </li>
-                            <li><a href="#">Брови</a></li>
-                            <li><a href="#">Губы</a></li>
+                            <li><a href="category_page/empty_category_page.html">Брови</a></li>
+                            <li><a href="category_page/empty_category_page.html">Губы</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#glasses" class="has-submenu">Очки</a>
+                        <a href="category_page/empty_category_page.html" class="has-submenu">Очки</a>
                         <ul class="sub-menu">
-                            <li><a href="#">Солнцезащитные</a></li>
-                            <li><a href="#">Оптические</a></li>
-                            <li><a href="#">Компьютерные</a></li>
-                            <li><a href="#">Спортивные</a></li>
+                            <li><a href="category_page/empty_category_page.html">Солнцезащитные</a></li>
+                            <li><a href="category_page/empty_category_page.html">Оптические</a></li>
+                            <li><a href="category_page/empty_category_page.html">Компьютерные</a></li>
+                            <li><a href="category_page/empty_category_page.html">Спортивные</a></li>
                         </ul>
                     </li>
                     <li><a href="contact/contact.html">Контакты</a></li>
@@ -61,8 +61,23 @@
                             <span class="cart-text">Корзина</span>
                         </a>
                     </li>
+                    <li>
+                        <a class="cart-link" id="searchMenu" title="Поиск">
+                            <i class="fas fa-search"></i>
+                            <span class="cart-text">Поиск</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
+            <!-- Поисковая строка -->
+            <div class="search-block" id="searchBlock">
+                <form class="search-form">
+                    <input type="text" placeholder="Поиск товаров..." class="search-input">
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
         </div>
     </header>
 
@@ -200,7 +215,7 @@
             </div>
         </section>
 
-        <section id="promotions" class="promotions">
+        <section class="promotions">
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">Специальные предложения</span>
@@ -251,7 +266,7 @@
         </section>
 
         <!-- Секция Косметики -->
-        <section id="cosmetics" class="products cosmetics-section">
+        <section class="products cosmetics-section">
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">Косметика</span>
@@ -307,7 +322,7 @@
         </section>
 
         <!-- Секция Очков -->
-        <section id="glasses" class="products glasses-section">
+        <section class="products glasses-section">
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">Очки</span>
@@ -496,5 +511,6 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="search.js"></script>
 </body>
 </html>
