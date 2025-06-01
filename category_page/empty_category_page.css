@@ -27,7 +27,7 @@
     padding: 15px 25px 30px;
     box-shadow: var(--shadow-sm);
     position: sticky;
-    top: 80px; /* Увеличиваем значение с 0px до 80px, чтобы создать отступ от заголовка */
+    top: 80px;
     align-self: flex-start;
 }
 
