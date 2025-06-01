@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Очки и Пудра</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="product-cards.css">
     <link rel="stylesheet" href="menu_style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -128,55 +129,70 @@
                 </div>
                 <div class="new-arrivals-slider">
                     <div class="new-arrivals-grid">
-                        <div class="new-arrival-item">
-                            <div class="new-arrival-image">
-                                <span class="product-badge">Новинка</span>
-                                <img src="img/glasses.jpg" alt="Увлажняющая сыворотка">
-                            </div>
-                            <div class="new-arrival-info">
-                                <h3>Увлажняющая сыворотка</h3>
-                                <p>С гиалуроновой кислотой и витамином C</p>
-                                <div class="new-arrival-price">2 790 ₽</div>
-                                <a href="#" class="btn-outline">В корзину</a>
-                            </div>
-                        </div>
-
-                        <div class="new-arrival-item">
-                            <div class="new-arrival-image">
-                                <span class="product-badge">Новинка</span>
+                        <div class="product-card" data-category="glasses">
+                            <div class="product-image">
                                 <img src="img/glasses.jpg" alt="Очки Sunmaster">
+                                <div class="product-badges">
+                                    <span class="product-badge">Новинка</span>
+                                </div>
                             </div>
-                            <div class="new-arrival-info">
+                            <div class="product-info">
                                 <h3>Очки Sunmaster</h3>
                                 <p>Премиальные очки с поляризованными линзами</p>
-                                <div class="new-arrival-price">4 990 ₽</div>
-                                <a href="#" class="btn-outline">В корзину</a>
+                                <div class="product-bottom">
+                                    <div class="product-price">4 990 ₽</div>
+                                    <button class="btn-outline">В корзину</button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="new-arrival-item">
-                            <div class="new-arrival-image">
-                                <span class="product-badge">Новинка</span>
-                                <img src="img/glasses.jpg" alt="Матовая помада">
+                        <div class="product-card" data-category="glasses">
+                            <div class="product-image">
+                                <img src="img/glasses.jpg" alt="Очки Sunmaster">
+                                <div class="product-badges">
+                                    <span class="product-badge">Новинка</span>
+                                </div>
                             </div>
-                            <div class="new-arrival-info">
-                                <h3>Матовая помада</h3>
-                                <p>Стойкая формула, не сушит губы</p>
-                                <div class="new-arrival-price">1 390 ₽</div>
-                                <a href="#" class="btn-outline">В корзину</a>
+                            <div class="product-info">
+                                <h3>Очки Sunmaster</h3>
+                                <p>Премиальные очки с поляризованными линзами</p>
+                                <div class="product-bottom">
+                                    <div class="product-price">4 990 ₽</div>
+                                    <button class="btn-outline">В корзину</button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="new-arrival-item">
-                            <div class="new-arrival-image">
-                                <span class="product-badge">Новинка</span>
-                                <img src="img/glasses.jpg" alt="Компьютерные очки Blu-Block">
+                        <div class="product-card" data-category="glasses">
+                            <div class="product-image">
+                                <img src="img/glasses.jpg" alt="Очки Sunmaster">
+                                <div class="product-badges">
+                                    <span class="product-badge">Новинка</span>
+                                </div>
                             </div>
-                            <div class="new-arrival-info">
-                                <h3>Очки Blu-Block</h3>
-                                <p>Защита от синего света для работы за компьютером</p>
-                                <div class="new-arrival-price">2 890 ₽</div>
-                                <a href="#" class="btn-outline">В корзину</a>
+                            <div class="product-info">
+                                <h3>Очки Sunmaster</h3>
+                                <p>Премиальные очки с поляризованными линзами</p>
+                                <div class="product-bottom">
+                                    <div class="product-price">4 990 ₽</div>
+                                    <button class="btn-outline">В корзину</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-card" data-category="glasses">
+                            <div class="product-image">
+                                <img src="img/glasses.jpg" alt="Очки Sunmaster">
+                                <div class="product-badges">
+                                    <span class="product-badge">Новинка</span>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h3>Очки Sunmaster</h3>
+                                <p>Премиальные очки с поляризованными линзами</p>
+                                <div class="product-bottom">
+                                    <div class="product-price">4 990 ₽</div>
+                                    <button class="btn-outline">В корзину</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -277,7 +293,7 @@
                     </div>
                     <div class="category-card" data-category="skincare">
                         <div class="category-image">
-                            <img src="img/category/clean_face.jpg" alt="Брови">
+                            <img src="img/category/brow.png" alt="Брови">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="category-info">
