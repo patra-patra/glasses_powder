@@ -192,7 +192,7 @@
         background: var(--secondary-color);
     }
 
-/* Стили для блока сортировки */
+/* Обновленные стили для блока сортировки */
 .sort-block {
     display: flex;
     align-items: center;
@@ -201,11 +201,14 @@
     padding: 15px 20px;
     border-radius: var(--radius-lg);
     margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 
     .sort-block span {
         color: var(--text-color);
-        font-weight: 500;
+        font-weight: 600;
+        font-size: 0.95rem;
+        letter-spacing: 0.02em;
     }
 
 .sort-options {
@@ -215,20 +218,54 @@
 }
 
 .sort-btn {
-    padding: 8px 20px;
+    padding: 9px 18px;
     background: white;
     border: 1px solid var(--gray-200);
-    border-radius: var(--radius-md);
-    font-size: 0.95rem;
+    border-radius: var(--radius-lg);
+    font-size: 0.9rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+    color: var(--text-color);
 }
 
-    .sort-btn.active,
-    .sort-btn:hover {
-        background: var(--primary-light);
+    .sort-btn:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0));
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    .sort-btn:hover:before {
+        opacity: 1;
+    }
+
+    .sort-btn.active {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+        color: white;
+        box-shadow: 0 4px 8px rgba(224, 122, 95, 0.2);
+        transform: translateY(-1px);
+    }
+
+    .sort-btn:hover:not(.active) {
         border-color: var(--primary-color);
         color: var(--primary-color);
+        box-shadow: 0 3px 6px rgba(0,0,0,0.08);
+        transform: translateY(-2px);
+    }
+
+    .sort-btn:active {
+        transform: translateY(0);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
     }
 
 /* Пагинация */
@@ -289,7 +326,7 @@
     .sort-block {
         flex-direction: column;
         align-items: flex-start;
-        gap: 10px;
+        gap: 12px;
     }
 
     .sort-options {
@@ -299,6 +336,7 @@
     .sort-btn {
         flex-grow: 1;
         text-align: center;
+        padding: 10px 15px;
     }
 }
 
