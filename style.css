@@ -1669,7 +1669,7 @@ section {
     grid-template-rows: auto auto;
     gap: 25px;
     margin-bottom: 30px;
-    padding-top: 5px; /* Небольшой отступ сверху */
+    padding-top: 5px; 
 }
 
 .promo-card {
@@ -1712,8 +1712,8 @@ section {
 .promo-card-large .promo-image {
     height: 300px;
     min-width: 50%;
-    border-top-left-radius: var(--radius-lg); /* Добавляем скругление */
-    border-bottom-left-radius: var(--radius-lg); /* Для левой стороны большой карточки */
+    border-top-left-radius: var(--radius-lg);
+    border-bottom-left-radius: var(--radius-lg);
 }
 
 .promo-image img {

@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>Пустая категория — Очки и Пудра</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="empty_category_page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo"><a href="../index.html">Очки & Пудра</a></h1>
+            <nav class="nav">
+                <input type="checkbox" id="nav-toggle" class="nav-toggle">
+                <label for="nav-toggle" class="nav-toggle-label">
+                    <span></span>
+                </label>
+                <ul>
+                    <li><a href="../index.html#about">О нас</a></li>
+                    <li><a href="../index.html#cosmetics">Косметика</a></li>
+                    <li><a href="../index.html#glasses">Очки</a></li>
+                    <li><a href="../index.html#contact">Контакты</a></li>
+                    <li>
+                        <a href="cart.html" class="cart-link active" title="Корзина">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-text">Корзина</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="category-main">
+        <div class="category-container">
+            <aside class="category-sidebar">
+                <h3>Фильтры</h3>
+                <button class="filter-btn">По цене</button>
+                <button class="filter-btn">По бренду</button>
+                <button class="filter-btn">По типу</button>
+            </aside>
+            <section class="category-content">
+                <div class="category-sort">
+                    <span>Сортировать:</span>
+                    <button class="sort-btn active">По популярности</button>
+                    <button class="sort-btn">По цене</button>
+                    <button class="sort-btn">По новизне</button>
+                </div>
+                <div class="empty-message">
+                    <i class="fas fa-box-open"></i>
+                    <p>В этой категории пока нет товаров.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3 class="logo">Очки & Пудра</h3>
+                    <p>Ваш источник лучших косметических средств и стильных очков.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="../index.html#about">О нас</a></li>
+                        <li><a href="../index.html#cosmetics">Косметика</a></li>
+                        <li><a href="../index.html#glasses">Очки</a></li>
+                        <li><a href="../index.html#blog">Блог</a></li>
+                        <li><a href="../index.html#contact">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Контакты</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, Мясницкая ул., 13 строение 2</li>
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@beautyvision.ru</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Очки & Пудра. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
