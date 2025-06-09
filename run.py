@@ -12,6 +12,3 @@ def home():
 @app.route("/api/products")
 def products():
     return {"products": get_all_products()}
-
-if __name__ == "__main__":
-    app.run()

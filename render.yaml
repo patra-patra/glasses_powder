@@ -3,7 +3,7 @@ services:
     name: glasses-project
     env: python
     buildCommand: ""
-    startCommand: python run.py
+    startCommand: gunicorn run:app
     envVars:
       - key: FLASK_ENV
         value: production
