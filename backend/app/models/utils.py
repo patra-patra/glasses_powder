@@ -1,6 +1,6 @@
 import sqlite3
 import os
-from app.models.product import Product
+from backend.app.models.product import Product
 
 DB_PATH = r"F:\PycharmProjects\glasses_powder\backend\app\db\products.db"
 
