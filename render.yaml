@@ -3,7 +3,7 @@ services:
     name: glasses-powder-app
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn run:app
+    startCommand: gunicorn backend.run:app
     envVars:
       - key: FLASK_ENV
         value: production
