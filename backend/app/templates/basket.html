@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+    <style>
+        table { border-collapse: collapse; width: 80%; margin: 20px auto; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .total-row td { font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;">Ваша корзина</h1>
+    {% if products %}
+        <table>
+            <tr>
+                <th>Название</th>
+                <th>Цена за шт.</th>
+                <th>Количество</th>
+                <th>Итого</th>
+            </tr>
+            {% for item in products %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.price }} ₽</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.total }} ₽</td>
+            </tr>
+            {% endfor %}
+            <tr class="total-row">
+                <td colspan="3">Общая сумма</td>
+                <td>{{ total_price }} ₽</td>
+            </tr>
+        </table>
+    {% else %}
+        <p style="text-align:center;">Корзина пуста.</p>
+    {% endif %}
+    <div style="text-align:center;">
+        <a href="{{ url_for('home') }}">Вернуться в каталог</a>
+    </div>
+    <form method="POST" action="{{ url_for('create_order') }}">
+        <button type="submit">Заказать</button>
+    </form>
+
+</body>
+</html>

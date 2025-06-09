@@ -1,8 +1,12 @@
+import os
+
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
+
 class Product(db.Model):
-    __tablename__ = "product"
+    __tablename__ = "products"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -40,34 +44,29 @@ class User(db.Model):
 
     orders = db.relationship("Order", back_populates="user")
 
-
 class Order(db.Model):
-    __tablename__ = "order"
+    __tablename__ = "orders"
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    created_at = db.Column(db.String, default=db.func.current_timestamp())
-    delivered_at = db.Column(db.String)  # можно менять вручную
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    delivered_at = db.Column(db.DateTime)
     status = db.Column(db.String, default="новый")
 
     user = db.relationship("User", back_populates="orders")
-    items = db.relationship("OrderItem", back_populates="order")
+    items = db.relationship("OrderItem", back_populates="order", lazy=True)  # ✅ back_populates="order"
 
 
 class OrderItem(db.Model):
     __tablename__ = "order_items"
 
     id = db.Column(db.Integer, primary_key=True)
-    order_id = db.Column(db.Integer, db.ForeignKey("order.id"), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey("product.id"), nullable=False)
-    quantity = db.Column(db.Integer, default=1)
+    order_id = db.Column(db.Integer, db.ForeignKey("orders.id"), nullable=False)
+    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=False)
+    quantity = db.Column(db.Integer, default=1, nullable=False)
 
-    order = db.relationship("Order", back_populates="items")
-    product = db.relationship("Product")  # Read-only
-
-
-import os
-
+    order = db.relationship("Order", back_populates="items")  # ✅ back_populates="items"
+    product = db.relationship("Product")
 
 # Подключение к уже существующей БД:
 def init_db(app):
