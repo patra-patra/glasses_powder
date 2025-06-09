@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+</head>
+<body>
+    <h1>Добро пожаловать, {{ user.first_name }}!</h1>
+    <p>Ваш телефон: {{ user.phone }}</p>
+    <p>Город: {{ user.city }}</p>
+
+    <a href="{{ url_for('logout') }}">Выйти</a>
+</body>
+</html>
