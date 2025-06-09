@@ -1,15 +1,17 @@
 import os
 import sys
 import re
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask import session  # ← это для сессии
+import random
+from datetime import timedelta, datetime
 
 # Добавляем путь к backend
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from backend.app.models.utils import get_all_products
-from backend.app.models.product import db, init_db, User, Product, Order
+from backend.app.models.product import db, init_db, User, Product, Order, OrderItem
 
 # Путь к БД
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -73,15 +75,16 @@ def login():
     return render_template('login.html')
 
 
-# Выход
-@app.route('/logout')
+@app.route('/logout', methods=['POST'])
 def logout():
     session.pop('user_id', None)
     flash("Вы вышли из аккаунта", "info")
     return redirect(url_for('login'))
 
-# Профиль — заглушка (можно развивать)
-@app.route('/profile')
+
+from flask import session, redirect, url_for, render_template, request, flash
+
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
     user_id = session.get('user_id')
     if not user_id:
@@ -89,7 +92,17 @@ def profile():
         return redirect(url_for('login'))
 
     user = User.query.get(user_id)
+
+    if request.method == 'POST':
+        # Обновляем только город и адрес
+        user.city = request.form.get('city')
+        user.address = request.form.get('address')
+        db.session.commit()
+        flash("Данные успешно обновлены", "success")
+        return redirect(url_for('profile'))
+
     return render_template('profile.html', user=user)
+
 
 # Страница регистрации
 @app.route('/register', methods=['GET', 'POST'])
@@ -122,6 +135,77 @@ def register():
         return redirect(url_for('profile'))
 
     return render_template('register.html')
+
+@app.route('/catalog')
+def catalog():
+    products = get_all_products()  # возвращает список словарей
+    return render_template('catalog.html', products=products)
+
+@app.route('/add_to_cart/<int:product_id>', methods=['POST'])
+def add_to_cart(product_id):
+    cart = session.get('cart', {})
+
+    # Увеличиваем количество
+    cart[str(product_id)] = cart.get(str(product_id), 0) + 1
+
+    session['cart'] = cart
+    return jsonify({'message': 'Товар добавлен в корзину', 'cart': cart})
+
+@app.route('/basket')
+def basket():
+    cart = session.get('cart', {})
+
+    products_in_cart = []
+    total_price = 0
+
+    for pid, qty in cart.items():
+        product = Product.query.get(int(pid))
+        if product:
+            item_total = product.price * qty
+            total_price += item_total
+            products_in_cart.append({
+                'id': product.id,
+                'name': product.name,
+                'price': product.price,
+                'quantity': qty,
+                'total': item_total,
+                'photonum': product.photonum
+            })
+
+    return render_template('basket.html', products=products_in_cart, total_price=total_price)
+
+@app.route('/basket_count')
+def basket_count():
+    cart = session.get('cart', {})
+    count = sum(cart.values())
+    return jsonify({'count': count})
+
+import random
+from datetime import timedelta
+
+@app.route('/order', methods=['POST'])
+def create_order():
+    cart = session.get('cart', {})
+    if not cart:
+        return redirect(url_for('cart_page'))  # если корзина пуста
+
+    new_order = Order()
+    delivery_days = random.randint(1, 10)
+    new_order.delivered_at = datetime.utcnow() + timedelta(days=delivery_days)
+    db.session.add(new_order)
+    db.session.flush()  # чтобы получить id заказа
+
+    for product_id, quantity in cart.items():
+        item = OrderItem(
+            product_id=product_id,
+            order_id=new_order.id,
+            quantity=quantity
+        )
+        db.session.add(item)
+
+    db.session.commit()
+    session['cart'] = {}  # очистка корзины
+    return render_template('order_success.html', delivery_date=new_order.delivered_at)
 
 
 # Запуск приложения
