@@ -1,0 +1,533 @@
+/* Основные стили для страницы авторизации/регистрации */
+.auth-container {
+    display: flex;
+    padding-top: 0; /* Убираем отступ от хедера */
+    background-color: var(--bg-color);
+    position: relative;
+    min-height: 100vh; /* Обновляем минимальную высоту */
+}
+
+/* Стили для карусели */
+.auth-carousel {
+    width: 50%;
+    position: relative;
+    overflow: hidden;
+    height: 100vh; /* Обновляем высоту карусели */
+    min-height: 600px;
+    margin-top: 0; /* Явно указываем отсутствие отступа сверху */
+}
+
+.header + .auth-container .auth-carousel {
+    margin-top: 0; /* Дополнительно убеждаемся, что отступа нет */
+}
+
+.carousel-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    z-index: 0;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    z-index: 10;
+}
+
+.carousel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.carousel-dot.active {
+    background-color: var(--primary-color);
+    transform: scale(1.2);
+}
+
+/* Стили для контентной части */
+.auth-content {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    position: relative;
+    min-height: 100vh; /* Обновляем минимальную высоту */
+    padding-top: 80px; /* Добавляем отступ сверху для контента, чтобы учесть высоту шапки */
+}
+
+.auth-welcome {
+    max-width: 500px;
+    text-align: center;
+    padding: 40px;
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    z-index: 2;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.auth-welcome.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.auth-welcome h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.auth-welcome p {
+    color: var(--text-light);
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+/* Обновленные стили для кнопок приветственного экрана */
+.auth-welcome .auth-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.auth-welcome .auth-buttons .btn-primary,
+.auth-welcome .auth-buttons .btn-secondary {
+    min-width: 180px;
+    padding: 14px 20px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    background: #ebebeb; /* Светло-серый фон */
+    color: var(--text-color);
+    border: none;
+    border-radius: var(--radius-sm);
+    box-shadow: none;
+    transition: background-color 0.3s ease;
+    text-transform: none; /* Отключаем все заглавные буквы, если они были */
+}
+
+.auth-welcome .auth-buttons .btn-primary:hover,
+.auth-welcome .auth-buttons .btn-secondary:hover {
+    background: #e0e0e0; /* Немного темнее при наведении */
+    transform: none;
+    box-shadow: none;
+}
+
+.auth-welcome .auth-buttons .btn-primary:before {
+    display: none; /* Отключаем эффект градиента */
+}
+
+.auth-welcome .auth-buttons .btn-secondary {
+    border: none;
+    color: var(--text-color);
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.auth-buttons .btn-primary,
+.auth-buttons .btn-secondary {
+    min-width: 150px;
+    padding: 12px 20px;
+    font-weight: 600;
+}
+
+/* Стили для форм */
+.auth-forms {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.login-form,
+.register-form {
+    max-width: 550px;
+    width: 90%;
+    background-color: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.login-form.form-active,
+.register-form.form-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    z-index: 3;
+}
+
+.login-form h3,
+.register-form h3 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-align: center;
+    color: var(--text-color);
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 0;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.form-error {
+    display: none;
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+.form-error.show {
+    display: block;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.remember-me input {
+    cursor: pointer;
+}
+
+.forgot-password {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.form-agreement {
+    margin-bottom: 25px;
+    font-size: 0.9rem;
+}
+
+.agreement {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.agreement input {
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+.agreement a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.agreement a:hover {
+    text-decoration: underline;
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.95rem;
+    color: var(--text-light);
+}
+
+.form-footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    box-shadow: 0 5px 15px rgba(224, 122, 95, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Стили для скроллбара в форме регистрации */
+.register-form::-webkit-scrollbar {
+    width: 8px;
+}
+
+.register-form::-webkit-scrollbar-track {
+    background-color: var(--gray-100);
+    border-radius: 10px;
+}
+
+.register-form::-webkit-scrollbar-thumb {
+    background-color: var(--gray-200);
+    border-radius: 10px;
+}
+
+.register-form::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-light);
+}
+
+/* Адаптивная верстка */
+@media (max-width: 992px) {
+    .auth-container {
+        flex-direction: column;
+        min-height: auto;
+        padding-bottom: 0;
+    }
+
+    .auth-carousel,
+    .auth-content {
+        width: 100%;
+    }
+
+    .auth-carousel {
+        height: 40vh;
+        min-height: 300px;
+    }
+
+    .auth-content {
+        min-height: auto;
+        padding: 40px 20px;
+        display: block;
+    }
+
+    /* Ключевое изменение: полное изменение подхода к верстке на мобильных */
+    .auth-welcome,
+    .login-form,
+    .register-form {
+        position: static;
+        transform: none;
+        margin: 0 auto 30px;
+        max-width: 550px;
+        width: 100%;
+        max-height: none;
+    }
+
+    .auth-welcome.hidden {
+        display: none;
+    }
+
+    .login-form,
+    .register-form {
+        display: none;
+    }
+
+    .login-form.form-active,
+    .register-form.form-active {
+        display: block;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .auth-forms {
+        position: static;
+        width: 100%;
+        height: auto;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .auth-container {
+        padding-top: 60px;
+    }
+
+    .auth-carousel {
+        height: 30vh;
+        min-height: 250px;
+    }
+
+    .auth-content {
+        padding: 30px 15px;
+    }
+
+    .auth-welcome,
+    .login-form,
+    .register-form {
+        padding: 30px 20px;
+    }
+
+    .auth-welcome h2 {
+        font-size: 2rem;
+    }
+
+    .auth-welcome p {
+        font-size: 1rem;
+    }
+
+    .login-form h3,
+    .register-form h3 {
+        font-size: 1.8rem;
+    }
+
+    .auth-buttons {
+        flex-direction: column;
+    }
+
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    /* Сокращаем размеры и отступы для компактности */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 10px 12px;
+    }
+
+    .form-footer {
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .auth-carousel {
+        min-height: 200px;
+    }
+
+    .auth-welcome,
+    .login-form,
+    .register-form {
+        padding: 25px 15px;
+    }
+
+    .auth-welcome h2 {
+        font-size: 1.8rem;
+    }
+
+    .login-form h3,
+    .register-form h3 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+
+    button[type="submit"] {
+        padding: 12px;
+    }
+}
