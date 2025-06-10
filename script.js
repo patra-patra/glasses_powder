@@ -48,18 +48,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // Обновляем иконку корзины при загрузке страницы
     updateCartIcon();
 
-    // Функционал поиска - переключение видимости поисковой строки
+    // Функционал поиска - прямое управление видимостью
     const searchMenu = document.getElementById("searchMenu");
     const searchBlock = document.getElementById("searchBlock");
 
     if (searchMenu && searchBlock) {
+        // Изначально скрываем поисковую строку
+        searchBlock.style.display = "none";
+        
         searchMenu.addEventListener("click", function(e) {
             e.preventDefault();
-            // Переключаем класс active у поисковой строки
-            searchBlock.classList.toggle("active");
             
-            // Если поисковая строка скрыта, очищаем поле ввода
-            if (!searchBlock.classList.contains("active")) {
+            // Переключаем видимость напрямую через style.display
+            if (searchBlock.style.display === "none") {
+                searchBlock.style.display = "block";
+            } else {
+                searchBlock.style.display = "none";
+                // Очищаем поле ввода при закрытии
                 const searchInput = searchBlock.querySelector(".search-input");
                 if (searchInput) {
                     searchInput.value = "";
@@ -70,8 +75,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Закрываем поиск при клике вне поисковой строки
         document.addEventListener("click", function(e) {
             if (!searchMenu.contains(e.target) && !searchBlock.contains(e.target) && 
-                searchBlock.classList.contains("active")) {
-                searchBlock.classList.remove("active");
+                searchBlock.style.display === "block") {
+                searchBlock.style.display = "none";
             }
         });
     }
