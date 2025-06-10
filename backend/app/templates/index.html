@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="shortcut icon" href="img/sign.svg">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/sign.svg') }}">
 </head>
 <body>
     <header class="header">
@@ -69,7 +69,7 @@
         <section class="hero">
             <div class="hero-carousel">
                 <div class="hero-slide active">
-                    <div class="hero-background" style="background-image: url('img/hero/slide1.jpg')"></div>
+                    <div class="hero-background" style="background-image: url_for('static', filename='img/hero/slide1.jpg')"></div>
                     <div class="container">
                         <div class="hero-content">
                             <h2>Красота и стиль<br>в каждом взгляде</h2>
@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="hero-slide">
-                    <div class="hero-background" style="background-image: url('img/hero/slide2.jpg')"></div>
+                    <div class="hero-background" style="background-image: url_for('static', filename='img/hero/slide2.jpg')"></div>
                     <div class="container">
                         <div class="hero-content">
                             <h2>Стильные оправы<br>для особого образа</h2>
@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div class="hero-slide">
-                    <div class="hero-background" style="background-image: url('img/hero/slide3.jpg')"></div>
+                    <div class="hero-background" style="background-image: url_for('static', filename='img/hero/slide3.jpg')"></div>
                     <div class="container">
                         <div class="hero-content">
                             <h2>Косметика<br>премиум-класса</h2>
@@ -144,7 +144,7 @@
                         <div class="new-arrival-item">
                             <div class="new-arrival-image">
                                 <span class="product-badge">Новинка</span>
-                                <img src="img/glasses.jpg" alt="Очки Sunmaster">
+                                <img src="{{ url_for('static', filename='img/glasses.jpg') }}" alt="Очки Sunmaster">
                             </div>
                             <div class="new-arrival-info">
                                 <h3>Очки Sunmaster</h3>
@@ -157,7 +157,7 @@
                         <div class="new-arrival-item">
                             <div class="new-arrival-image">
                                 <span class="product-badge">Новинка</span>
-                                <img src="img/glasses.jpg" alt="Матовая помада">
+                                <img src="{{ url_for('static', filename='img/glasses.jpg') }}" alt="Матовая помада">
                             </div>
                             <div class="new-arrival-info">
                                 <h3>Матовая помада</h3>
@@ -170,7 +170,7 @@
                         <div class="new-arrival-item">
                             <div class="new-arrival-image">
                                 <span class="product-badge">Новинка</span>
-                                <img src="img/glasses.jpg" alt="Компьютерные очки Blu-Block">
+                                <img src="{{ url_for('static', filename='img/glasses.jpg') }}" alt="Компьютерные очки Blu-Block">
                             </div>
                             <div class="new-arrival-info">
                                 <h3>Очки Blu-Block</h3>
@@ -193,7 +193,7 @@
                 <div class="promotions-grid">
                     <div class="promo-card promo-card-large">
                         <div class="promo-image">
-                            <img src="img/sale/sun.jpg" alt="Скидка 20% на солнцезащитные очки">
+                            <img src="{{ url_for('static', filename='img/sale/sun.jpg') }}" alt="Скидка 20% на солнцезащитные очки">
                             <div class="promo-overlay"></div>
                         </div>
                         <div class="promo-content">
@@ -206,7 +206,7 @@
                     </div>
                     <div class="promo-card">
                         <div class="promo-image">
-                            <img src="img/sale/three.jpg" alt="1+1=3 на всю декоративную косметику">
+                            <img src="{{ url_for('static', filename='img/sale/three.jpg') }}" alt="1+1=3 на всю декоративную косметику">
                             <div class="promo-overlay"></div>
                         </div>
                         <div class="promo-content">
@@ -219,7 +219,7 @@
                     </div>
                     <div class="promo-card">
                         <div class="promo-image">
-                            <img src="img/sale/health.jpg" alt="Бесплатная диагностика зрения">
+                            <img src="{{ url_for('static', filename='img/sale/health.jpg') }}" alt="Бесплатная диагностика зрения">
                             <div class="promo-overlay"></div>
                         </div>
                         <div class="promo-content">
@@ -244,7 +244,7 @@
                 <div class="product-list">
                     <div class="category-card" data-category="face">
                         <div class="category-image">
-                            <img src="img/category/face.jpg" alt="Для лица">
+                            <img src="{{ url_for('static', filename='img/category/face.jpg') }}" alt="Для лица">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="category-info">
@@ -255,7 +255,7 @@
                     </div>
                     <div class="category-card" data-category="eyes">
                         <div class="category-image">
-                            <img src="img/category/eye.jpg" alt="Для глаз">
+                            <img src="{{ url_for('static', filename='img/category/eye.jpg') }}" alt="Для глаз">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="category-info">
@@ -266,7 +266,7 @@
                     </div>
                     <div class="category-card" data-category="lips">
                         <div class="category-image">
-                            <img src="img/category/lips.jpg" alt="Для губ">
+                            <img src="{{ url_for('static', filename='img/category/lips.jpg') }}" alt="Для губ">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="category-info">
@@ -277,7 +277,7 @@
                     </div>
                     <div class="category-card" data-category="skincare">
                         <div class="category-image">
-                            <img src="img/category/clean_face.jpg" alt="Уход за кожей">
+                            <img src="{{ url_for('static', filename='img/category/clean_face.jpg') }}" alt="Уход за кожей">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="category-info">
@@ -300,7 +300,7 @@
                 <div class="product-list">
                     <div class="category-card" data-category="sunglasses">
                         <div class="category-image">
-                            <img src="img/category/computer.jpg" alt="Женские очки">
+                            <img src="{{ url_for('static', filename='img/category/computer.jpg') }}" alt="Женские очки">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="category-info">
@@ -311,7 +311,7 @@
                     </div>
                     <div class="category-card" data-category="optical">
                         <div class="category-image">
-                            <img src="img/category/man.jpg" alt="Мужские очки">
+                            <img src="{{ url_for('static', filename='img/category/man.jpg') }}" alt="Мужские очки">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="category-info">
@@ -322,7 +322,7 @@
                     </div>
                     <div class="category-card" data-category="computer">
                         <div class="category-image">
-                            <img src="img/category/metal.jpg" alt="Италия">
+                            <img src="{{ url_for('static', filename='img/category/metal.jpg') }}" alt="Италия">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="category-info">
@@ -333,7 +333,7 @@
                     </div>
                     <div class="category-card" data-category="sport">
                         <div class="category-image">
-                            <img src="img/category/germany.jpg" alt="Германия">
+                            <img src="{{ url_for('static', filename='img/category/germany.jpg') }}" alt="Германия">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="category-info">
@@ -366,7 +366,7 @@
                             <p>"Очень довольна покупкой! Очки сидят идеально и выглядят стильно. Особенно радует защита от синего света — теперь глаза не устают при работе за компьютером."</p>
                         </div>
                         <div class="review-author">
-                            <img src="img/portrait/anna.jpg" alt="Анна М." class="author-avatar">
+                            <img src="{{ url_for('static', filename='img/portrait/anna.jpg') }}" alt="Анна М." class="author-avatar">
                             <div class="author-info">
                                 <h4>Анна М.</h4>
                                 <p>Москва</p>
@@ -386,7 +386,7 @@
                             <p>"Палетка теней просто великолепна! Оттенки насыщенные, хорошо пигментированы и прекрасно смешиваются. Отдельное спасибо за быструю доставку и приятный бонус в виде пробников."</p>
                         </div>
                         <div class="review-author">
-                            <img src="img/portrait/katya.jpg" alt="Екатерина Д." class="author-avatar">
+                            <img src="{{ url_for('static', filename='img/portrait/katya.jpg') }}" alt="Екатерина Д." class="author-avatar">
                             <div class="author-info">
                                 <h4>Екатерина Д.</h4>
                                 <p>Санкт-Петербург</p>
@@ -406,7 +406,7 @@
                             <p>"Заказывал солнцезащитные очки Milano, качество выше всяких похвал! Линзы действительно защищают глаза от ультрафиолета, а материал оправы очень приятный и прочный. Рекомендую!"</p>
                         </div>
                         <div class="review-author">
-                            <img src="img/portrait/dmitr.jpg" alt="Дмитрий К." class="author-avatar">
+                            <img src="{{ url_for('static', filename='img/portrait/dmitr.jpg') }}" alt="Дмитрий К." class="author-avatar">
                             <div class="author-info">
                                 <h4>Дмитрий К.</h4>
                                 <p>Казань</p>

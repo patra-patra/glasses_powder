@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет | Очки & Пудра</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='account.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu_style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="../img/sign.svg">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <h1 class="logo">Очки & Пудра</h1>
+            </a>
+            <nav class="nav">
+                <input type="checkbox" id="nav-toggle" class="nav-toggle">
+                <label for="nav-toggle" class="nav-toggle-label">
+                    <span></span>
+                </label>
+                <ul>
+                    <li>
+                        <a href="../category_page/empty_category_page.html" class="has-submenu">Косметика</a>
+                        <ul class="sub-menu">
+                            <li><a href="../category_page/empty_category_page.html">Лицо</a></li>
+                            <li><a href="../category_page/empty_category_page.html">Глаза</a></li>
+                            <li><a href="../category_page/empty_category_page.html">Брови</a></li>
+                            <li><a href="../category_page/empty_category_page.html">Губы</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="../category_page/empty_category_page.html" class="has-submenu">Очки</a>
+                        <ul class="sub-menu">
+                            <li><a href="../category_page/empty_category_page.html">Солнцезащитные</a></li>
+                            <li><a href="../category_page/empty_category_page.html">Оптические</a></li>
+                            <li><a href="../category_page/empty_category_page.html">Компьютерные</a></li>
+                            <li><a href="../category_page/empty_category_page.html">Спортивные</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="../contact/contact.html">Контакты</a></li>
+                    <li>
+                        <a href="../cart/cart.html" class="cart-link" title="Корзина">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-text">Корзина</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="cart-link" id="searchMenu" title="Поиск">
+                            <i class="fas fa-search"></i>
+                            <span class="cart-text">Поиск</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="account.html" class="cart-link active" title="Личный кабинет">
+                            <i class="fas fa-user"></i>
+                            <span class="cart-text">Кабинет</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- Поисковая строка -->
+            <div class="search-block" id="searchBlock" style="display: none;">
+                <form class="search-form">
+                    <input type="text" placeholder="Поиск товаров..." class="search-input">
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+
+    <main class="account-main">
+        <div class="container">
+            <div class="account-header">
+                <span class="section-tag">Личный кабинет</span>
+                <p>Добро пожаловать, Екатерина!</p>
+            </div>
+
+            <div class="account-wrapper">
+                <aside class="account-sidebar">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <img src="../img/portrait/katya.jpg" alt="Аватар пользователя">
+                            <!--<button class="change-avatar-btn">
+                                <i class="fas fa-camera"></i>
+                            </button>-->
+                        </div>
+                        <h3>Екатерина Дмитриева</h3>
+                        <p class="user-status">Постоянный клиент</p>
+                    </div>
+
+                    <nav class="account-nav">
+                        <ul>
+                            <li class="active">
+                                <a href="#profile" data-tab="profile">
+                                    <i class="fas fa-user-circle"></i> Профиль
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#orders" data-tab="orders">
+                                    <i class="fas fa-shopping-bag"></i> Мои заказы
+                                    <span class="badge">2</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#favorites" data-tab="favorites">
+                                    <i class="fas fa-heart"></i> Избранное
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#addresses" data-tab="addresses">
+                                    <i class="fas fa-map-marker-alt"></i> Адреса доставки
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#settings" data-tab="settings">
+                                    <i class="fas fa-cog"></i> Настройки
+                                </a>
+                            </li>
+                            <li class="logout">
+                                <a href="#">
+                                    <i class="fas fa-sign-out-alt"></i> Выйти
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </aside>
+
+                <div class="account-content">
+                    <!-- Профиль -->
+                    <div class="tab-content active" id="profile">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h3>Личные данные</h3>
+                                <button class="edit-btn" data-form="personal-form">
+                                    <i class="fas fa-pen"></i> Редактировать
+                                </button>
+                            </div>
+                            <div class="personal-info">
+                                <div class="profile-data">
+                                    <div class="data-row">
+                                        <span class="data-label">Имя:</span>
+                                        <span class="data-value">Екатерина</span>
+                                    </div>
+                                    <div class="data-row">
+                                        <span class="data-label">Фамилия:</span>
+                                        <span class="data-value">Дмитриева</span>
+                                    </div>
+                                    <div class="data-row">
+                                        <span class="data-label">Телефон:</span>
+                                        <span class="data-value">+7 (999) 123-45-67</span>
+                                    </div>
+                                    <div class="data-row">
+                                        <span class="data-label">Дата рождения:</span>
+                                        <span class="data-value">15.03.1992</span>
+                                    </div>
+                                </div>
+                                <form class="profile-form hidden" id="personal-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="firstname">Имя</label>
+                                            <input type="text" id="firstname" value="Екатерина">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="lastname">Фамилия</label>
+                                            <input type="text" id="lastname" value="Дмитриева">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">Телефон</label>
+                                        <input type="tel" id="phone" value="+7 (999) 123-45-67">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="birthdate">Дата рождения</label>
+                                        <input type="date" id="birthdate" value="1992-03-15">
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn-primary">Сохранить</button>
+                                        <button type="button" class="btn-secondary cancel-btn" data-form="personal-form">Отмена</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h3>Изменить пароль</h3>
+                            </div>
+                            <form class="password-form">
+                                <div class="form-group">
+                                    <label for="current-password">Текущий пароль</label>
+                                    <input type="password" id="current-password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="new-password">Новый пароль</label>
+                                    <input type="password" id="new-password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm-password">Подтвердите пароль</label>
+                                    <input type="password" id="confirm-password">
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-primary">Изменить пароль</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Мои заказы -->
+                    <div class="tab-content" id="orders">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h3>История заказов</h3>
+                            </div>
+                            <div class="orders-list">
+                                <div class="order-item">
+                                    <div class="order-header">
+                                        <div class="order-info">
+                                            <div class="order-number">Заказ №83752</div>
+                                            <div class="order-date">15.05.2025</div>
+                                        </div>
+                                        <div class="order-status processing">
+                                            <span>В обработке</span>
+                                        </div>
+                                        <div class="order-price">4 990 ₽</div>
+                                    </div>
+                                    <div class="order-products">
+                                        <div class="order-product">
+                                            <img src="../img/glasses.jpg" alt="Очки Sunmaster">
+                                            <div class="product-details">
+                                                <h4>Очки Sunmaster</h4>
+                                                <p>Премиальные очки с поляризованными линзами</p>
+                                                <div class="product-qty">Количество: 1</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-actions">
+                                        <button class="btn-outline">Подробнее</button>
+                                        <button class="btn-primary">Отследить</button>
+                                    </div>
+                                </div>
+
+                                <div class="order-item">
+                                    <div class="order-header">
+                                        <div class="order-info">
+                                            <div class="order-number">Заказ №83621</div>
+                                            <div class="order-date">03.05.2025</div>
+                                        </div>
+                                        <div class="order-status completed">
+                                            <span>Доставлен</span>
+                                        </div>
+                                        <div class="order-price">3 790 ₽</div>
+                                    </div>
+                                    <div class="order-products">
+                                        <div class="order-product">
+                                            <img src="../img/category/face.jpg" alt="Тональный крем">
+                                            <div class="product-details">
+                                                <h4>Тональный крем Perfect Glow</h4>
+                                                <p>Стойкий тональный крем с эффектом сияния</p>
+                                                <div class="product-qty">Количество: 1</div>
+                                            </div>
+                                        </div>
+                                        <div class="order-product">
+                                            <img src="../img/category/lips.jpg" alt="Помада">
+                                            <div class="product-details">
+                                                <h4>Матовая помада Velvet Touch</h4>
+                                                <p>Стойкая матовая помада с ухаживающими компонентами</p>
+                                                <div class="product-qty">Количество: 2</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="order-actions">
+                                        <button class="btn-outline">Подробнее</button>
+                                        <button class="btn-primary">Повторить заказ</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Избранное -->
+                    <div class="tab-content" id="favorites">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h3>Избранные товары</h3>
+                            </div>
+                            <div class="favorites-grid">
+                                <div class="product-card" data-category="glasses">
+                                    <div class="product-image">
+                                        <img src="../img/glasses.jpg" alt="Очки Sunmaster">
+                                        <button class="favorite-btn active">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>Очки Sunmaster</h3>
+                                        <p>Премиальные очки с поляризованными линзами</p>
+                                        <div class="product-bottom">
+                                            <div class="product-price">4 990 ₽</div>
+                                            <button class="btn-outline">В корзину</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-card" data-category="cosmetics">
+                                    <div class="product-image">
+                                        <img src="../img/category/eye.jpg" alt="Палетка теней">
+                                        <button class="favorite-btn active">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>Палетка теней Shimmer</h3>
+                                        <p>Палетка из 12 оттенков с шиммером</p>
+                                        <div class="product-bottom">
+                                            <div class="product-price">2 490 ₽</div>
+                                            <button class="btn-outline">В корзину</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Адреса доставки -->
+                    <div class="tab-content" id="addresses">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h3>Адреса доставки</h3>
+                                <button class="add-btn" id="add-address-btn">
+                                    <i class="fas fa-plus"></i> Добавить адрес
+                                </button>
+                            </div>
+                            <div class="addresses-list">
+                                <div class="address-item">
+                                    <div class="address-badge default">Основной</div>
+                                    <div class="address-content">
+                                        <h4>Домашний</h4>
+                                        <p>г. Москва, ул. Тверская, д. 25, кв. 48</p>
+                                        <p>Екатерина Дмитриева, +7 (999) 123-45-67</p>
+                                    </div>
+                                    <div class="address-actions">
+                                        <button class="edit-address-btn"><i class="fas fa-pen"></i></button>
+                                        <button class="delete-address-btn"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="address-item">
+                                    <div class="address-content">
+                                        <h4>Рабочий</h4>
+                                        <p>г. Москва, Ленинградский пр-т, д. 80, корп. 16, офис 505</p>
+                                        <p>Екатерина Дмитриева, +7 (999) 123-45-67</p>
+                                    </div>
+                                    <div class="address-actions">
+                                        <button class="set-default-btn">Сделать основным</button>
+                                        <button class="edit-address-btn"><i class="fas fa-pen"></i></button>
+                                        <button class="delete-address-btn"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <form class="address-form hidden" id="address-form">
+                                <h4>Новый адрес доставки</h4>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="address-name">Название адреса</label>
+                                        <input type="text" id="address-name" placeholder="Например, Домашний">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address-recipient">Получатель</label>
+                                        <input type="text" id="address-recipient" value="Екатерина Дмитриева">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address-city">Город</label>
+                                    <input type="text" id="address-city" placeholder="Введите город">
+                                </div>
+                                <div class="form-group">
+                                    <label for="address-street">Улица, дом, квартира</label>
+                                    <input type="text" id="address-street" placeholder="Введите адрес">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="address-phone">Телефон</label>
+                                        <input type="tel" id="address-phone" value="+7 (999) 123-45-67">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address-index">Индекс</label>
+                                        <input type="text" id="address-index" placeholder="Почтовый индекс">
+                                    </div>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" id="address-default">
+                                    <label for="address-default">Сделать основным адресом</label>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-primary">Сохранить</button>
+                                    <button type="button" class="btn-secondary" id="cancel-address-btn">Отмена</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Настройки -->
+                    <div class="tab-content" id="settings">
+                        <div class="section-card">
+                            <div class="section-header">
+                                <h3>Настройки аккаунта</h3>
+                            </div>
+                            <div class="settings-list">
+                                <div class="settings-item">
+                                    <div class="settings-info">
+                                        <h4>Уведомления по email</h4>
+                                        <p>Получайте информацию о новых акциях и поступлениях</p>
+                                    </div>
+                                    <div class="settings-control">
+                                        <label class="switch">
+                                            <input type="checkbox" checked>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="settings-item">
+                                    <div class="settings-info">
+                                        <h4>SMS-уведомления</h4>
+                                        <p>Получайте информацию о статусе заказов по SMS</p>
+                                    </div>
+                                    <div class="settings-control">
+                                        <label class="switch">
+                                            <input type="checkbox" checked>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="settings-item">
+                                    <div class="settings-info">
+                                        <h4>Двухфакторная аутентификация</h4>
+                                        <p>Повышенная безопасность для вашего аккаунта</p>
+                                    </div>
+                                    <div class="settings-control">
+                                        <label class="switch">
+                                            <input type="checkbox">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="danger-zone">
+                                    <h4>Опасная зона</h4>
+                                    <button class="btn-danger">Удалить аккаунт</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3 class="logo">Очки & Пудра</h3>
+                    <p>Ваш источник лучших косметических средств и стильных очков.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="#about">О нас</a></li>
+                        <li><a href="#cosmetics">Косметика</a></li>
+                        <li><a href="#glasses">Очки</a></li>
+                        <li><a href="#blog">Блог</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Контакты</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, Мясницкая ул., 13 строение 2</li>
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@beautyvision.ru</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Beauty & Vision. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='search.js') }}"></script>
+    <script src="{{ url_for('static', filename='account.js') }}"></script>
+</body>
+</html>

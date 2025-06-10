@@ -1,0 +1,327 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>Каталог товаров — Очки и Пудра</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../menu_style.css">
+    <link rel="stylesheet" href="../product-cards.css">
+    <link rel="stylesheet" href="empty_category_page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo"><a href="../index.html">Очки & Пудра</a></h1>
+            <nav class="nav">
+                <input type="checkbox" id="nav-toggle" class="nav-toggle">
+                <label for="nav-toggle" class="nav-toggle-label">
+                    <span></span>
+                </label>
+                <ul>
+                    <li><a href="../index.html#about">О нас</a></li>
+                    <li><a href="../index.html#cosmetics">Косметика</a></li>
+                    <li><a href="../index.html#glasses">Очки</a></li>
+                    <li><a href="../index.html#contact">Контакты</a></li>
+                    <li>
+                        <a href="../cart/cart.html" class="cart-link" title="Корзина">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-text">Корзина</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="category-main">
+        <div class="container">
+            <div class="category-layout">
+                <!-- Левая колонка с фильтрами -->
+                <aside class="filter-sidebar">
+                    <h3>Фильтры</h3>
+
+                    <!--<div class="filter-group">
+                        <h4>Категория</h4>
+                        <div class="filter-options">
+                            <label class="filter-checkbox">
+                                <input type="checkbox" checked>
+                                <span>Все товары</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span>Косметика</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span>Очки</span>
+                            </label>
+                        </div>
+                    </div>-->
+
+                    <div class="filter-group">
+                        <h4>Цена</h4>
+                        <div class="price-slider">
+                            <div class="price-inputs">
+                                <input type="text" placeholder="от" class="price-input">
+                                <span>—</span>
+                                <input type="text" placeholder="до" class="price-input">
+                            </div>
+                            <button class="filter-btn">Применить</button>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Бренд</h4>
+                        <div class="filter-options">
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span>Estelle</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span>Lumiere</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span>Vision Pro</span>
+                            </label>
+                            <label class="filter-checkbox">
+                                <input type="checkbox">
+                                <span>Beauty Glam</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary reset-filters">Сбросить фильтры</button>
+                </aside>
+
+                <!-- Правая колонка с содержимым -->
+                <div class="products-content">
+                    <!-- Поисковая строка -->
+                    <div class="search-block-category">
+                        <form class="search-form">
+                            <input type="text" placeholder="Поиск товаров..." class="search-input">
+                            <button type="submit" class="search-button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Сортировка -->
+                    <div class="sort-block">
+                        <span>Сортировать:</span>
+                        <div class="sort-options">
+                            <button class="sort-btn active">По популярности</button>
+                            <button class="sort-btn">По цене</button>
+                            <button class="sort-btn">По новизне</button>
+                        </div>
+                    </div>
+
+                    <!-- Сетка товаров -->
+                    <div class="product-grid">
+                        <div class="product-card" data-category="cosmetics">
+                            <div class="product-image">
+                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}" alt="Увлажняющая сыворотка">
+                                <div class="product-badges">
+                                    <span class="product-badge">Новинка</span>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h3>Увлажняющая сыворотка</h3>
+                                <p>С гиалуроновой кислотой и витамином C</p>
+                                <div class="product-bottom">
+                                    <div class="product-price">2 790 ₽</div>
+                                    <button class="btn-outline">В корзину</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-card" data-category="glasses">
+                            <div class="product-image">
+                                <imghref="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Очки Sunmaster">
+                                <div class="product-badges">
+                                    <span class="product-badge">Хит</span>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h3>Очки Sunmaster</h3>
+                                <p>Премиальные очки с поляризованными линзами</p>
+                                <div class="product-bottom">
+                                    <div class="product-price">4 990 ₽</div>
+                                    <button class="btn-outline">В корзину</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-card" data-category="cosmetics">
+                            <div class="product-image">
+                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Матовая помада">
+                            </div>
+                            <div class="product-info">
+                                <h3>Матовая помада</h3>
+                                <p>Стойкая формула, не сушит губы</p>
+                                <div class="product-bottom">
+                                    <div class="product-price">1 390 ₽</div>
+                                    <button class="btn-outline">В корзину</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-card" data-category="glasses">
+                            <div class="product-image">
+                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Очки Blu-Block">
+                                <div class="product-badges">
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h3>Очки Blu-Block</h3>
+                                <p>Защита от синего света для работы за компьютером</p>
+                                <div class="product-bottom">
+                                    <div class="product-price">2 890 ₽</div>
+                                    <button class="btn-outline">В корзину</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-card" data-category="cosmetics">
+                            <div class="product-image">
+                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Палетка теней">
+                            </div>
+                            <div class="product-info">
+                                <h3>Палетка теней</h3>
+                                <p>12 оттенков с матовым и шиммерным финишем</p>
+                                <div class="product-bottom">
+                                    <div class="product-price">3 590 ₽</div>
+                                    <button class="btn-outline">В корзину</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-card" data-category="glasses">
+                            <div class="product-image">
+                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Солнцезащитные очки">
+                            </div>
+                            <div class="product-info">
+                                <h3>Солнцезащитные очки</h3>
+                                <p>Классическая модель с градиентными линзами</p>
+                                <div class="product-bottom">
+                                    <div class="product-price">5 990 ₽</div>
+                                    <button class="btn-outline">В корзину</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-card" data-category="glasses">
+                            <div class="product-image">
+                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Солнцезащитные очки">
+                            </div>
+                            <div class="product-info">
+                                <h3>Солнцезащитные очки</h3>
+                                <p>Классическая модель с градиентными линзами</p>
+                                <div class="product-bottom">
+                                    <div class="product-price">5 990 ₽</div>
+                                    <button class="btn-outline">В корзину</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-card" data-category="glasses">
+                            <div class="product-image">
+                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Солнцезащитные очки">
+                            </div>
+                            <div class="product-info">
+                                <h3>Солнцезащитные очки</h3>
+                                <p>Классическая модель с градиентными линзами</p>
+                                <div class="product-bottom">
+                                    <div class="product-price">5 990 ₽</div>
+                                    <button class="btn-outline">В корзину</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-card" data-category="glasses">
+                            <div class="product-image">
+                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Солнцезащитные очки">
+                            </div>
+                            <div class="product-info">
+                                <h3>Солнцезащитные очки</h3>
+                                <p>Классическая модель с градиентными линзами</p>
+                                <div class="product-bottom">
+                                    <div class="product-price">5 990 ₽</div>
+                                    <button class="btn-outline">В корзину</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-card" data-category="glasses">
+                            <div class="product-image">
+                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Солнцезащитные очки">
+                            </div>
+                            <div class="product-info">
+                                <h3>Солнцезащитные очки</h3>
+                                <p>Классическая модель с градиентными линзами</p>
+                                <div class="product-bottom">
+                                    <div class="product-price">5 990 ₽</div>
+                                    <button class="btn-outline">В корзину</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Пагинация -->
+                    <div class="pagination">
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#">4</a>
+                        <a href="#" class="next"><i class="fas fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3 class="logo">Очки & Пудра</h3>
+                    <p>Ваш источник лучших косметических средств и стильных очков.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Навигация</h4>
+                    <ul>
+                        <li><a href="../index.html#about">О нас</a></li>
+                        <li><a href="../index.html#cosmetics">Косметика</a></li>
+                        <li><a href="../index.html#glasses">Очки</a></li>
+                        <li><a href="../index.html#blog">Блог</a></li>
+                        <li><a href="../index.html#contact">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Контакты</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, Мясницкая ул., 13 строение 2</li>
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@beautyvision.ru</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Очки & Пудра. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>

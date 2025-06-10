@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Корзина — Очки и Пудра</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='cart/cart.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cart.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
@@ -13,19 +14,19 @@
 <body>
     <header class="header">
         <div class="container">
-            <h1 class="logo"><a href="../index.html">Очки & Пудра</a></h1>
+            <h1 class="logo"><a href="{{ url_for('home') }}">Очки & Пудра</a></h1>
             <nav class="nav">
                 <input type="checkbox" id="nav-toggle" class="nav-toggle">
                 <label for="nav-toggle" class="nav-toggle-label">
                     <span></span>
                 </label>
                 <ul>
-                    <li><a href="../index.html#about">О нас</a></li>
-                    <li><a href="../index.html#cosmetics">Косметика</a></li>
-                    <li><a href="../index.html#glasses">Очки</a></li>
-                    <li><a href="../index.html#contact">Контакты</a></li>
+                    <li><a href="{{ url_for('home') }}#about">О нас</a></li>
+                    <li><a href="{{ url_for('home') }}#cosmetics">Косметика</a></li>
+                    <li><a href="{{ url_for('home') }}#glasses">Очки</a></li>
+                    <li><a href="{{ url_for('home') }}#contact">Контакты</a></li>
                     <li>
-                        <a href="cart.html" class="cart-link active" title="Корзина">
+                        <a href="{{ url_for('cart') }}" class="cart-link active" title="Корзина">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="cart-text">Корзина</span>
                         </a>
@@ -41,25 +42,54 @@
                 <h2>Ваша корзина</h2>
             </div>
 
+            {% if products %}
             <div class="cart-content">
                 <div id="cart-items">
-                    <!-- Здесь будут элементы корзины -->
-                </div>
-
-                <div class="cart-empty hidden">
-                    <i class="fas fa-shopping-cart"></i>
-                    <p>Ваша корзина пуста</p>
-                    <a href="../index.html" class="btn btn-primary">Перейти к покупкам</a>
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Цена за шт.</th>
+                                <th>Количество</th>
+                                <th>Итого</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in products %}
+                            <tr>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.price }} ₽</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.total }} ₽</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr class="total-row">
+                                <td colspan="3">Общая сумма</td>
+                                <td>{{ total_price }} ₽</td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
 
                 <div class="cart-summary">
                     <div class="cart-total">
                         <span>Итого:</span>
-                        <span id="cart-total-price">0 ₽</span>
+                        <span id="cart-total-price">{{ total_price }} ₽</span>
                     </div>
-                    <button id="checkout" class="btn btn-primary" disabled>Оформить заказ</button>
+                    <form method="POST" action="{{ url_for('create_order') }}">
+                        <button type="submit" class="btn btn-primary">Оформить заказ</button>
+                    </form>
                 </div>
             </div>
+            {% else %}
+            <div class="cart-empty">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Ваша корзина пуста</p>
+                <a href="{{ url_for('home') }}" class="btn btn-primary">Перейти к покупкам</a>
+            </div>
+            {% endif %}
         </div>
     </main>
 
@@ -101,6 +131,6 @@
         </div>
     </footer>
 
-    <script src="cart.js"></script>
+    <script src="{{ url_for('static', filename='cart.js') }}"></script>
 </body>
 </html>

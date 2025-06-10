@@ -38,11 +38,26 @@ class User(db.Model):
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     phone = db.Column(db.String, unique=True, nullable=False)
-    city = db.Column(db.String)
-    address = db.Column(db.String)
+    email = db.Column(db.String, unique=True)
+    password = db.Column(db.String)
     birthdate = db.Column(db.String)
+    gender = db.Column(db.String)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     orders = db.relationship("Order", back_populates="user")
+    addresses = db.relationship("UserAddress", back_populates="user", cascade="all, delete-orphan")
+
+
+class UserAddress(db.Model):
+    __tablename__ = "user_addresses"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    city = db.Column(db.String, nullable=False)
+    address = db.Column(db.String, nullable=False)
+    is_default = db.Column(db.String, default=False)
+
+    user = db.relationship("User", back_populates="addresses")
 
 class Order(db.Model):
     __tablename__ = "orders"
