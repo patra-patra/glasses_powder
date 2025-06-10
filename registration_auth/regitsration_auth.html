@@ -6,6 +6,7 @@
     <title>Вход и регистрация | Beauty Shop</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="registration_auth.css">
+    <link rel="stylesheet" href="../menu_style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -19,14 +20,60 @@
                     <span></span>
                 </label>
                 <ul>
-                    <li><a href="../index.html">Главная</a></li>
-                    <li><a href="#">Косметика</a></li>
-                    <li><a href="#">Очки</a></li>
-                    <li><a href="#">Акции</a></li>
-                    <li><a href="#">О нас</a></li>
-                    <li><a href="#">Контакты</a></li>
+                    <li>
+                        <a href="category_page/empty_category_page.html" class="has-submenu">Косметика</a>
+                        <ul class="sub-menu">
+                            <li><a href="category_page/empty_category_page.html">Лицо</a></li>
+                            <li>
+                                <a href="category_page/empty_category_page.html" class="has-submenu">Глаза</a>
+                                <!--<ul class="sub-menu">
+                                <li><a href="category_page/empty_category_page.html">Тушь для ресниц</a></li>
+                                <li><a href="category_page/empty_category_page.html">Подводки для глаз</a></li>
+                                <li><a href="category_page/empty_category_page.html">Карандаши для глаз</a></li>
+                                <li><a href="category_page/empty_category_page.html">Тени для век</a></li>
+                                <li><a href="category_page/empty_category_page.html">База под тени</a></li>
+                                <li><a href="category_page/empty_category_page.html">Средства для ухода<br>за ресницами</a></li>
+                                <li><a href="category_page/empty_category_page.html">Накладные ресницы<br>и клей</a></li>
+                                <li><a href="category_page/empty_category_page.html">Для снятия макияжа</a></li>
+                            </ul>-->
+                            </li>
+                            <li><a href="category_page/empty_category_page.html">Брови</a></li>
+                            <li><a href="category_page/empty_category_page.html">Губы</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="category_page/empty_category_page.html" class="has-submenu">Очки</a>
+                        <ul class="sub-menu">
+                            <li><a href="category_page/empty_category_page.html">Солнцезащитные</a></li>
+                            <li><a href="category_page/empty_category_page.html">Оптические</a></li>
+                            <li><a href="category_page/empty_category_page.html">Компьютерные</a></li>
+                            <li><a href="category_page/empty_category_page.html">Спортивные</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact/contact.html">Контакты</a></li>
+                    <li>
+                        <a href="cart/cart.html" class="cart-link" title="Корзина">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-text">Корзина</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="cart-link" id="searchMenu" title="Поиск">
+                            <i class="fas fa-search"></i>
+                            <span class="cart-text">Поиск</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
+            <!-- Поисковая строка -->
+            <div class="search-block" id="searchBlock">
+                <form class="search-form">
+                    <input type="text" placeholder="Поиск товаров..." class="search-input">
+                    <button type="submit" class="search-button">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+            </div>
         </div>
     </header>
 

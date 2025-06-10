@@ -48,6 +48,34 @@ document.addEventListener("DOMContentLoaded", function () {
     // Обновляем иконку корзины при загрузке страницы
     updateCartIcon();
 
+    // Функционал поиска - переключение видимости поисковой строки
+    const searchMenu = document.getElementById("searchMenu");
+    const searchBlock = document.getElementById("searchBlock");
+
+    if (searchMenu && searchBlock) {
+        searchMenu.addEventListener("click", function(e) {
+            e.preventDefault();
+            // Переключаем класс active у поисковой строки
+            searchBlock.classList.toggle("active");
+            
+            // Если поисковая строка скрыта, очищаем поле ввода
+            if (!searchBlock.classList.contains("active")) {
+                const searchInput = searchBlock.querySelector(".search-input");
+                if (searchInput) {
+                    searchInput.value = "";
+                }
+            }
+        });
+
+        // Закрываем поиск при клике вне поисковой строки
+        document.addEventListener("click", function(e) {
+            if (!searchMenu.contains(e.target) && !searchBlock.contains(e.target) && 
+                searchBlock.classList.contains("active")) {
+                searchBlock.classList.remove("active");
+            }
+        });
+    }
+
     // Общая функция для добавления обработчиков на кнопки "В корзину"
     function initAddToCartButtons(selector) {
         const buttons = document.querySelectorAll(selector);
