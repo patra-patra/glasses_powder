@@ -211,13 +211,14 @@
     box-shadow: var(--shadow-md);
     margin-bottom: 30px;
     overflow: hidden;
+    padding-top: 0; /* Явно указываем отсутствие верхнего отступа */
 }
 
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 30px;
+    padding: 15px 30px; /* Уменьшен отступ сверху и снизу */
     border-bottom: 1px solid var(--gray-200);
 }
 
@@ -256,7 +257,7 @@
 
 /* Профиль - личные данные */
 .personal-info {
-    padding: 30px;
+    padding: 0px 30px 30px 30px; /* Уменьшен отступ сверху */
 }
 
 .profile-data {
