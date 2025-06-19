@@ -1,41 +1,18 @@
-﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Контакты — Очки и Пудра</title>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="contact.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='contact/contact.css') }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <h1 class="logo"><a href="../index.html">Очки & Пудра</a></h1>
-            <nav class="nav">
-                <input type="checkbox" id="nav-toggle" class="nav-toggle">
-                <label for="nav-toggle" class="nav-toggle-label">
-                    <span></span>
-                </label>
-                <ul>
-                    <li><a href="../index.html#about">О нас</a></li>
-                    <li><a href="../index.html#cosmetics">Косметика</a></li>
-                    <li><a href="../index.html#glasses">Очки</a></li>
-                    <li><a href="../index.html#bestsellers">Бестселлеры</a></li>
-                    <li><a href="contact.html" class="active">Контакты</a></li>
-                    <li>
-                        <a href="../cart/cart.html" class="cart-link" title="Корзина">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span class="cart-text">Корзина</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    {% include 'header.html' %}
 
     <main class="contact-page">
         <div class="container">
@@ -89,36 +66,44 @@
                     </div>
 
                     <div class="contact-map">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1923.9602966406653!2d37.63272267068749!3d55.76220739578183!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a5df8a882ab%3A0x95b3dcaaa593b770!2z0JzRj9GB0L3QuNGG0LrQsNGPINGD0LsuLCAxMyDRgdGC0YDQvtC10L3QuNC1IDIsINCc0L7RgdC60LLQsCwg0KDQvtGB0YHQuNGPLCAxMDEwMDA!5e0!3m2!1sru!2sde!4v1748316809832!5m2!1sru!2sde" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1923.9602966406653!2d37.63272267068749!3d55.76220739578183!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a5df8a882ab%3A0x95b3dcaaa593b770!2z0JzRj9GB0L3QuNGG0LrQsNGPINGD0LsuLCAxMyDRgdGC0YDQvtC10L3QuNC1IDIsINCc0L7RgdC60LLQsCwg0KDQvtGB0YHQuNGPLCAxMDEwMDA!5e0!3m2!1sru!2sde!4v1748316809832!5m2!1sru!2sde"
+                            width="600"
+                            height="450"
+                            style="border:0;"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                        ></iframe>
                     </div>
                 </div>
 
                 <div class="contact-form-wrapper">
                     <div class="contact-form">
                         <h3>Отправьте сообщение</h3>
-                        <form id="contactForm">
+                        <form id="contactForm" method="POST" action="{{ url_for('contact') }}">
                             <div class="form-group">
                                 <label for="name">Ваше имя</label>
-                                <input type="text" id="name" name="name" required>
+                                <input type="text" id="name" name="name" required />
                             </div>
 
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" id="email" name="email" required>
+                                <input type="email" id="email" name="email" required />
                             </div>
 
                             <div class="form-group">
                                 <label for="phone">Телефон</label>
-                                <input type="tel" id="phone" name="phone">
+                                <input type="tel" id="phone" name="phone" />
                             </div>
 
                             <div class="form-group">
                                 <label for="subject">Тема</label>
                                 <select id="subject" name="subject">
-                                    <option value="question">Вопрос о продукции</option>
-                                    <option value="order">Вопрос по заказу</option>
-                                    <option value="partnership">Сотрудничество</option>
-                                    <option value="other">Другое</option>
+                                    <option value="Вопрос о продукции">Вопрос о продукции</option>
+                                    <option value="Вопрос по заказу">Вопрос по заказу</option>
+                                    <option value="Сотрудничество">Сотрудничество</option>
+                                    <option value="Другое">Другое</option>
                                 </select>
                             </div>
 
@@ -128,9 +113,20 @@
                             </div>
 
                             <div class="form-group checkbox-group">
-                                <input type="checkbox" id="consent" name="consent" required>
+                                <input type="checkbox" id="consent" name="consent" required />
                                 <label for="consent">Я согласен на обработку персональных данных</label>
                             </div>
+
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                              {% if messages %}
+                                <ul class="flashes">
+                                  {% for category, message in messages %}
+                                    <li class="{{ category }}">{{ message }}</li>
+                                  {% endfor %}
+                                </ul>
+                              {% endif %}
+                            {% endwith %}
+
 
                             <button type="submit" class="btn btn-primary">Отправить сообщение</button>
                         </form>
@@ -151,7 +147,9 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            <p>Для выбора идеальных очков рекомендуем учитывать форму лица, стиль одежды и цветотип. Наши консультанты всегда готовы помочь вам с выбором подходящей модели при посещении нашего магазина или при онлайн-консультации.</p>
+                            <p>
+                                Для выбора идеальных очков рекомендуем учитывать форму лица, стиль одежды и цветотип. Наши консультанты всегда готовы помочь вам с выбором подходящей модели при посещении нашего магазина или при онлайн-консультации.
+                            </p>
                         </div>
                     </div>
 
@@ -161,7 +159,9 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            <p>Мы предлагаем несколько вариантов доставки: курьерская доставка по Москве (1-2 дня), доставка по России (3-7 дней) и самовывоз из нашего магазина. Стоимость и сроки доставки зависят от региона и выбранного способа.</p>
+                            <p>
+                                Мы предлагаем несколько вариантов доставки: курьерская доставка по Москве (1-2 дня), доставка по России (3-7 дней) и самовывоз из нашего магазина. Стоимость и сроки доставки зависят от региона и выбранного способа.
+                            </p>
                         </div>
                     </div>
 
@@ -171,7 +171,9 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            <p>Для чувствительной кожи мы рекомендуем гипоаллергенную косметику без отдушек и агрессивных компонентов. В нашем ассортименте представлены специальные линейки для чувствительной кожи с успокаивающими компонентами.</p>
+                            <p>
+                                Для чувствительной кожи мы рекомендуем гипоаллергенную косметику без отдушек и агрессивных компонентов. В нашем ассортименте представлены специальные линейки для чувствительной кожи с успокаивающими компонентами.
+                            </p>
                         </div>
                     </div>
 
@@ -181,7 +183,9 @@
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="faq-answer">
-                            <p>Да, возврат товара возможен в течение 14 дней с момента покупки при сохранении товарного вида, упаковки и чека. Косметика принимается к возврату только в случае, если не нарушена целостность упаковки.</p>
+                            <p>
+                                Да, возврат товара возможен в течение 14 дней с момента покупки при сохранении товарного вида, упаковки и чека. Косметика принимается к возврату только в случае, если не нарушена целостность упаковки.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -189,44 +193,27 @@
         </div>
     </main>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-columns">
-                <div class="footer-column">
-                    <h3 class="logo">Beauty & Vision</h3>
-                    <p>Ваш источник лучших косметических средств и стильных очков.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-vk"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h4>Навигация</h4>
-                    <ul>
-                        <li><a href="#about">О нас</a></li>
-                        <li><a href="#cosmetics">Косметика</a></li>
-                        <li><a href="#glasses">Очки</a></li>
-                        <li><a href="#blog">Блог</a></li>
-                        <li><a href="#contact">Контакты</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Контакты</h4>
-                    <ul class="contact--info">
-                        <li><i class="fas fa-map-marker-alt"></i> Москва, Мясницкая ул., 13 строение 2</li>
-                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
-                        <li><i class="fas fa-envelope"></i> info@beautyvision.ru</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Beauty & Vision. Все права защищены.</p>
-            </div>
-        </div>
-    </footer>
+        {% include 'partials/footer.html' %}
 
-    <script src="contact.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='contact/contact.js') }}"></script>
+    <script>
+        // Простой JS для FAQ — сворачивание/разворачивание ответов
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                if (answer.style.maxHeight) {
+                    answer.style.maxHeight = null;
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

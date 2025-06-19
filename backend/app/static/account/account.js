@@ -38,6 +38,53 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    const changePasswordForm = document.getElementById("change-password-form");
+
+     changePasswordForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const currentPassword = document.getElementById("current-password").value;
+        const newPassword = document.getElementById("new-password").value;
+        const confirmPassword = document.getElementById("confirm-password").value;
+
+        if (newPassword !== confirmPassword) {
+            showNotification("Пароли не совпадают");
+            return;
+        }
+
+        fetch("/change_password", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                current_password: currentPassword,
+                new_password: newPassword,
+            }),
+        })
+        .then(async (res) => {
+            let data;
+            try {
+                data = await res.json();
+            } catch {
+                data = {};
+            }
+            return { ok: res.ok, data };
+        })
+        .then(({ ok, data }) => {
+            if (!ok) {
+                showNotification("Ошибка: " + (data.error || "Не удалось изменить пароль"));
+            } else {
+                showNotification(data.message || "Пароль успешно изменён");
+                changePasswordForm.reset();
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            showNotification("Произошла ошибка: " + (err.message || "Неизвестная ошибка"));
+        });
+    });
+
     cancelBtns.forEach((btn) => {
         btn.addEventListener("click", function () {
             const formId = this.getAttribute("data-form");
@@ -71,43 +118,51 @@ document.addEventListener("DOMContentLoaded", function () {
     // Обработка отправки форм
     const forms = document.querySelectorAll("form");
     forms.forEach((form) => {
-        form.addEventListener("submit", function (e) {
+        form.addEventListener("submit", async function (e) {
             e.preventDefault();
-            // Здесь должна быть логика отправки формы на сервер
 
-            // Имитация успешной отправки
-            showNotification("Данные успешно сохранены!");
+            const formData = {
+                first_name: document.getElementById("firstname").value,
+                last_name: document.getElementById("lastname").value,
+                phone: document.getElementById("phone").value,
+                birthdate: document.getElementById("birthdate").value,
+            };
 
-            // Если это форма редактирования персональных данных, скрываем её
-            if (form.id === "personal-form") {
-                const dataBlock = form.previousElementSibling;
-                form.classList.add("hidden");
-                dataBlock.style.display = "block";
+            try {
+                const response = await fetch("/update_profile", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData),
+                });
 
-                // Обновляем отображаемые данные
-                const firstName = document.getElementById("firstname").value;
-                const lastName = document.getElementById("lastname").value;
-                const email = document.getElementById("email").value;
-                const phone = document.getElementById("phone").value;
+                let result = {};
+                try {
+                    result = await response.json();
+                } catch {
+                    // JSON не удалось распарсить — оставляем пустым
+                }
 
-                dataBlock.querySelector(
-                    ".data-value:nth-child(2)"
-                ).textContent = firstName;
-                dataBlock.querySelector(
-                    ".data-row:nth-child(2) .data-value"
-                ).textContent = lastName;
-                dataBlock.querySelector(
-                    ".data-row:nth-child(3) .data-value"
-                ).textContent = email;
-                dataBlock.querySelector(
-                    ".data-row:nth-child(4) .data-value"
-                ).textContent = phone;
-            }
+                if (response.ok) {
+                    showNotification("Данные успешно сохранены!");
 
-            // Если это форма добавления адреса, скрываем её
-            if (form.id === "address-form") {
-                form.classList.add("hidden");
-                form.reset();
+                    // Обновление данных на странице
+                    const dataBlock = form.previousElementSibling;
+                    form.classList.add("hidden");
+                    dataBlock.style.display = "block";
+
+                    dataBlock.querySelector(".data-row:nth-child(1) .data-value").textContent = formData.first_name;
+                    dataBlock.querySelector(".data-row:nth-child(2) .data-value").textContent = formData.last_name;
+                    dataBlock.querySelector(".data-row:nth-child(3) .data-value").textContent = formData.phone;
+                    dataBlock.querySelector(".data-row:nth-child(4) .data-value").textContent = formData.birthdate;
+                } else {
+                    showNotification("Ошибка: " + (result.error || "Не удалось обновить данные"));
+                }
+            } catch (err) {
+                console.error(err);
+                // Показываем ошибку, если она есть, иначе общее сообщение
+                showNotification("Произошла ошибка: " + (err.message || "Ошибка сети"));
             }
         });
     });

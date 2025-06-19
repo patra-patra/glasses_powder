@@ -3,39 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <title>Каталог товаров — Очки и Пудра</title>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="../menu_style.css">
-    <link rel="stylesheet" href="../product-cards.css">
-    <link rel="stylesheet" href="empty_category_page.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='product-cards.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='category_page/empty_category_page.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <h1 class="logo"><a href="../index.html">Очки & Пудра</a></h1>
-            <nav class="nav">
-                <input type="checkbox" id="nav-toggle" class="nav-toggle">
-                <label for="nav-toggle" class="nav-toggle-label">
-                    <span></span>
-                </label>
-                <ul>
-                    <li><a href="../index.html#about">О нас</a></li>
-                    <li><a href="../index.html#cosmetics">Косметика</a></li>
-                    <li><a href="../index.html#glasses">Очки</a></li>
-                    <li><a href="../index.html#contact">Контакты</a></li>
-                    <li>
-                        <a href="../cart/cart.html" class="cart-link" title="Корзина">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span class="cart-text">Корзина</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    {% include 'header.html' %}
 
     <main class="category-main">
         <div class="container">
@@ -44,284 +22,247 @@
                 <aside class="filter-sidebar">
                     <h3>Фильтры</h3>
 
-                    <!--<div class="filter-group">
-                        <h4>Категория</h4>
-                        <div class="filter-options">
-                            <label class="filter-checkbox">
-                                <input type="checkbox" checked>
-                                <span>Все товары</span>
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox">
-                                <span>Косметика</span>
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox">
-                                <span>Очки</span>
-                            </label>
-                        </div>
-                    </div>-->
-
-                    <div class="filter-group">
-                        <h4>Цена</h4>
-                        <div class="price-slider">
-                            <div class="price-inputs">
-                                <input type="text" placeholder="от" class="price-input">
-                                <span>—</span>
-                                <input type="text" placeholder="до" class="price-input">
+                    <form method="GET" action="{{ url_for('catalog') }}">
+                        <input type="hidden" name="type" value="{{ current_type }}">
+                        <div class="filter-group">
+                            <h4>Бренд</h4>
+                            <div class="filter-options brand-scroll">
+                                {% for brand in brands %}
+                                    <label class="filter-checkbox">
+                                        <input type="checkbox" name="brand" value="{{ brand }}"
+                                               {% if brand in selected_brands %}checked{% endif %}>
+                                        <span>{{ brand }}</span>
+                                    </label>
+                                {% endfor %}
                             </div>
-                            <button class="filter-btn">Применить</button>
                         </div>
-                    </div>
 
-                    <div class="filter-group">
-                        <h4>Бренд</h4>
-                        <div class="filter-options">
-                            <label class="filter-checkbox">
-                                <input type="checkbox">
-                                <span>Estelle</span>
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox">
-                                <span>Lumiere</span>
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox">
-                                <span>Vision Pro</span>
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox">
-                                <span>Beauty Glam</span>
-                            </label>
+                        <div class="filter-group">
+                            <h4>Цена</h4>
+                            <div class="price-slider">
+                                <div class="price-inputs">
+                                    <input type="text" name="min_price" placeholder="от" value="{{ min_price or '' }}" class="price-input">
+                                    <span>—</span>
+                                    <input type="text" name="max_price" placeholder="до" value="{{ max_price or '' }}" class="price-input">
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <button class="btn btn-primary reset-filters">Сбросить фильтры</button>
+                        <div class="filter-group">
+                            <label for="country-select">Страна производства:</label>
+                            <select id="country-select" name="country" onchange="this.form.submit()">
+                                <option value="">Все</option>
+                                {% for country in countries %}
+                                    <option value="{{ country }}" {% if selected_country == country %}selected{% endif %}>
+                                        {{ country }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <button type="submit" class="filter-btn">Применить</button>
+                        <a href="{{ url_for('catalog') }}" class="btn btn-primary reset-filters">Сбросить фильтры</a>
+                    </form>
                 </aside>
+
+
 
                 <!-- Правая колонка с содержимым -->
                 <div class="products-content">
                     <!-- Поисковая строка -->
                     <div class="search-block-category">
-                        <form class="search-form">
-                            <input type="text" placeholder="Поиск товаров..." class="search-input">
+                        <form class="search-form" id="search-form" method="GET" action="{{ url_for('catalog') }}">
+                            <input type="text" name="q" id="search-input" placeholder="Поиск товаров..." class="search-input" autocomplete="off" value="{{ request.args.get('q', '') }}">
+                            <!-- Сохраняем другие параметры как скрытые поля -->
+                            <input type="hidden" name="type" value="{{ request.args.get('type', '') }}">
+                            <input type="hidden" name="sort" value="{{ request.args.get('sort', 'popularity') }}">
+                            <input type="hidden" name="order" value="{{ request.args.get('order', 'desc') }}">
                             <button type="submit" class="search-button">
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>
+
                     </div>
+
+
 
                     <!-- Сортировка -->
                     <div class="sort-block">
                         <span>Сортировать:</span>
                         <div class="sort-options">
-                            <button class="sort-btn active">По популярности</button>
-                            <button class="sort-btn">По цене</button>
-                            <button class="sort-btn">По новизне</button>
+                            <button class="sort-btn {% if request.args.get('sort', 'popularity') == 'popularity' %}active{% endif %}" data-sort="popularity" data-order="desc">По популярности</button>
+                            <button class="sort-btn {% if request.args.get('sort') == 'price' and request.args.get('order') == 'asc' %}active{% endif %}" data-sort="price" data-order="asc">По цене ↑</button>
+                            <button class="sort-btn {% if request.args.get('sort') == 'price' and request.args.get('order') == 'desc' %}active{% endif %}" data-sort="price" data-order="desc">По цене ↓</button>
+                            <button class="sort-btn {% if request.args.get('sort') == 'new' %}active{% endif %}" data-sort="new" data-order="desc">По новизне</button>
                         </div>
                     </div>
 
-                    <!-- Сетка товаров -->
-                    <div class="product-grid">
-                        <div class="product-card" data-category="cosmetics">
-                            <div class="product-image">
-                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}" alt="Увлажняющая сыворотка">
-                                <div class="product-badges">
-                                    <span class="product-badge">Новинка</span>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h3>Увлажняющая сыворотка</h3>
-                                <p>С гиалуроновой кислотой и витамином C</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">2 790 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="product-card" data-category="glasses">
-                            <div class="product-image">
-                                <imghref="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Очки Sunmaster">
-                                <div class="product-badges">
-                                    <span class="product-badge">Хит</span>
+                    <div id="product-results">
+                        <div class="product-grid">
+                            {% for product in products.items %}
+                                <div class="product-card" data-category="{{ product.category }}">
+                                    <div class="product-image">
+                                        <img src="{{ url_for('static', filename='img/products/' ~ product.photonum) }}" alt="{{ product.name }}">
+                                        <div class="product-badges">
+                                            {% if loop.index == 1 %}
+                                                <span class="product-badge">Новинка</span>
+                                            {% elif loop.index == 2 %}
+                                                <span class="product-badge">Хит</span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>{{ product.name }}</h3>
+                                        {% if product.desc != 'no' %}
+                                            <p>{{ product.desc[:120] }}{% if product.desc|length > 120 %}...{% endif %}</p>
+                                        {% endif %}
+                                        <div class="product-bottom">
+                                            <div class="product-price">{{ '{:,.0f}'.format(product.price | int).replace(',', ' ') }} ₽</div>
+                                            <form action="{{ url_for('add_to_cart') }}" method="POST">
+                                              <input type="hidden" name="product_id" value="{{ product.id }}">
+                                              <button type="submit">В корзину</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="product-info">
-                                <h3>Очки Sunmaster</h3>
-                                <p>Премиальные очки с поляризованными линзами</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">4 990 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-card" data-category="cosmetics">
-                            <div class="product-image">
-                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Матовая помада">
-                            </div>
-                            <div class="product-info">
-                                <h3>Матовая помада</h3>
-                                <p>Стойкая формула, не сушит губы</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">1 390 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-card" data-category="glasses">
-                            <div class="product-image">
-                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Очки Blu-Block">
-                                <div class="product-badges">
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h3>Очки Blu-Block</h3>
-                                <p>Защита от синего света для работы за компьютером</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">2 890 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-card" data-category="cosmetics">
-                            <div class="product-image">
-                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Палетка теней">
-                            </div>
-                            <div class="product-info">
-                                <h3>Палетка теней</h3>
-                                <p>12 оттенков с матовым и шиммерным финишем</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">3 590 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-card" data-category="glasses">
-                            <div class="product-image">
-                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Солнцезащитные очки">
-                            </div>
-                            <div class="product-info">
-                                <h3>Солнцезащитные очки</h3>
-                                <p>Классическая модель с градиентными линзами</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">5 990 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-card" data-category="glasses">
-                            <div class="product-image">
-                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Солнцезащитные очки">
-                            </div>
-                            <div class="product-info">
-                                <h3>Солнцезащитные очки</h3>
-                                <p>Классическая модель с градиентными линзами</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">5 990 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-card" data-category="glasses">
-                            <div class="product-image">
-                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Солнцезащитные очки">
-                            </div>
-                            <div class="product-info">
-                                <h3>Солнцезащитные очки</h3>
-                                <p>Классическая модель с градиентными линзами</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">5 990 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-card" data-category="glasses">
-                            <div class="product-image">
-                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Солнцезащитные очки">
-                            </div>
-                            <div class="product-info">
-                                <h3>Солнцезащитные очки</h3>
-                                <p>Классическая модель с градиентными линзами</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">5 990 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-card" data-category="glasses">
-                            <div class="product-image">
-                                <img href="{{ url_for('static', filename='img/glasses.jpg') }}"  alt="Солнцезащитные очки">
-                            </div>
-                            <div class="product-info">
-                                <h3>Солнцезащитные очки</h3>
-                                <p>Классическая модель с градиентными линзами</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">5 990 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
                     </div>
 
-                    <!-- Пагинация -->
+
+
                     <div class="pagination">
-                        <a href="#" class="active">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#" class="next"><i class="fas fa-chevron-right"></i></a>
+                        {% if products.has_prev %}
+                            <a href="{{ url_for('catalog', page=products.prev_num, type=current_type, brand=selected_brands, country=selected_country, min_price=min_price, max_price=max_price, sort=request.args.get('sort'), order=request.args.get('order')) }}">&laquo;</a>
+                        {% endif %}
+
+                        {% for p in range(1, products.pages + 1) %}
+                            <a href="{{ url_for('catalog', page=p, type=current_type, brand=selected_brands, country=selected_country, min_price=min_price, max_price=max_price, sort=request.args.get('sort'), order=request.args.get('order')) }}" class="{% if p == products.page %}active{% endif %}">
+                                {{ p }}
+                            </a>
+                        {% endfor %}
+
+                        {% if products.has_next %}
+                            <a href="{{ url_for('catalog', page=products.next_num, type=current_type, brand=selected_brands, country=selected_country, min_price=min_price, max_price=max_price, sort=request.args.get('sort'), order=request.args.get('order')) }}">&raquo;</a>
+                        {% endif %}
                     </div>
+
+
+
                 </div>
             </div>
         </div>
     </main>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-columns">
-                <div class="footer-column">
-                    <h3 class="logo">Очки & Пудра</h3>
-                    <p>Ваш источник лучших косметических средств и стильных очков.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-vk"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h4>Навигация</h4>
-                    <ul>
-                        <li><a href="../index.html#about">О нас</a></li>
-                        <li><a href="../index.html#cosmetics">Косметика</a></li>
-                        <li><a href="../index.html#glasses">Очки</a></li>
-                        <li><a href="../index.html#blog">Блог</a></li>
-                        <li><a href="../index.html#contact">Контакты</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Контакты</h4>
-                    <ul class="contact-info">
-                        <li><i class="fas fa-map-marker-alt"></i> Москва, Мясницкая ул., 13 строение 2</li>
-                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
-                        <li><i class="fas fa-envelope"></i> info@beautyvision.ru</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Очки & Пудра. Все права защищены.</p>
-            </div>
-        </div>
-    </footer>
+        {% include 'partials/footer.html' %}
 
-    <script src="../script.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const searchInput = document.getElementById("search-input");
+        const productResults = document.getElementById("product-results");
+
+        let timer = null;
+
+        searchInput.addEventListener("input", function() {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                const query = searchInput.value;
+
+                fetch(`/search?q=${encodeURIComponent(query)}`)
+                    .then(response => response.text())
+                    .then(html => {
+                        productResults.innerHTML = html;
+                    });
+            }, 300); // задержка для избежания спама-запросов
+        });
+    });
+    </script>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const sortButtons = document.querySelectorAll(".sort-btn");
+        const productResults = document.getElementById("product-results");
+
+        sortButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                sortButtons.forEach(btn => btn.classList.remove("active"));
+                this.classList.add("active");
+
+                const sort = this.dataset.sort;
+                const order = this.dataset.order;
+
+                const query = new URLSearchParams({
+                    sort,
+                    order,
+                    q: document.getElementById("search-input")?.value || ''
+                });
+
+                fetch(`/search?${query.toString()}`)
+                    .then(res => res.text())
+                    .then(html => {
+                        productResults.innerHTML = html;
+                    });
+            });
+        });
+    });
+    </script>
+
+    <script>
+    document.querySelectorAll('.sort-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            urlParams.set('sort', button.getAttribute('data-sort'));
+            urlParams.set('order', button.getAttribute('data-order'));
+            urlParams.set('page', 1); // при изменении сортировки возвращаемся на первую страницу
+
+            // Оставляем остальные параметры (type, q, brand и т.д.) как есть
+
+            // Перенаправляем
+            window.location.search = urlParams.toString();
+        });
+    });
+    </script>
+
+    <script>
+    function onCountryChange() {
+        const select = document.getElementById('country-select');
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if(select.value) {
+            urlParams.set('country', select.value);
+        } else {
+            urlParams.delete('country');
+        }
+        urlParams.set('page', 1); // сбрасываем пагинацию при фильтре
+        window.location.search = urlParams.toString();
+    }
+    </script>
+
+    <script>
+    document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("btn-outline")) {
+            const button = e.target;
+            const id = button.dataset.id;
+            const title = button.dataset.title;
+            const price = parseFloat(button.dataset.price);
+
+            const cart = JSON.parse(localStorage.getItem("beautyVisionCart")) || {};
+
+            if (cart[id]) {
+                cart[id].quantity += 1;
+            } else {
+                cart[id] = { id, title, price, quantity: 1 };
+            }
+
+            localStorage.setItem("beautyVisionCart", JSON.stringify(cart));
+            alert(`Товар "${title}" добавлен в корзину`);
+        }
+    });
+
+    </script>
+
 </body>
 </html>

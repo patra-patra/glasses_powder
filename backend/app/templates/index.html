@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Очки и Пудра</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='product-cards.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='menu_style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,63 +14,13 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/sign.svg') }}">
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <h1 class="logo">Очки & Пудра</h1>
-            <nav class="nav">
-                <input type="checkbox" id="nav-toggle" class="nav-toggle">
-                <label for="nav-toggle" class="nav-toggle-label">
-                    <span></span>
-                </label>
-                <ul>
-                    <li><a href="#about">О нас</a></li>
-                    <li>
-                        <a href="#cosmetics" class="has-submenu">Косметика</a>
-                        <ul class="sub-menu">
-                            <li><a href="#">Лицо</a></li>
-                            <li>
-                                <a href="#" class="has-submenu">Глаза</a>
-                                <ul class="sub-menu">
-                                    <li><a href="#">Тушь для ресниц</a></li>
-                                    <li><a href="#">Подводки для глаз</a></li>
-                                    <li><a href="#">Карандаши для глаз</a></li>
-                                    <li><a href="#">Тени для век</a></li>
-                                    <li><a href="#">База под тени</a></li>
-                                    <li><a href="#">Средства для ухода<br>за ресницами</a></li>
-                                    <li><a href="#">Накладные ресницы<br>и клей</a></li>
-                                    <li><a href="#">Для снятия макияжа</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Брови</a></li>
-                            <li><a href="#">Губы</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#glasses" class="has-submenu">Очки</a>
-                        <ul class="sub-menu">
-                            <li><a href="#">Солнцезащитные</a></li>
-                            <li><a href="#">Оптические</a></li>
-                            <li><a href="#">Компьютерные</a></li>
-                            <li><a href="#">Спортивные</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="contact/contact.html">Контакты</a></li>
-                    <li>
-                        <a href="cart/cart.html" class="cart-link" title="Корзина">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span class="cart-text">Корзина</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    {% include 'header.html' %}
 
     <main>
         <section class="hero">
             <div class="hero-carousel">
                 <div class="hero-slide active">
-                    <div class="hero-background" style="background-image: url_for('static', filename='img/hero/slide1.jpg')"></div>
+                    <div class="hero-background" style="background-image: url('{{ url_for('static', filename='img/hero/slide1.jpg') }}')"></div>
                     <div class="container">
                         <div class="hero-content">
                             <h2>Красота и стиль<br>в каждом взгляде</h2>
@@ -82,7 +33,7 @@
                     </div>
                 </div>
                 <div class="hero-slide">
-                    <div class="hero-background" style="background-image: url_for('static', filename='img/hero/slide2.jpg')"></div>
+                    <div class="hero-background" style="background-image: url('{{ url_for('static', filename='img/hero/slide2.jpg') }}')"></div>
                     <div class="container">
                         <div class="hero-content">
                             <h2>Стильные оправы<br>для особого образа</h2>
@@ -95,7 +46,7 @@
                     </div>
                 </div>
                 <div class="hero-slide">
-                    <div class="hero-background" style="background-image: url_for('static', filename='img/hero/slide3.jpg')"></div>
+                    <div class="hero-background" style="background-image: url('{{ url_for('static', filename='img/hero/slide3.jpg') }}')"></div>
                     <div class="container">
                         <div class="hero-content">
                             <h2>Косметика<br>премиум-класса</h2>
@@ -128,63 +79,36 @@
                 </div>
                 <div class="new-arrivals-slider">
                     <div class="new-arrivals-grid">
-                        <div class="new-arrival-item">
-                            <div class="new-arrival-image">
-                                <span class="product-badge">Новинка</span>
-                                <img src="{{ url_for('static', filename='img/glasses.jpg') }}" alt="Увлажняющая сыворотка">
+                        {% for product in new_products %}
+                            <div class="product-card" data-category="{{ product.category or 'default' }}">
+                                <div class="product-image">
+                                    <img src="{{ url_for('static', filename='img/products/' ~ product.photonum) }}" alt="{{ product.name }}">
+                                    <div class="product-badges">
+                                        <span class="product-badge">Новинка</span>
+                                    </div>
+                                </div>
+                                <div class="product-info">
+                                    <h3>{{ product.name }}</h3>
+                                    {% if product.desc != 'no' %}
+                                        <p>{{ product.desc[:120] }}{% if product.desc|length > 120 %}...{% endif %}</p>
+                                    {% endif %}
+                                    <div class="product-bottom">
+                                        <div class="product-price">{{ product.price }} ₽</div>
+                                        <form action="{{ url_for('add_to_cart') }}" method="POST">
+                                          <input type="hidden" name="product_id" value="{{ product.id }}">
+                                          <button type="submit">В корзину</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="new-arrival-info">
-                                <h3>Увлажняющая сыворотка</h3>
-                                <p>С гиалуроновой кислотой и витамином C</p>
-                                <div class="new-arrival-price">2 790 ₽</div>
-                                <a href="#" class="btn-outline">В корзину</a>
-                            </div>
-                        </div>
-
-                        <div class="new-arrival-item">
-                            <div class="new-arrival-image">
-                                <span class="product-badge">Новинка</span>
-                                <img src="{{ url_for('static', filename='img/glasses.jpg') }}" alt="Очки Sunmaster">
-                            </div>
-                            <div class="new-arrival-info">
-                                <h3>Очки Sunmaster</h3>
-                                <p>Премиальные очки с поляризованными линзами</p>
-                                <div class="new-arrival-price">4 990 ₽</div>
-                                <a href="#" class="btn-outline">В корзину</a>
-                            </div>
-                        </div>
-
-                        <div class="new-arrival-item">
-                            <div class="new-arrival-image">
-                                <span class="product-badge">Новинка</span>
-                                <img src="{{ url_for('static', filename='img/glasses.jpg') }}" alt="Матовая помада">
-                            </div>
-                            <div class="new-arrival-info">
-                                <h3>Матовая помада</h3>
-                                <p>Стойкая формула, не сушит губы</p>
-                                <div class="new-arrival-price">1 390 ₽</div>
-                                <a href="#" class="btn-outline">В корзину</a>
-                            </div>
-                        </div>
-
-                        <div class="new-arrival-item">
-                            <div class="new-arrival-image">
-                                <span class="product-badge">Новинка</span>
-                                <img src="{{ url_for('static', filename='img/glasses.jpg') }}" alt="Компьютерные очки Blu-Block">
-                            </div>
-                            <div class="new-arrival-info">
-                                <h3>Очки Blu-Block</h3>
-                                <p>Защита от синего света для работы за компьютером</p>
-                                <div class="new-arrival-price">2 890 ₽</div>
-                                <a href="#" class="btn-outline">В корзину</a>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="promotions" class="promotions">
+
+        <section class="promotions">
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">Специальные предложения</span>
@@ -235,7 +159,7 @@
         </section>
 
         <!-- Секция Косметики -->
-        <section id="cosmetics" class="products cosmetics-section">
+        <section class="products cosmetics-section">
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">Косметика</span>
@@ -250,7 +174,7 @@
                         <div class="category-info">
                             <h3>Для лица</h3>
                             <p>Тональные средства, румяна, хайлайтеры</p>
-                            <a href="#" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog_category', category='Товары для лица') }}" class="btn-outline">Смотреть все</a>
                         </div>
                     </div>
                     <div class="category-card" data-category="eyes">
@@ -261,7 +185,7 @@
                         <div class="category-info">
                             <h3>Для глаз</h3>
                             <p>Тени, тушь, подводки, карандаши</p>
-                            <a href="#" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog_category', category='Товары для глаз') }}" class="btn-outline">Смотреть все</a>
                         </div>
                     </div>
                     <div class="category-card" data-category="lips">
@@ -272,18 +196,18 @@
                         <div class="category-info">
                             <h3>Для губ</h3>
                             <p>Помады, блески, карандаши, бальзамы</p>
-                            <a href="#" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog_category', category='Товары для губ') }}" class="btn-outline">Смотреть все</a>
                         </div>
                     </div>
                     <div class="category-card" data-category="skincare">
                         <div class="category-image">
-                            <img src="{{ url_for('static', filename='img/category/clean_face.jpg') }}" alt="Уход за кожей">
+                            <img src="{{ url_for('static', filename='img/category/eye.jpg') }}" alt="Брови">
                             <div class="category-overlay"></div>
                         </div>
                         <div class="category-info">
-                            <h3>Уход за кожей</h3>
-                            <p>Кремы, сыворотки, маски, очищение</p>
-                            <a href="#" class="btn-outline">Смотреть все</a>
+                            <h3>Брови</h3>
+                            <p>Карандаши, тени, гели, краски</p>
+                            <a href="{{ url_for('catalog_category', category='Товары для бровей') }}" class="btn-outline">Смотреть все</a>
                         </div>
                     </div>
                 </div>
@@ -291,7 +215,7 @@
         </section>
 
         <!-- Секция Очков -->
-        <section id="glasses" class="products glasses-section">
+        <section class="products glasses-section">
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">Очки</span>
@@ -306,7 +230,7 @@
                         <div class="category-info">
                             <h3>Женские</h3>
                             <p>Изящные, подчеркивающие индивидуальность.</p>
-                            <a href="#" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog', type='Женские') }}" class="btn-outline">Смотреть все</a>
                         </div>
                     </div>
                     <div class="category-card" data-category="optical">
@@ -317,7 +241,7 @@
                         <div class="category-info">
                             <h3>Мужские</h3>
                             <p>Стильные и функциональные, на все случаи.</p>
-                            <a href="#" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog', type='Мужские') }}" class="btn-outline">Смотреть все</a>
                         </div>
                     </div>
                     <div class="category-card" data-category="computer">
@@ -328,7 +252,7 @@
                         <div class="category-info">
                             <h3>Италия</h3>
                             <p>Эталон стиля, качества и изысканности.</p>
-                            <a href="#" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog', country='ИТАЛИЯ', type=['Мужские', 'Женские', 'Унисекс']) }}" class="btn-outline">Смотреть все</a>
                         </div>
                     </div>
                     <div class="category-card" data-category="sport">
@@ -339,7 +263,7 @@
                         <div class="category-info">
                             <h3>Германия</h3>
                             <p>Прочные и легкие модели, деловые и повседневные.</p>
-                            <a href="#" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog', country='ГЕРМАНИЯ', type=['Мужские', 'Женские', 'Унисекс']) }}" class="btn-outline">Смотреть все</a>
                         </div>
                     </div>
                 </div>
@@ -441,44 +365,32 @@
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-columns">
-                <div class="footer-column">
-                    <h3 class="logo">Очки & Пудра</h3>
-                    <p>Ваш источник лучших косметических средств и стильных очков.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-vk"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h4>Навигация</h4>
-                    <ul>
-                        <li><a href="#about">О нас</a></li>
-                        <li><a href="#cosmetics">Косметика</a></li>
-                        <li><a href="#glasses">Очки</a></li>
-                        <li><a href="#blog">Блог</a></li>
-                        <li><a href="#contact">Контакты</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Контакты</h4>
-                    <ul class="contact-info">
-                        <li><i class="fas fa-map-marker-alt"></i> Москва, Мясницкая ул., 13 строение 2</li>
-                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
-                        <li><i class="fas fa-envelope"></i> info@beautyvision.ru</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Beauty & Vision. Все права защищены.</p>
-            </div>
-        </div>
-    </footer>
+    {% include 'partials/footer.html' %}
 
-    <script src="script.js"></script>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <script>
+    document.addEventListener("click", function (e) {
+        if (e.target.classList.contains("btn-outline")) {
+            const button = e.target;
+            const id = button.dataset.id;
+            const title = button.dataset.title;
+            const price = parseFloat(button.dataset.price);
+
+            const cart = JSON.parse(localStorage.getItem("beautyVisionCart")) || {};
+
+            if (cart[id]) {
+                cart[id].quantity += 1;
+            } else {
+                cart[id] = { id, title, price, quantity: 1 };
+            }
+
+            localStorage.setItem("beautyVisionCart", JSON.stringify(cart));
+            alert(`Товар "${title}" добавлен в корзину`);
+        }
+    });
+
+    </script>
 </body>
 </html>

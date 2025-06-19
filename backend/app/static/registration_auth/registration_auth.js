@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const switchToRegister = document.querySelector('.switch-to-register');
     const switchToLogin = document.querySelector('.switch-to-login');
 
+
     const welcomeBlock = document.querySelector('.auth-welcome');
     const loginForm = document.querySelector('.login-form');
     const registerForm = document.querySelector('.register-form');
@@ -228,10 +229,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const loginFormElement = document.getElementById('login-form');
     const registerFormElement = document.getElementById('registration-form');
 
+
     loginFormElement.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        // Валидация телефона перед отправкой
+        // Валидация телефона
         const phonePattern = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
         if (!phonePattern.test(loginPhoneInput.value)) {
             loginPhoneError.textContent = 'Введите корректный номер телефона';
@@ -239,63 +241,92 @@ document.addEventListener('DOMContentLoaded', function () {
             loginPhoneInput.focus();
             return;
         }
+        loginPhoneError.textContent = '';
+        loginPhoneError.classList.remove('show');
 
-        // Здесь код для обработки входа
         const phone = loginPhoneInput.value;
         const password = document.getElementById('login-password').value;
 
-        console.log('Выполняется вход:', { phone, password });
-        // В реальном приложении здесь был бы запрос к серверу
-        alert('Форма входа отправлена успешно!');
-    });
-
-    registerFormElement.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        // Валидация телефона перед отправкой
-        const phonePattern = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
-        if (!phonePattern.test(registerPhoneInput.value)) {
-            registerPhoneError.textContent = 'Введите корректный номер телефона';
-            registerPhoneError.classList.add('show');
-            registerPhoneInput.focus();
-            return;
-        }
-
-        // Валидация паролей перед отправкой
-        if (passwordInput.value !== confirmPasswordInput.value) {
-            passwordError.textContent = 'Пароли не совпадают';
-            passwordError.classList.add('show');
-            confirmPasswordInput.focus();
-            return;
-        }
-
-        // Сбор данных формы
-        const formData = {
-            name: document.getElementById('register-name').value,
-            lastname: document.getElementById('register-lastname').value,
-            email: document.getElementById('register-email').value,
-            phone: registerPhoneInput.value,
-            birthdate: document.getElementById('register-birthdate').value,
-            city: document.getElementById('register-city').value,
-            address: document.getElementById('register-address').value,
-            password: passwordInput.value
-        };
-
-        fetch('/register', {
+        fetch('/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ phone, password })
         })
-        .then(res => res.json())
+        .then(response => response.json())
         .then(data => {
-            alert('Регистрация завершена!');
+            if (data.message) {
+                // Успешный вход — перенаправляем
+                window.location.href = '/account';
+            } else if (data.error) {
+                alert('Ошибка входа: ' + data.error);
+            }
         })
         .catch(err => {
-            alert('Ошибка регистрации: ' + err.message);
+            console.error('Ошибка при отправке запроса', err);
+            alert('Ошибка сети. Попробуйте позже.');
         });
-
-        console.log('Данные регистрации:', formData);
-        // В реальном приложении здесь был бы запрос к серверу
-        alert('Регистрация успешно завершена!');
     });
+
+
+    registerFormElement.addEventListener('submit', function (e) {
+    e.preventDefault();
+    console.log('Отправка формы регистрации');
+
+    const messageContainer = document.getElementById('register-message');
+    messageContainer.textContent = ''; // очистка перед новой попыткой
+    messageContainer.classList.remove('success');
+
+    // Валидация телефона перед отправкой
+    const phonePattern = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
+    const registerPhoneInput = document.getElementById('register-phone');
+    const registerPhoneError = document.getElementById('phone-error');
+    const passwordInput = document.getElementById('register-password');
+    const confirmPasswordInput = document.getElementById('register-confirm-password');
+    const passwordError = document.getElementById('password-error');
+
+    if (!phonePattern.test(registerPhoneInput.value)) {
+        registerPhoneError.textContent = 'Введите корректный номер телефона';
+        messageContainer.textContent = 'Введите корректный номер телефона';
+        registerPhoneError.classList.add('show');
+        registerPhoneInput.focus();
+        return;
+    }
+
+    if (passwordInput.value !== confirmPasswordInput.value) {
+        passwordError.textContent = 'Пароли не совпадают';
+        messageContainer.textContent = 'Пароли не совпадают';
+        passwordError.classList.add('show');
+        confirmPasswordInput.focus();
+        return;
+    }
+
+    // Формируем FormData из формы
+    const formData = new FormData(registerFormElement);
+
+    fetch('/register', {
+        method: 'POST',
+        body: formData // отправляем formData без указания Content-Type
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            messageContainer.textContent = data.message || 'Регистрация успешно завершена!';
+            messageContainer.classList.add('success');
+            setTimeout(() => {
+                window.location.href = data.redirect || '/account';
+            }, 2000);
+        } else {
+            messageContainer.textContent = data.error || 'Произошла ошибка регистрации';
+            messageContainer.classList.remove('success');
+        }
+    })
+    .catch(err => {
+        messageContainer.textContent = 'Ошибка регистрации: ' + err.message;
+        messageContainer.classList.remove('success');
+    });
+
+    console.log('Данные регистрации отправлены');
+});
 });

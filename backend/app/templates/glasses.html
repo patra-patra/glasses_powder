@@ -1,33 +1,33 @@
-﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Очки — Очки и Пудра</title>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="cart.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cart/cart.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <h1 class="logo"><a href="../index.html">Очки & Пудра</a></h1>
+            <h1 class="logo"><a href="{{ url_for('home') }}">Очки & Пудра</a></h1>
             <nav class="nav">
-                <input type="checkbox" id="nav-toggle" class="nav-toggle">
+                <input type="checkbox" id="nav-toggle" class="nav-toggle" />
                 <label for="nav-toggle" class="nav-toggle-label">
                     <span></span>
                 </label>
                 <ul>
-                    <li><a href="../index.html#about">О нас</a></li>
-                    <li><a href="../index.html#cosmetics">Косметика</a></li>
-                    <li><a href="../index.html#glasses">Очки</a></li>
-                    <li><a href="../index.html#bestsellers">Бестселлеры</a></li>
-                    <li><a href="../index.html#contact">Контакты</a></li>
+                    <li><a href="{{ url_for('home') }}#about">О нас</a></li>
+                    <li><a href="{{ url_for('home') }}#cosmetics">Косметика</a></li>
+                    <li><a href="{{ url_for('home') }}#glasses">Очки</a></li>
+                    <li><a href="{{ url_for('home') }}#bestsellers">Бестселлеры</a></li>
+                    <li><a href="{{ url_for('home') }}#contact">Контакты</a></li>
                     <li>
-                        <a href="cart.html" class="cart-link active" title="Корзина">
+                        <a href="{{ url_for('cart') }}" class="cart-link active" title="Корзина">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="cart-text">Корзина</span>
                         </a>
@@ -38,7 +38,7 @@
     </header>
 
     <main>
-
+        <!-- Контент страницы корзины -->
     </main>
 
     <footer class="footer">
@@ -57,17 +57,17 @@
                 <div class="footer-column">
                     <h4>Навигация</h4>
                     <ul>
-                        <li><a href="../index.html#about">О нас</a></li>
-                        <li><a href="../index.html#cosmetics">Косметика</a></li>
-                        <li><a href="../index.html#glasses">Очки</a></li>
-                        <li><a href="../index.html#blog">Блог</a></li>
-                        <li><a href="../index.html#contact">Контакты</a></li>
+                        <li><a href="{{ url_for('home') }}#about">О нас</a></li>
+                        <li><a href="{{ url_for('home') }}#cosmetics">Косметика</a></li>
+                        <li><a href="{{ url_for('home') }}#glasses">Очки</a></li>
+                        <li><a href="{{ url_for('home') }}#blog">Блог</a></li>
+                        <li><a href="{{ url_for('home') }}#contact">Контакты</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h4>Контакты</h4>
                     <ul class="contact-info">
-                        <li><i class="fas fa-map-marker-alt"></i>Москва, Мясницкая ул., 13 строение 2</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, Мясницкая ул., 13 строение 2</li>
                         <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
                         <li><i class="fas fa-envelope"></i> info@beautyvision.ru</li>
                     </ul>
@@ -79,6 +79,6 @@
         </div>
     </footer>
 
-    <script src="cart.js"></script>
+    <script src="{{ url_for('static', filename='cart/cart.js') }}"></script>
 </body>
 </html>

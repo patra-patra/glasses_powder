@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Вход и регистрация | Очки & Пудра</title>
+
+    <!-- Подключение стилей -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='registration_auth/registration_auth.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu_style.css') }}" />
+
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- Иконка сайта -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/sign.svg') }}" />
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <main class="auth-container">
+        <div class="auth-carousel">
+            <div class="carousel-slide active">
+                <div class="carousel-image" style="background-image: url('{{ url_for('static', filename='img/reg_auth/woman.jpg') }}')"></div>
+            </div>
+            <div class="carousel-slide">
+                <div class="carousel-image" style="background-image: url('{{ url_for('static', filename='img/reg_auth/shadows.jpg') }}')"></div>
+            </div>
+            <div class="carousel-slide">
+                <div class="carousel-image" style="background-image: url('{{ url_for('static', filename='img/reg_auth/woman2.jpg') }}')"></div>
+            </div>
+            <div class="carousel-dots">
+                <span class="carousel-dot active" data-slide="0"></span>
+                <span class="carousel-dot" data-slide="1"></span>
+                <span class="carousel-dot" data-slide="2"></span>
+            </div>
+        </div>
+
+        <div class="auth-content">
+            <div class="auth-welcome">
+                <h2>Погрузитесь в мир красоты</h2>
+                <p>Откройте для себя идеальные продукты для вашего неповторимого стиля. Присоединяйтесь к нам, чтобы получить доступ к эксклюзивным предложениям и персонализированным рекомендациям.</p>
+
+                <div class="auth-buttons">
+                    <button class="btn-primary login-btn">Войти</button>
+                    <button class="btn-secondary register-btn">Зарегистрироваться</button>
+                </div>
+            </div>
+
+            <div class="auth-forms">
+                <div class="login-form">
+                    <h3>Вход в аккаунт</h3>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label for="login-phone">Телефон</label>
+                            <input name="phone" type="tel" id="login-phone" placeholder="+7 (___) ___-__-__" required />
+                            <span class="form-error" id="login-phone-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Пароль</label>
+                            <input name="password" type="password" id="login-password" required />
+                        </div>
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox" id="remember-me" />
+                                <span>Запомнить меня</span>
+                            </label>
+                            <a href="#" class="forgot-password">Забыли пароль?</a>
+                        </div>
+                        <button type="submit" class="btn-primary">Войти</button>
+                    </form>
+                    <div class="form-footer">
+                        <p>Нет аккаунта? <a href="#" class="switch-to-register">Зарегистрироваться</a></p>
+                    </div>
+                </div>
+
+                <div class="register-form">
+                    <h3>Создание аккаунта</h3>
+                    <form id="registration-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="register-name">Имя</label>
+                                <input name="first_name" type="text" id="register-name" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="register-lastname">Фамилия</label>
+                                <input name="last_name" type="text" id="register-lastname" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="register-phone">Телефон</label>
+                            <input name="phone" type="tel" id="register-phone" placeholder="+7 (___) ___-__-__" required />
+                            <span class="form-error" id="phone-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="register-birthdate">Дата рождения</label>
+                            <input name="birthdate" type="date" id="register-birthdate" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="register-city">Город</label>
+                            <input name="city" type="text" id="register-city" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="register-address">Адрес</label>
+                            <input name="street" type="text" id="register-street" required />
+                            <textarea  id="register-address" rows="2" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="register-password">Пароль</label>
+                            <input name="password" type="password" id="register-password" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="register-confirm-password">Подтвердите пароль</label>
+                            <input name="password" type="password" id="register-confirm-password" required />
+                            <span class="form-error" id="password-error"></span>
+                        </div>
+
+                        <div class="form-agreement">
+                            <label class="agreement">
+                                <input type="checkbox" required />
+                                <span>Я согласен с <a href="#">условиями использования</a> и <a href="#">политикой конфиденциальности</a></span>
+                            </label>
+                        </div>
+
+                        <div id="register-message" class="form-message"></div>
+
+                        <button type="submit" class="btn-primary">Зарегистрироваться</button>
+                    </form>
+                    <div class="form-footer">
+                        <p>Уже есть аккаунт? <a href="#" class="switch-to-login">Войти</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+        {% include 'partials/footer.html' %}
+
+    <script src="{{ url_for('static', filename='registration_auth/registration_auth.js') }}"></script>
+    <script src="{{ url_for('static', filename='register.js') }}"></script>
+
+</body>
+</html>
