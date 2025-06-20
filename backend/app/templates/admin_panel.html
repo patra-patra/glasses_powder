@@ -26,11 +26,28 @@
 
     <main class="admin-main">
         <nav class="admin-categories">
-            <button class="category-tab active" data-category="все">Все</button>
-            <button class="category-tab" data-category="Очки">Очки</button>
-            <button class="category-tab" data-category="Косметика">Косметика</button>
-            <button class="category-tab" data-category="Уход">Уход</button>
-        </nav>
+    <ul class="admin-menu">
+        <li><a href="#" class="category-tab all-tab active" data-category="все">Все</a></li>
+        <li>
+            <a href="#" data-category="Очки">Очки</a>
+            <ul>
+                <li><a href="#" data-subcategory="Мужские">Мужские</a></li>
+                <li><a href="#" data-subcategory="Женские">Женские</a></li>
+                <li><a href="#" data-subcategory="Унисекс">Унисекс</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" data-category="Косметика">Косметика</a>
+            <ul>
+                <li><a href="#" data-subcategory="Товары для лица">Лицо</a></li>
+                <li><a href="#" data-subcategory="Товары для губ">Губы</a></li>
+                <li><a href="#" data-subcategory="Товары для бровей">Брови</a></li>
+                <li><a href="#" data-subcategory="Товары для глах">Глаза</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
 
         <div class="admin-products">
             <div class="product-grid">
@@ -56,24 +73,41 @@
     </main>
 
     <script>
-        // Фильтрация по категории
-        document.querySelectorAll('.category-tab').forEach(button => {
-            button.addEventListener('click', () => {
-                const category = button.dataset.category.toLowerCase();
-                document.querySelectorAll('.category-tab').forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
+// Основная категория
+const categoryLinks = document.querySelectorAll('[data-category]');
+const subcategoryLinks = document.querySelectorAll('[data-subcategory]');
 
-                document.querySelectorAll('.product-card-admin').forEach(card => {
-                    const productCategory = card.dataset.category.toLowerCase();
-                    if (category === 'все' || productCategory.includes(category)) {
-                        card.style.display = '';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
+categoryLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const category = link.dataset.category.toLowerCase();
+        document.querySelectorAll('.product-card-admin').forEach(card => {
+            const productCategory = card.dataset.category.toLowerCase();
+            if (category === 'все' || productCategory.includes(category)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
         });
-    </script>
+    });
+});
+
+subcategoryLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const subcategory = link.dataset.subcategory.toLowerCase();
+        document.querySelectorAll('.product-card-admin').forEach(card => {
+            const productCategory = card.dataset.category.toLowerCase();
+            if (productCategory.includes(subcategory)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+</script>
+
 
 </body>
 </html>

@@ -479,12 +479,33 @@ def is_admin():
 # Панель администратора
 @app.route('/admin')
 def admin_panel():
-    # if not is_admin():
-    #     return abort(403)
-
     products = Product.query.all()
     orders = Order.query.order_by(Order.created_at.desc()).all()
-    return render_template('admin_panel.html', products=products, orders=orders)
+
+    # Категории из БД
+    cosmetics_subcategories = db.session.query(Product.types).filter(
+        Product.types.in_([
+            'Товары для лица', 'Товары для губ', 'Товары для бровей', 'Товары для глах'
+        ])
+    ).distinct().all()
+
+    glasses_subcategories = db.session.query(Product.types).filter(
+        Product.types.in_([
+            'Мужские', 'Женские', 'Унисекс'
+        ])
+    ).distinct().all()
+
+    cosmetics_subcategories = [sub[0] for sub in cosmetics_subcategories]
+    glasses_subcategories = [sub[0] for sub in glasses_subcategories]
+
+    return render_template(
+        'admin_panel.html',
+        products=products,
+        orders=orders,
+        cosmetics_subcategories=cosmetics_subcategories,
+        glasses_subcategories=glasses_subcategories
+    )
+
 
 # Добавление товара (форма и обработка)
 @app.route('/admin/add_product', methods=['GET', 'POST'])
