@@ -2,6 +2,7 @@
     max-height: 200px; /* или другая высота под дизайн */
     overflow-y: auto;
     padding-right: 5px; /* чтобы не обрезалась полоса прокрутки */
+    overflow-x: hidden;
 }
 
 .category-main {
@@ -10,11 +11,10 @@
     padding: 80px 0 60px 0;
 }
 
-/* Íîâàÿ äâóõêîëîíî÷íàÿ ñòðóêòóðà */
 .category-layout {
     display: flex;
     gap: 30px;
-    align-items: flex-start; /* Ãàðàíòèðóåì âûðàâíèâàíèå ïî âåðõíåìó êðàþ */
+    align-items: flex-start;
 }
 
 .product-grid {
@@ -24,7 +24,6 @@
     margin-bottom: 40px;
 }
 
-/* Ñòèëè ñàéäáàðà ñ ôèëüòðàìè */
 .filter-sidebar {
     width: 280px;
     flex-shrink: 0;

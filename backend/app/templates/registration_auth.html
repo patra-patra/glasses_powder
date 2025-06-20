@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
     <!-- Иконка сайта -->
-    <link rel="shortcut icon" href="{{ url_for('static', filename='img/sign.svg') }}" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/sign.png') }}">
 </head>
 <body>
     {% include 'header.html' %}
@@ -112,7 +112,7 @@
 
                         <div class="form-group">
                             <label for="register-address">Адрес</label>
-                            <input name="street" type="text" id="register-street" required />
+                            <!--<input name="street" type="text" id="register-street" required />-->
                             <textarea  id="register-address" rows="2" required></textarea>
                         </div>
 
