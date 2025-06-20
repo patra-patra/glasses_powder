@@ -65,6 +65,7 @@ def account():
     return render_template('account.html', user=user, addresses=addresses, orders=orders, datetime=datetime)
 
 from flask import request, flash
+from datetime import timedelta
 
 @app.route('/repeat_order/<int:order_id>', methods=['POST'])
 def repeat_order(order_id):
@@ -78,27 +79,31 @@ def repeat_order(order_id):
         return redirect(url_for('account'))
 
     try:
-        # Пересчёт цены, если нет в старом заказе
+        # Пересчёт цены, если в старом заказе она отсутствует
         order_price = old_order.price
         if not order_price or order_price == 0:
             order_price = sum(item.price * item.quantity for item in old_order.items)
+
+        # Устанавливаем дату доставки: например, +2 дня от текущей
+        delivered_at = datetime.utcnow() + timedelta(days=2)
 
         new_order = Order(
             user_id=user_id,
             delivery_address_id=old_order.delivery_address_id,
             created_at=datetime.utcnow(),
+            delivered_at=delivered_at,
             status='новый',
             price=order_price
         )
         db.session.add(new_order)
-        db.session.flush()  # чтобы получить id нового заказа
+        db.session.flush()
 
         for item in old_order.items:
             new_item = OrderItem(
                 order_id=new_order.id,
                 product_id=item.product_id,
                 quantity=item.quantity,
-                price=int(item.price)  # если price float, привести к int
+                price=int(item.price)
             )
             db.session.add(new_item)
 
@@ -110,6 +115,8 @@ def repeat_order(order_id):
         flash('Ошибка при повторении заказа', 'error')
 
     return redirect(url_for('account'))
+
+
 
 
 @app.template_filter('sum')
@@ -280,16 +287,19 @@ import random
 
 @app.route('/create_order', methods=['POST'])
 def create_order():
-    cart = session.get('cart', {})
     user_id = session.get('user_id')
+    if not user_id:
+        flash("Пожалуйста, войдите в аккаунт, чтобы оформить заказ.")
+        return redirect(url_for('reg'))  # Или 'login', если есть такая страница
 
-    if not cart or not user_id:
-        flash("Корзина пуста или вы не вошли в аккаунт.")
-        return redirect(url_for('login'))
+    cart = session.get('cart', {})
+    if not cart:
+        flash("Ваша корзина пуста.")
+        return redirect(url_for('cart'))  # Можно на страницу корзины
 
     address = UserDeliveryAddress.query.filter_by(user_id=user_id).first()
     if not address:
-        flash("Укажите адрес доставки в профиле.")
+        flash("Пожалуйста, укажите адрес доставки в профиле.")
         return redirect(url_for('account'))
 
     now = datetime.now()
@@ -310,13 +320,9 @@ def create_order():
     for product_id_str, qty in cart.items():
         try:
             product_id = int(product_id_str)
-        except (ValueError, TypeError):
-            continue  # некорректный product_id
-
-        try:
             quantity = int(qty)
         except (ValueError, TypeError):
-            quantity = 0
+            continue
 
         if quantity <= 0:
             continue
@@ -341,7 +347,6 @@ def create_order():
     session.pop('cart', None)
     flash("Заказ успешно оформлен!")
     return redirect(url_for('account'))
-
 
 from flask import request, redirect, url_for, session
 
@@ -676,8 +681,6 @@ def search():
     products = products_query.limit(100).all()
 
     return render_template('partials/product_list.html', products=products)
-
-
 #=========Админ=============
 def is_admin():
     return session.get('user_id') == 1  # например, id 1 — админ
@@ -687,10 +690,11 @@ def is_admin():
 def admin_panel():
     products = Product.query.all()
     orders = Order.query.order_by(Order.created_at.desc()).all()
+
     # Категории из БД
     cosmetics_subcategories = db.session.query(Product.types).filter(
         Product.types.in_([
-            'Товары для лица', 'Товары для губ', 'Товары для бровей', 'Товары для глах'
+            'Товары для лица', 'Товары для губ', 'Товары для бровей', 'Товары для глаз'
         ])
     ).distinct().all()
 
@@ -710,6 +714,7 @@ def admin_panel():
         cosmetics_subcategories=cosmetics_subcategories,
         glasses_subcategories=glasses_subcategories
     )
+
 
 # Добавление товара (форма и обработка)
 @app.route('/admin/add_product', methods=['GET', 'POST'])
@@ -735,8 +740,6 @@ def add_product():
             types=types,
             photonum=photonum
         )
-        generate_discount(new_product)
-        db.session.add(new_product)
         db.session.add(new_product)
         db.session.commit()
         flash('Товар добавлен!', 'success')
@@ -778,6 +781,9 @@ def delete_product(product_id):
     flash('Товар удалён!', 'info')
     return redirect(url_for('admin_panel'))
 
+
+
+
 from flask import render_template
 
 import random
@@ -796,6 +802,9 @@ def product_page(product_id):
     recommended = sample(same_category_products, min(4, len(same_category_products)))
 
     return render_template('product.html', product=product, recommended=recommended)
+
+from flask import session, abort
+
 
 
 import random

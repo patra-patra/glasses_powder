@@ -26,11 +26,28 @@
 
     <main class="admin-main">
         <nav class="admin-categories">
-            <button class="category-tab active" data-category="все">Все</button>
-            <button class="category-tab" data-category="Очки">Очки</button>
-            <button class="category-tab" data-category="Косметика">Косметика</button>
-            <button class="category-tab" data-category="Уход">Уход</button>
-        </nav>
+    <ul class="admin-menu">
+        <li><a href="#" data-category="все">Все</a></li>
+        <li>
+            <a href="#" data-category="Очки">Очки</a>
+            <ul>
+                <li><a href="#" data-subcategory="Мужские">Мужские</a></li>
+                <li><a href="#" data-subcategory="Женские">Женские</a></li>
+                <li><a href="#" data-subcategory="Унисекс">Унисекс</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" data-category="Косметика">Косметика</a>
+            <ul>
+                <li><a href="#" data-subcategory="Товары для лица">Лицо</a></li>
+                <li><a href="#" data-subcategory="Товары для губ">Губы</a></li>
+                <li><a href="#" data-subcategory="Товары для бровей">Брови</a></li>
+                <li><a href="#" data-subcategory="Товары для глаз">Глаза</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
 
         <div class="admin-products">
             <div class="product-grid">
@@ -56,24 +73,53 @@
     </main>
 
     <script>
-        // Фильтрация по категории
-        document.querySelectorAll('.category-tab').forEach(button => {
-            button.addEventListener('click', () => {
-                const category = button.dataset.category.toLowerCase();
-                document.querySelectorAll('.category-tab').forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
+// Связь категорий с типами товаров из базы
+const categoryMap = {
+    'очки': ['мужские', 'женские', 'унисекс'],
+    'косметика': ['товары для лица', 'товары для губ', 'товары для бровей', 'товары для глах']
+};
 
-                document.querySelectorAll('.product-card-admin').forEach(card => {
-                    const productCategory = card.dataset.category.toLowerCase();
-                    if (category === 'все' || productCategory.includes(category)) {
-                        card.style.display = '';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
+// Основные ссылки на категории и подкатегории
+const categoryLinks = document.querySelectorAll('.admin-menu [data-category]');
+const subcategoryLinks = document.querySelectorAll('.admin-menu [data-subcategory]');
+
+// Обработка кликов по основным категориям
+categoryLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const category = link.dataset.category.toLowerCase();
+
+        document.querySelectorAll('.product-card-admin').forEach(card => {
+            const productCategory = card.dataset.category?.toLowerCase() || '';
+
+            if (category === 'все') {
+                card.style.display = '';
+            } else if (categoryMap[category]) {
+                // Проверка по списку подкатегорий
+                const matches = categoryMap[category].some(sub => productCategory.includes(sub));
+                card.style.display = matches ? '' : 'none';
+            } else {
+                // На случай, если категория без маппинга
+                card.style.display = productCategory.includes(category) ? '' : 'none';
+            }
         });
-    </script>
+    });
+});
+
+// Обработка кликов по подкатегориям
+subcategoryLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const subcategory = link.dataset.subcategory.toLowerCase();
+
+        document.querySelectorAll('.product-card-admin').forEach(card => {
+            const productCategory = card.dataset.category?.toLowerCase() || '';
+            card.style.display = productCategory.includes(subcategory) ? '' : 'none';
+        });
+    });
+});
+</script>
+
 
 </body>
 </html>

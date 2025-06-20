@@ -50,7 +50,7 @@
                             </li>
                             <li>
                                 <a href="#addresses" data-tab="addresses">
-                                    <i class="fas fa-map-marker-alt"></i> Адреса доставки
+                                    <i class="fas fa-map-marker-alt"></i> Адрес доставки
                                 </a>
                             </li>
                             <li>
@@ -237,56 +237,25 @@
                 </div>
 
                     <!-- Адреса -->
-                    <div class="tab-content" id="addresses">
-                        <div class="section-card">
-                            <div class="section-header">
-                                <h3>Мои адреса</h3>
-                                <button class="btn-primary" id="add-address-btn" type="button">Добавить адрес</button>
+                    <div class="address-list">
+                        {% if addresses %}
+                            <form method="POST" action="{{ url_for('update_default_address') }}">
+                                {% for address in addresses %}
+                                    <div class="address-item" data-address-id="{{ address.id }}">
+                                        <label>
+                                            <strong>Дом:</strong> {{ address.street }}, <strong>Город:</strong> {{ address.city }}
+                                        </label>
+                                        <div class="address-actions">
+                                        </div>
 
-                            </div>
-                            <form id="add-address-form" method="POST" action="{{ url_for('add_address') }}" class="hidden">
-                                <div class="form-group">
-                                    <label for="city">Город</label>
-                                    <input type="text" id="city" name="city" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="street">Улица</label>
-                                    <input type="text" id="street" name="street" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="default">Сделать адрес основным</label>
-                                    <input type="checkbox" id="default" name="default" value="1">
-                                </div>
-                                <div class="form-actions">
-                                    <button type="submit" class="btn-primary">Сохранить</button>
-                                    <button type="button" class="btn-secondary" id="cancel-add-address">Отмена</button>
-                                </div>
+                                    </div>
+                                {% endfor %}
                             </form>
-                            <div class="address-list">
-                                {% if addresses %}
-                                    <form method="POST" action="{{ url_for('update_default_address') }}">
-                                        {% for address in addresses %}
-                                            <div class="address-item">
-                                                <label>
-                                                    <input type="radio" name="default_address" value="{{ address.id }}" {% if address.default %}checked{% endif %}>
-                                                    <strong>Дом:</strong> {{ address.street }}, <strong>Город:</strong> {{ address.city }}
-                                                </label>
-                                                <div class="address-actions">
-                                                    <button class="btn-outline" type="button">Редактировать</button>
-                                                    <button class="btn-secondary" type="button">Удалить</button>
-                                                </div>
-                                            </div>
-                                        {% endfor %}
-                                        <button type="submit" class="btn-primary">Сохранить основной адрес</button>
-                                    </form>
-                                {% else %}
-                                    <p>У вас пока нет сохранённых адресов.</p>
-                                {% endif %}
-                            </div>
-
-
-                        </div>
+                        {% else %}
+                            <p>У вас пока нет сохранённых адресов.</p>
+                        {% endif %}
                     </div>
+
 
                     <!-- Настройки -->
                     <div class="tab-content" id="settings">
@@ -339,6 +308,34 @@
     });
 
 
+
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const editButtons = document.querySelectorAll('.edit-address-btn');
+        const cancelButtons = document.querySelectorAll('.cancel-edit-btn');
+
+        editButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                console.log('Edit clicked');
+                const addressItem = button.closest('.address-item');
+                const editForm = addressItem.querySelector('.edit-address-form');
+                editForm.classList.remove('hidden');
+                button.style.display = 'none';
+            });
+        });
+
+        cancelButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                console.log('Cancel clicked');
+                const editForm = button.closest('.edit-address-form');
+                const addressItem = editForm.closest('.address-item');
+                editForm.classList.add('hidden');
+                addressItem.querySelector('.edit-address-btn').style.display = 'inline-block';
+            });
+        });
+    });
 
     </script>
 </body>
