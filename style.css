@@ -667,8 +667,8 @@ section {
     }
 
 .product-list {
-    display: flex;
-    overflow-x: auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 25px;
     padding: 10px 0;
     scroll-snap-type: x mandatory;
@@ -1023,6 +1023,93 @@ section {
     }
 }
 
+/* Изменение поведения выпадающих меню в адаптивной версии */
+@media (max-width: 768px) {
+    /* Отключаем hover-поведение подменю на мобильных */
+    .nav li:hover .sub-menu {
+        display: none; /* Отменяем автоматическое появление подменю при наведении */
+    }
+    
+    /* Добавляем класс для видимости подменю при клике */
+    .nav li.show-submenu .sub-menu {
+        display: block;
+        position: static; /* Меню выпадает внутри родителя, а не наверх */
+        box-shadow: none;
+        background-color: #f9f9f9;
+        padding-left: 20px; /* Отступ слева для визуальной иерархии */
+    }
+    
+    /* Стили для стрелок-индикаторов */
+    .has-submenu::after {
+        content: '\f078'; /* Иконка стрелки вниз из Font Awesome */
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        margin-left: 5px;
+        transition: transform 0.3s ease;
+    }
+    
+    .show-submenu .has-submenu::after {
+        transform: rotate(180deg); /* Поворачиваем стрелку при открытом меню */
+    }
+    
+    /* Дополнительные стили для мобильной навигации */
+    .nav ul {
+        width: 100%;
+    }
+    
+    .nav li {
+        width: 100%;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .nav li > a {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 15px;
+    }
+    
+    .sub-menu {
+        width: 100%;
+        position: static; /* Подменю открывается в потоке, а не наверх */
+        transform: none;
+        opacity: 1;
+    }
+    
+    .sub-menu li {
+        border-bottom: none;
+    }
+    
+    .sub-menu a {
+        padding: 10px 15px;
+    }
+}
+
+/* Полностью скрываем выпадающие подменю в адаптивной версии */
+@media (max-width: 768px) {
+    /* Скрываем все выпадающие меню в мобильной версии */
+    .nav .sub-menu {
+        display: none !important; /* Важно перезаписать все другие стили */
+    }
+    
+    /* Убираем индикаторы выпадающих меню */
+    .has-submenu::after {
+        display: none;
+    }
+    
+    /* Убираем hover-эффекты для меню на мобильных */
+    .nav a:hover::after {
+        width: 0;
+    }
+    
+    /* Делаем ссылки с подменю активными (чтобы они вели на страницу категории) */
+    .has-submenu {
+        pointer-events: auto;
+        cursor: pointer;
+    }
+}
+
 @media (max-width: 576px) {
     .hero h2 {
         font-size: 2rem;
@@ -1246,13 +1333,11 @@ section {
     overflow: hidden;
     box-shadow: var(--shadow-md);
     transition: var(--transition);
-    height: 100%;
+    position: relative;
     display: flex;
     flex-direction: column;
-    position: relative;
-    flex: 0 0 300px;
-    scroll-snap-align: start;
-    margin-bottom: 20px;
+    height: 300px; /* Фиксированная высота для всех карточек */
+    width: 100%;
 }
 
 .cosmetics-section .category-card {
@@ -1268,18 +1353,19 @@ section {
     box-shadow: var(--shadow-lg);
 }
 
+/* Фиксируем размер изображения */
 .category-image {
     position: relative;
-    height: 250px;
+    height: 100%; /* Занимает всю высоту карточки */
     overflow: hidden;
 }
 
-    .category-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.7s ease;
-    }
+.category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
 
 .category-card:hover .category-image img {
     transform: scale(1.05);
@@ -1300,13 +1386,13 @@ section {
     opacity: 0.5;
 }
 
+/* Стили для информационного блока */
 .category-info {
-    padding: 25px 20px;
+    padding: 20px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex-grow: 1;
     justify-content: space-between;
     background: linear-gradient(to bottom, rgba(255,255,255,0.9), white);
     position: absolute;
@@ -1399,31 +1485,52 @@ section {
 }
 
 /* Адаптивность для карточек категорий */
+@media (max-width: 1200px) {
+    .product-list {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    
+    .category-card {
+        height: 280px;
+    }
+}
+
 @media (max-width: 992px) {
     .product-list {
         grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .category-card {
+        height: 260px; /* Немного меньше на планшетах */
     }
 }
 
 @media (max-width: 768px) {
     .category-card {
-        flex: 0 0 250px;
+        height: 240px; /* Ещё меньше на маленьких планшетах */
+    }
+    
+    .category-info h3 {
+        font-size: 1.2rem;
     }
 }
 
 @media (max-width: 576px) {
     .product-list {
         grid-template-columns: 1fr;
+        gap: 15px;
     }
-
+    
     .category-card {
-        max-width: 320px;
-        margin: 0 auto;
-        flex: 0 0 230px;
+        height: 220px; /* Самый маленький размер на мобильных */
+        max-width: 100%;
+        margin: 0 0 15px;
     }
-
+    
     .category-info {
-        transform: translateY(55%);
+        transform: translateY(60%); /* Показываем чуть больше информации на мобильных */
     }
 }
 
@@ -1576,6 +1683,8 @@ section {
     border-bottom: 3px solid var(--secondary-color);
     display: flex;
     flex-direction: column;
+    min-height: 0; /* Удаляем минимальную высоту если она была */
+    height: auto; /* Высота по содержимому */
 }
 
 .promo-card-large {
@@ -1633,11 +1742,14 @@ section {
 }
 
 .promo-content {
-    padding: 30px;
+    padding: 25px 30px 25px; /* Уменьшаем отступ снизу */
     position: relative;
     z-index: 2;
     flex: 1;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Выравниваем содержимое к верху */
 }
 
 .promo-badge {
@@ -1654,13 +1766,13 @@ section {
 
 .promo-card h3 {
     font-size: 1.6rem;
-    margin-bottom: 15px;
+    margin-bottom: 10px; /* Уменьшаем нижний отступ заголовка */
     color: var(--text-color);
 }
 
 .promo-card p {
     color: var(--text-light);
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* Уменьшаем отступ после параграфа */
     font-size: 1.05rem;
 }
 
@@ -1668,7 +1780,7 @@ section {
     font-size: 0.9rem;
     color: var(--text-light);
     font-weight: 500;
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* Уменьшаем отступ после даты */
     display: flex;
     align-items: center;
 }
@@ -1682,7 +1794,9 @@ section {
     }
 
 .promo-card .btn-outline {
-    padding: 10px 25px;
+    padding: 10px 20px;
+    align-self: flex-start; /* Кнопка прижата к левому краю */
+    margin-top: auto; /* При необходимости кнопка будет прижата к низу содержимого */
 }
 
 /* Адаптивность для секции с акциями */
@@ -1702,6 +1816,48 @@ section {
             border-top-right-radius: var(--radius-lg);
             border-bottom-left-radius: 0; /* Убираем скругление снизу на мобильных */
         }
+}
+
+/* Исправление пустого пространства в адаптивной версии */
+@media (max-width: 992px) {
+    .promo-card {
+        height: auto; /* Высота по содержимому */
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .promo-card-large {
+        flex-direction: column;
+    }
+    
+    .promo-content {
+        padding: 20px 25px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .promo-badge {
+        margin-bottom: 10px;
+    }
+    
+    .promo-card h3 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+    }
+    
+    .promo-card p {
+        margin-bottom: 15px;
+    }
+    
+    .promo-date {
+        margin-bottom: 20px;
+    }
+    
+    /* Контейнер для кнопки с автоматическим отступом сверху */
+    .promo-actions {
+        margin-top: 10px; /* Небольшой фиксированный отступ */
+        width: 100%;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1741,5 +1897,33 @@ section {
 
     .promo-card:not(.promo-card-large) .promo-image {
         height: 160px;
+    }
+}
+
+/* Мобильные устройства - еще более компактное отображение */
+@media (max-width: 576px) {
+    .promo-content {
+        padding: 15px 20px; /* Еще меньше отступов */
+    }
+    
+    .promo-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 8px;
+    }
+    
+    .promo-card p {
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+    }
+    
+    .promo-date {
+        margin-bottom: 15px;
+        font-size: 0.85rem;
+    }
+    
+    .promo-card .btn-outline {
+        width: 100%; /* На мобильных кнопка на всю ширину */
+        padding: 8px 15px;
+        text-align: center;
     }
 }

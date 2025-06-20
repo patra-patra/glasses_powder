@@ -346,4 +346,54 @@ document.addEventListener("DOMContentLoaded", function () {
         // Запуск автоматической смены слайдов
         startHeroCarousel();
     }
+
+    // Функционал адаптивного меню с подменю
+    const menuItems = document.querySelectorAll('.nav .has-submenu');
+    
+    menuItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            // Предотвращаем переход по ссылке при клике на пункт с подменю
+            if (window.innerWidth <= 992) { // Только для мобильного режима
+                e.preventDefault();
+                
+                // Если кликнули на уже открытый пункт - закрываем его
+                if (this.classList.contains('active')) {
+                    this.classList.remove('active');
+                    const submenu = this.nextElementSibling || this.querySelector('.sub-menu');
+                    if (submenu) {
+                        submenu.style.maxHeight = '0';
+                    }
+                } else {
+                    // Закрываем все ранее открытые подменю
+                    document.querySelectorAll('.nav .has-submenu.active').forEach(activeItem => {
+                        activeItem.classList.remove('active');
+                        const openSubmenu = activeItem.nextElementSibling || activeItem.querySelector('.sub-menu');
+                        if (openSubmenu) {
+                            openSubmenu.style.maxHeight = '0';
+                        }
+                    });
+                    
+                    // Открываем текущее подменю
+                    this.classList.add('active');
+                    const submenu = this.nextElementSibling || this.querySelector('.sub-menu');
+                    if (submenu) {
+                        submenu.style.maxHeight = submenu.scrollHeight + 'px';
+                    }
+                }
+            }
+        });
+    });
+    
+    // Обработчик изменения размера окна
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 992) {
+            // Сбрасываем стили подменю при переходе на десктоп версию
+            document.querySelectorAll('.sub-menu').forEach(submenu => {
+                submenu.style.maxHeight = '';
+            });
+            document.querySelectorAll('.has-submenu.active').forEach(item => {
+                item.classList.remove('active');
+            });
+        }
+    });
 });
