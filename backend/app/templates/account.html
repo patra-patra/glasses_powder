@@ -43,24 +43,24 @@
                             <li>
                                 <a href="#orders" data-tab="orders">
                                     <i class="fas fa-shopping-bag"></i> Мои заказы
-                                    <span class="badge">2</span>
+                                    <!--<span class="badge">2</span>-->
                                 </a>
                             </li>
-                            <li>
+                            <!--<li>
                                 <a href="#favorites" data-tab="favorites">
                                     <i class="fas fa-heart"></i> Избранное
                                 </a>
-                            </li>
+                            </li>-->
                             <li>
                                 <a href="#addresses" data-tab="addresses">
                                     <i class="fas fa-map-marker-alt"></i> Адреса доставки
                                 </a>
                             </li>
-                            <li>
+                            <!--<li>
                                 <a href="#settings" data-tab="settings">
                                     <i class="fas fa-cog"></i> Настройки
                                 </a>
-                            </li>
+                            </li>-->
                             <li class="logout">
                                 <a href="{{ url_for('logout') }}">
                                     <i class="fas fa-sign-out-alt"></i> Выйти
@@ -215,48 +215,7 @@
                 </div>
 
                 <!-- Избранное -->
-                <div class="tab-content" id="favorites">
-                    <div class="section-card">
-                        <div class="section-header">
-                            <h3>Избранные товары</h3>
-                        </div>
-                        <div class="favorites-grid">
-                            <div class="product-card" data-category="glasses">
-                                <div class="product-image">
-                                    <img src="{{ url_for('static', filename='img/glasses.jpg') }}" alt="Очки Sunmaster">
-                                    <button class="favorite-btn active">
-                                        <i class="fas fa-heart"></i>
-                                    </button>
-                                </div>
-                                <div class="product-info">
-                                    <h3>Очки Sunmaster</h3>
-                                    <p>Премиальные очки с поляризованными линзами</p>
-                                    <div class="product-bottom">
-                                        <div class="product-price">4 990 ₽</div>
-                                        <button class="btn-outline">В корзину</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="product-card" data-category="cosmetics">
-                                <div class="product-image">
-                                    <img src="{{ url_for('static', filename='img/category/eye.jpg') }}" alt="Палетка теней">
-                                    <button class="favorite-btn active">
-                                        <i class="fas fa-heart"></i>
-                                    </button>
-                                </div>
-                                <div class="product-info">
-                                    <h3>Палетка теней Shimmer</h3>
-                                    <p>Палетка из 12 оттенков с шиммером</p>
-                                    <div class="product-bottom">
-                                        <div class="product-price">2 490 ₽</div>
-                                        <button class="btn-outline">В корзину</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
                     <!-- Адреса -->
                     <div class="tab-content" id="addresses">
                         <div class="section-card">
@@ -277,28 +236,6 @@
                               </div>
                               {% endfor %}
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Настройки -->
-                    <div class="tab-content" id="settings">
-                        <div class="section-card">
-                            <div class="section-header">
-                                <h3>Настройки уведомлений</h3>
-                            </div>
-                            <form class="settings-form">
-                                <div class="form-group checkbox">
-                                    <input type="checkbox" id="promo-emails" checked>
-                                    <label for="promo-emails">Получать промо-рассылки на email</label>
-                                </div>
-                                <div class="form-group checkbox">
-                                    <input type="checkbox" id="sms-alerts">
-                                    <label for="sms-alerts">Получать SMS-уведомления о заказах</label>
-                                </div>
-                                <div class="form-actions">
-                                    <button type="submit" class="btn-primary">Сохранить настройки</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div> <!-- .account-content -->
