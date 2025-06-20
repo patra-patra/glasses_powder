@@ -12,6 +12,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from backend.app.models.utils import get_all_products
 from backend.app.models.product import db, init_db, User, Product, Order, UserDeliveryAddress, OrderItem, ContactMessage
+from flask import abort
 
 # Путь к БД
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -468,6 +469,87 @@ def search():
     products = products_query.limit(100).all()
 
     return render_template('partials/_product_list.html', products=products)
+
+
+
+#=========Админ=============
+def is_admin():
+    return session.get('user_id') == 1  # например, id 1 — админ
+
+# Панель администратора
+@app.route('/admin')
+def admin_panel():
+    # if not is_admin():
+    #     return abort(403)
+
+    products = Product.query.all()
+    orders = Order.query.order_by(Order.created_at.desc()).all()
+    return render_template('admin_panel.html', products=products, orders=orders)
+
+# Добавление товара (форма и обработка)
+@app.route('/admin/add_product', methods=['GET', 'POST'])
+def add_product():
+    # if not is_admin():
+    #     return abort(403)
+
+    if request.method == 'POST':
+        name = request.form['name']
+        price = float(request.form['price'])
+        desc = request.form['desc']
+        brand = request.form['brand']
+        country = request.form['country']
+        types = request.form['types']
+        photonum = request.form['photonum']
+
+        new_product = Product(
+            name=name,
+            price=price,
+            desc=desc,
+            brand=brand,
+            country=country,
+            types=types,
+            photonum=photonum
+        )
+        db.session.add(new_product)
+        db.session.commit()
+        flash('Товар добавлен!', 'success')
+        return redirect(url_for('admin_panel'))
+
+    return render_template('add_product.html')
+
+# Редактирование товара
+@app.route('/admin/edit_product/<int:product_id>', methods=['GET', 'POST'])
+def edit_product(product_id):
+    # if not is_admin():
+    #     return abort(403)
+
+    product = Product.query.get_or_404(product_id)
+
+    if request.method == 'POST':
+        product.name = request.form['name']
+        product.price = float(request.form['price'])
+        product.desc = request.form['desc']
+        product.brand = request.form['brand']
+        product.country = request.form['country']
+        product.types = request.form['types']
+        product.photonum = request.form['photonum']
+        db.session.commit()
+        flash('Товар обновлён!', 'success')
+        return redirect(url_for('admin_panel'))
+
+    return render_template('edit_product.html', product=product)
+
+# Удаление товара
+@app.route('/admin/delete_product/<int:product_id>', methods=['POST'])
+def delete_product(product_id):
+    # if not is_admin():
+    #     return abort(403)
+
+    product = Product.query.get_or_404(product_id)
+    db.session.delete(product)
+    db.session.commit()
+    flash('Товар удалён!', 'info')
+    return redirect(url_for('admin_panel'))
 
 # Запуск приложения
 if __name__ == '__main__':

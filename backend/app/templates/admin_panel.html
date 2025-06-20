@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ - панель</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='product-cards.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu_style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/sign.png') }}">
+</head>
+<body>
+
+    <header class="admin-header">
+        <h1>Админ-панель</h1>
+        <div class="admin-buttons">
+            <a href="{{ url_for('add_product') }}" class="btn btn-primary">Добавить товар</a>
+            <a href="{{ url_for('logout') }}" class="btn btn-secondary">Выйти</a>
+        </div>
+    </header>
+
+    <main class="admin-main">
+        <nav class="admin-categories">
+            <button class="category-tab active" data-category="все">Все</button>
+            <button class="category-tab" data-category="Очки">Очки</button>
+            <button class="category-tab" data-category="Косметика">Косметика</button>
+            <button class="category-tab" data-category="Уход">Уход</button>
+        </nav>
+
+        <div class="admin-products">
+            <div class="product-grid">
+                {% for product in products %}
+                <div class="product-card-admin" data-category="{{ product.types }}">
+                    <div class="product-image-admin">
+                        <img src="{{ url_for('static', filename='img/products/' ~ product.photonum) }}" alt="{{ product.name }}">
+                    </div>
+                    <div class="product-info-admin">
+                        <h3>{{ product.name }}</h3>
+                        <p>{{ product.price }} ₽</p>
+                        <div class="admin-actions">
+                            <a href="{{ url_for('edit_product', product_id=product.id) }}" title="Редактировать"><i class="fas fa-edit"></i></a>
+                            <form action="{{ url_for('delete_product', product_id=product.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" onclick="return confirm('Удалить товар?')" title="Удалить"><i class="fas fa-trash-alt"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Фильтрация по категории
+        document.querySelectorAll('.category-tab').forEach(button => {
+            button.addEventListener('click', () => {
+                const category = button.dataset.category.toLowerCase();
+                document.querySelectorAll('.category-tab').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                document.querySelectorAll('.product-card-admin').forEach(card => {
+                    const productCategory = card.dataset.category.toLowerCase();
+                    if (category === 'все' || productCategory.includes(category)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

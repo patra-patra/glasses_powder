@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать товар</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='product-cards.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu_style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/sign.png') }}">
+</head>
+<body>
+
+    <header class="admin-header">
+        <h1>Редактировать товар</h1>
+        <div class="admin-buttons">
+            <a href="{{ url_for('admin_panel') }}" class="btn btn-secondary">Назад</a>
+        </div>
+    </header>
+
+    <main class="admin-main">
+        <div class="form-container">
+            <form method="POST" class="edit-form">
+                <div class="form-group">
+                    <label for="name">Название</label>
+                    <input type="text" id="name" name="name" value="{{ product.name }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Цена</label>
+                    <input type="number" id="price" name="price" value="{{ product.price }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="brand">Бренд</label>
+                    <input type="text" id="brand" name="brand" value="{{ product.brand }}" required>
+                </div>
+
+              <div class="form-group">
+    <label for="desc">Описание</label>
+    <textarea id="desc" name="desc" rows="4" class="form-textarea" placeholder="Введите подробное описание товара...">{{ product.desc }}</textarea>
+</div>
+
+    <div class="form-group">
+    <label for="country">Страна</label>
+    <input type="text" id="country" name="country" value="{{ product.country }}">
+    </div>
+
+    <div class="form-group">
+    <label for="photonum">Фото (название файла)</label>
+    <input type="text" id="photonum" name="photonum" value="{{ product.photonum }}">
+    </div>
+
+
+                <div class="form-group">
+                    <label for="types">Категория</label>
+                    <input type="text" id="types" name="types" value="{{ product.types }}" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>
