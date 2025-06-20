@@ -11,6 +11,9 @@
             </label>
             <ul>
                 <li>
+                    <a href="{{ url_for('catalog', category='cosmetics') }}" class="has-submenu">Каталог</a>
+                </li>
+                <li>
                     <a href="{{ url_for('catalog', category='cosmetics') }}" class="has-submenu">Косметика</a>
                     <ul class="sub-menu">
                         <li><a href="{{ url_for('catalog', type='Товары для лица', category='cosmetics') }}">Лицо</a></li>
@@ -35,28 +38,27 @@
                     </a>
                 </li>
                 <!--<li>
-                    <a class="cart-link" id="searchMenu" title="Поиск">-->
-                        <!--<i class="fas fa-search"></i>-->
-                        <!--<span class="cart-text">Поиск</span>-->
-                    <!--</a>
-                </li>-->
-
+        <a class="cart-link" id="searchMenu" title="Поиск">-->
+                <!--<i class="fas fa-search"></i>-->
+                <!--<span class="cart-text">Поиск</span>-->
+                <!--</a>
+    </li>-->
                 {% if session.user_id %}
-                    <!-- Пользователь вошел -->
-                    <li>
-                        <a href="{{ url_for('account') }}" class="cart-link" id="searchMenu3" title="Кабинет">
-                            <i class="fas fa-user"></i>
-                            <span class="cart-text">Кабинет</span>
-                        </a>
-                    </li>
+                <!-- Пользователь вошел -->
+                <li>
+                    <a href="{{ url_for('account') }}" class="cart-link" id="searchMenu3" title="Кабинет">
+                        <i class="fas fa-user"></i>
+                        <span class="cart-text">Кабинет</span>
+                    </a>
+                </li>
                 {% else %}
-                    <!-- Гость -->
-                    <li>
-                        <a href="{{ url_for('reg') }}" class="cart-link" id="searchMenu2" title="Вход/регистрация">
-                            <i class="fas fa-user"></i>
-                            <span class="cart-text">Вход / регистрация</span>
-                        </a>
-                    </li>
+                <!-- Гость -->
+                <li>
+                    <a href="{{ url_for('reg') }}" class="cart-link" id="searchMenu2" title="Вход/регистрация">
+                        <i class="fas fa-user"></i>
+                        <span class="cart-text">Вход / регистрация</span>
+                    </a>
+                </li>
                 {% endif %}
 
             </ul>

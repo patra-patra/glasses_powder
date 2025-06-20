@@ -25,6 +25,7 @@ li:hover ul {
     visibility: hidden;
     transform: translateY(10px);
     transition: all 0.3s ease;
+    flex-direction: column;
 }
 
 /* Показываем подменю при наведении */
