@@ -7,7 +7,7 @@ from flask_login import UserMixin
 
 db = SQLAlchemy()
 
-class Product(db.Model, UserMixin):
+class Product(db.Model):
     __tablename__ = "products"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -24,6 +24,8 @@ class Product(db.Model, UserMixin):
     massa = db.Column(db.String, default="no")
     struct = db.Column(db.String, default="no")
     use = db.Column(db.String, default="no")
+    old_price = db.Column(db.Float)
+    discount_percent = db.Column(db.Integer)
 
     def to_dict(self):
         return {

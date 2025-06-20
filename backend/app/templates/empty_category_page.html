@@ -24,17 +24,24 @@
                     <h3>Фильтры</h3>
 
                     <form method="GET" action="{{ url_for('catalog') }}">
-                        <input type="hidden" name="type" value="{{ current_type }}">
+                        <input type="hidden" name="type" value="{{ current_type if current_type else '' }}">
+                        <input type="hidden" name="category" value="{{ category if category else '' }}">
+
                         <div class="filter-group">
                             <h4>Бренд</h4>
                             <div class="filter-options brand-scroll">
                                 {% for brand in brands %}
-                                    <label class="filter-checkbox">
-                                        <input type="checkbox" name="brand" value="{{ brand }}"
-                                               {% if brand in selected_brands %}checked{% endif %}>
-                                        <span>{{ brand }}</span>
-                                    </label>
+                                  <label>
+                                    <input
+                                      type="checkbox"
+                                      name="brand"
+                                      value="{{ brand }}"
+                                      {% if brand in selected_brands %}checked{% endif %}
+                                    >
+                                    {{ brand }}
+                                  </label>
                                 {% endfor %}
+
                             </div>
                         </div>
 
@@ -64,6 +71,7 @@
                         <button type="submit" class="filter-btn">Применить</button>
                         <a href="{{ url_for('catalog') }}" class="btn btn-primary reset-filters">Сбросить фильтры</a>
                     </form>
+
                 </aside>
 
 
@@ -99,39 +107,73 @@
                     </div>
 
 
-                    <div id="product-results">
-                        <div class="product-grid">
-                            {% for product in products.items %}
-                                <div class="product-card" data-category="{{ product.category }}">
-                                    <div class="product-image">
-                                        <img src="{{ url_for('static', filename='img/products/' ~ product.photonum) }}" alt="{{ product.name }}">
-                                        <div class="product-badges">
-                                            {% if loop.index == 1 %}
-                                                <span class="product-badge">Новинка</span>
-                                            {% elif loop.index == 2 %}
-                                                <span class="product-badge">Хит</span>
-                                            {% endif %}
+
+
+                    <div id="products-container">
+                        {% if products.items %}
+                            <div id="product-results">
+                                <div class="product-grid">
+                                    {% for product in products.items %}
+                                        <div class="product-card" data-category="{{ product.category }}">
+                                            <div class="product-image">
+                                                <a href="{{ url_for('product_page', product_id=product.id) }}">
+                                                    <img src="{{ url_for('static', filename='img/products/' ~ product.photonum) }}" alt="{{ product.name }}">
+                                                </a>
+                                            </div>
+                                            <div class="product-info">
+                                                <h3>
+                                                  <a href="{{ url_for('product_page', product_id=product.id) }}">{{ product.name }}</a>
+                                                </h3>
+
+                                                {% if product.desc != 'no' %}
+                                                    <p>{{ product.desc[:120] }}{% if product.desc|length > 120 %}...{% endif %}</p>
+                                                {% endif %}
+                                                <div class="product-bottom">
+                                                    <div class="product-price">{{ product.price }} ₽</div>
+                                                    <form action="{{ url_for('add_to_cart') }}" method="POST">
+                                                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                                                        <button type="submit">В корзину</button>
+                                                    </form>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="product-info">
-                                        <h3>{{ product.name }}</h3>
-                                        {% if product.desc != 'no' %}
-                                            <p>{{ product.desc[:120] }}{% if product.desc|length > 120 %}...{% endif %}</p>
-                                        {% endif %}
-                                        <div class="product-bottom">
-                                            <div class="product-price">{{ '{:,.0f}'.format(product.price | int).replace(',', ' ') }} ₽</div>
-                                            <form action="{{ url_for('add_to_cart') }}" method="POST">
-                                              <input type="hidden" name="product_id" value="{{ product.id }}">
-                                              <button type="submit">В корзину</button>
-                                            </form>
-                                        </div>
-                                    </div>
+                                    {% endfor %}
+
                                 </div>
+                            </div>
+                        {% else %}
+                            <div class="empty-message" style="grid-column: 1 / -1;">
+                                <i class="fas fa-box-open"></i>
+                                <p>Извините, пока таких товаров мы еще не привезли, но они уже в пути</p>
+                            </div>
+                        {% endif %}
+
+                        {% set args = request.args.to_dict(flat=False) %}
+
+                        <div class="pagination">
+                            {% if products.has_prev %}
+                                {% set new_args = args.copy() %}
+                                {% set _ = new_args.__setitem__('page', [products.prev_num]) %}
+                                <a href="{{ url_for('catalog', **new_args) }}">&laquo;</a>
+                            {% endif %}
+
+                            {% for p in range(1, products.pages + 1) %}
+                                {% set new_args = args.copy() %}
+                                {% set _ = new_args.__setitem__('page', [p]) %}
+                                <a href="{{ url_for('catalog', **new_args) }}" class="{% if p == products.page %}active{% endif %}">{{ p }}</a>
                             {% endfor %}
+
+                            {% if products.has_next %}
+                                {% set new_args = args.copy() %}
+                                {% set _ = new_args.__setitem__('page', [products.next_num]) %}
+                                <a href="{{ url_for('catalog', **new_args) }}">&raquo;</a>
+                            {% endif %}
                         </div>
+
+
                     </div>
 
-
+<!--
 
                     <div class="pagination">
                         {% if products.has_prev %}
@@ -147,7 +189,7 @@
                         {% if products.has_next %}
                             <a href="{{ url_for('catalog', page=products.next_num, type=current_type, brand=selected_brands, country=selected_country, min_price=min_price, max_price=max_price, sort=request.args.get('sort'), order=request.args.get('order')) }}">&raquo;</a>
                         {% endif %}
-                    </div>
+                    </div>-->
 
 
 
@@ -156,9 +198,10 @@
         </div>
     </main>
 
-        {% include 'partials/footer.html' %}
+    {% include 'partials/footer.html' %}
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='category_page/empty.js') }}"></script>
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         const searchInput = document.getElementById("search-input");
@@ -174,7 +217,7 @@
                 fetch(`/search?q=${encodeURIComponent(query)}`)
                     .then(response => response.text())
                     .then(html => {
-                        productResults.innerHTML = html;
+                        document.querySelector('.product-grid').innerHTML = html;
                     });
             }, 300); // задержка для избежания спама-запросов
         });
@@ -210,7 +253,7 @@
     });
     </script>
 
-    <script>
+<!--    <script>
     document.querySelectorAll('.sort-btn').forEach(button => {
         button.addEventListener('click', () => {
             const urlParams = new URLSearchParams(window.location.search);
@@ -225,7 +268,7 @@
             window.location.search = urlParams.toString();
         });
     });
-    </script>
+    </script>-->
 
     <script>
     function onCountryChange() {
@@ -264,6 +307,23 @@
     });
 
     </script>
+    <script>
+    document.querySelectorAll('.sort-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            urlParams.set('sort', button.getAttribute('data-sort'));
+            urlParams.set('order', button.getAttribute('data-order'));
+            urlParams.set('page', 1); // Сбросить пагинацию
+
+            window.location.search = urlParams.toString(); // Просто перезагрузить страницу
+        });
+    });
+
+    </script>
+
+
+
 
 </body>
 </html>
