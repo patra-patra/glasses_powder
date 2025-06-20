@@ -416,7 +416,7 @@ def register():
         print("Зарегистрирован:", user.id)
 
         # Возвращаем JSON
-        return jsonify({'success': True, 'redirect': url_for('account')})
+        return redirect(url_for('account'))
 
     except Exception as e:
         print("Ошибка при регистрации:", e)
