@@ -572,6 +572,19 @@ def delete_product(product_id):
     flash('Товар удалён!', 'info')
     return redirect(url_for('admin_panel'))
 
+
+
+#===========Карточка товара==========
+from flask import render_template
+
+@app.route('/product/<int:product_id>')
+def product_detail(product_id):
+    product = Product.query.get_or_404(product_id)
+    return render_template('product.html', product=product)
+
+
+
+
 # Запуск приложения
 if __name__ == '__main__':
     app.run(debug=True)
