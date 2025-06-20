@@ -12,6 +12,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from backend.app.models.utils import get_all_products
 from backend.app.models.product import db, init_db, User, Product, Order, UserDeliveryAddress, OrderItem, ContactMessage
+from flask import abort
 
 # Путь к БД
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -52,7 +53,8 @@ def account():
     if not user_id:
         return redirect(url_for('reg'))
 
-    user = db.session.get(User, user_id)
+    user = db.session.get(User, session['user_id'])
+
     if not user:
         return redirect(url_for('reg'))
 
@@ -60,7 +62,55 @@ def account():
     addresses = UserDeliveryAddress.query.filter_by(user_id=user.id).all()
 
     # 👇 Добавляем orders
-    return render_template('account.html', user=user, addresses=addresses, orders=orders)
+    return render_template('account.html', user=user, addresses=addresses, orders=orders, datetime=datetime)
+
+from flask import request, flash
+
+@app.route('/repeat_order/<int:order_id>', methods=['POST'])
+def repeat_order(order_id):
+    user_id = session.get('user_id')
+    if not user_id:
+        return redirect(url_for('reg'))
+
+    old_order = Order.query.filter_by(id=order_id, user_id=user_id).first()
+    if not old_order:
+        flash('Заказ не найден', 'error')
+        return redirect(url_for('account'))
+
+    try:
+        # Пересчёт цены, если нет в старом заказе
+        order_price = old_order.price
+        if not order_price or order_price == 0:
+            order_price = sum(item.price * item.quantity for item in old_order.items)
+
+        new_order = Order(
+            user_id=user_id,
+            delivery_address_id=old_order.delivery_address_id,
+            created_at=datetime.utcnow(),
+            status='новый',
+            price=order_price
+        )
+        db.session.add(new_order)
+        db.session.flush()  # чтобы получить id нового заказа
+
+        for item in old_order.items:
+            new_item = OrderItem(
+                order_id=new_order.id,
+                product_id=item.product_id,
+                quantity=item.quantity,
+                price=int(item.price)  # если price float, привести к int
+            )
+            db.session.add(new_item)
+
+        db.session.commit()
+        flash('Заказ успешно повторён', 'success')
+    except Exception as e:
+        db.session.rollback()
+        print(f"Ошибка при повторении заказа: {e}")
+        flash('Ошибка при повторении заказа', 'error')
+
+    return redirect(url_for('account'))
+
 
 @app.template_filter('sum')
 def sum_total(items, attribute='price', multiply='quantity'):
@@ -70,6 +120,38 @@ def sum_total(items, attribute='price', multiply='quantity'):
         qty = getattr(item, multiply) or 0
         total += value * qty
     return total
+from flask import request, redirect, url_for, flash, session
+
+from flask import request, redirect, url_for, flash
+from flask_login import login_required, current_user
+
+@app.route('/update_default_address', methods=['POST'])
+@login_required
+def update_default_address():
+    user_id = current_user.id
+    default_address_id = request.form.get('default_address')
+
+    if not default_address_id:
+        flash("Выберите адрес для установки по умолчанию.", "error")
+        return redirect(url_for('account'))
+
+    # Сбросить у всех адресов дефолт в 0
+    UserDeliveryAddress.query.filter_by(user_id=user_id).update({'default': 0})
+
+    # Установить выбранный адрес дефолтным (1)
+    address = UserDeliveryAddress.query.filter_by(id=default_address_id, user_id=user_id).first()
+    if not address:
+        flash("Адрес не найден.", "error")
+        return redirect(url_for('account'))
+
+    address.default = 1
+    db.session.commit()
+
+    flash("Основной адрес успешно обновлен.", "success")
+    return redirect(url_for('account'))
+
+
+
 
 @app.route('/catalog/<category>')
 def catalog_category(category):
@@ -179,12 +261,12 @@ def create_order():
 
     if not cart or not user_id:
         flash("Корзина пуста или вы не вошли в аккаунт.")
-        return redirect(url_for('cart'))
+        return redirect(url_for('login'))
 
     address = UserDeliveryAddress.query.filter_by(user_id=user_id).first()
     if not address:
         flash("Укажите адрес доставки в профиле.")
-        return redirect(url_for('cart'))
+        return redirect(url_for('account'))
 
     now = datetime.now()
     delivered_at = now + timedelta(days=random.randint(1, 30))
@@ -199,22 +281,31 @@ def create_order():
     db.session.add(order)
     db.session.flush()  # чтобы получить order.id
 
+    total_price = 0.0
+
     for product_id_str, qty in cart.items():
         product_id = int(product_id_str)
         product = Product.query.get(product_id)
         if not product:
-            continue  # на всякий случай пропускаем отсутствующий продукт
+            continue
+
+        item_price = product.price or 0
+        total_price += item_price * qty
+
         db.session.add(OrderItem(
             order_id=order.id,
             product_id=product_id,
             quantity=qty,
-            price=product.price or 0  # если вдруг price None, ставим 0
+            price=item_price
         ))
+
+    order.price = total_price
 
     db.session.commit()
     session.pop('cart', None)
     flash("Заказ успешно оформлен!")
     return redirect(url_for('account'))
+
 
 from flask import request, redirect, url_for, session
 
@@ -297,7 +388,6 @@ def logout():
 
 @app.route('/login', methods=['POST'])
 def login():
-    # Если это fetch с JSON, читаем через request.get_json()
     data = request.get_json()
     if not data:
         return jsonify({'error': 'Нет данных'}), 400
@@ -309,9 +399,14 @@ def login():
     if not user or user.password != password:
         return jsonify({'error': 'Неверный телефон или пароль'}), 401
 
-    # Успешный вход — сохраняем user_id в сессию
     session['user_id'] = user.id
-    return jsonify({'message': 'Успешный вход'})
+
+    # Проверка, админ ли пользователь
+    if user.id == 1:  # или user.is_admin, если есть такое поле
+        return jsonify({'message': 'Админ вошёл', 'redirect': url_for('admin_panel')})
+    else:
+        return jsonify({'message': 'Успешный вход', 'redirect': url_for('account')})
+
 
 @app.route('/update_profile', methods=['POST'])
 def update_profile():
@@ -319,7 +414,7 @@ def update_profile():
         return jsonify({'error': 'Пользователь не авторизован'}), 401
 
     data = request.get_json()
-    user = User.query.get(session['user_id'])
+    user = db.session.get(User, session['user_id'])
 
     user.first_name = data.get('first_name', user.first_name)
     user.last_name = data.get('last_name', user.last_name)
@@ -357,6 +452,49 @@ def change_password():
 
     return jsonify({'message': 'Пароль успешно обновлён'}), 200
 
+
+from flask import request, redirect, url_for, flash
+from flask_login import current_user, login_required
+
+
+from flask import Flask, request, redirect, url_for, flash
+from flask_login import current_user, login_required
+
+@app.route('/add_address', methods=['POST'])
+@login_required
+def add_address():
+    city = request.form.get('city')
+    street = request.form.get('street')
+    default = request.form.get('default') == '1'
+    print("Form data:", request.form)
+    if not city or not street:
+        flash('Пожалуйста, заполните все обязательные поля')
+        return redirect(url_for('account'))  # или куда у вас личный кабинет
+
+    # Если новый адрес нужно сделать основным, сбросим у остальных default=0
+    if default:
+        for addr in current_user.delivery_addresses:
+            addr.default = 0
+
+    new_address = UserDeliveryAddress(
+        user_id=current_user.id,
+        city=city,
+        street=street,
+        default=1 if default else 0
+    )
+
+    db.session.add(new_address)
+    db.session.commit()
+
+    print("Form data:", request.form)
+    print("Current user ID:", current_user.id)
+
+    flash('Адрес успешно добавлен')
+    return redirect(url_for('account'))  # или куда хотите
+
+
+
+
 @app.route('/catalog')
 def catalog():
     selected_brands = request.args.getlist('brand')
@@ -376,7 +514,7 @@ def catalog():
     # Если выбрана категория
     if category == 'cosmetics':
         query = query.filter(Product.types.in_([
-            'Товары для лица', 'Товары для губ', 'Товары для бровей', 'Товары для глах'
+            'Товары для лица', 'Товары для губ', 'Товары для бровей', 'Товары для глаз'
         ]))
     elif category == 'glasses':
         query = query.filter(Product.types.in_([
@@ -468,6 +606,85 @@ def search():
     products = products_query.limit(100).all()
 
     return render_template('partials/_product_list.html', products=products)
+
+#=========Админ=============
+def is_admin():
+    return session.get('user_id') == 1  # например, id 1 — админ
+
+# Панель администратора
+@app.route('/admin')
+def admin_panel():
+    if not is_admin():
+        return abort(403)
+
+    products = Product.query.all()
+    orders = Order.query.order_by(Order.created_at.desc()).all()
+    return render_template('admin_panel.html', products=products, orders=orders)
+
+# Добавление товара (форма и обработка)
+@app.route('/admin/add_product', methods=['GET', 'POST'])
+def add_product():
+    # if not is_admin():
+    #     return abort(403)
+
+    if request.method == 'POST':
+        name = request.form['name']
+        price = float(request.form['price'])
+        desc = request.form['desc']
+        brand = request.form['brand']
+        country = request.form['country']
+        types = request.form['types']
+        photonum = request.form['photonum']
+
+        new_product = Product(
+            name=name,
+            price=price,
+            desc=desc,
+            brand=brand,
+            country=country,
+            types=types,
+            photonum=photonum
+        )
+        db.session.add(new_product)
+        db.session.commit()
+        flash('Товар добавлен!', 'success')
+        return redirect(url_for('admin_panel'))
+
+    return render_template('add_product.html')
+
+# Редактирование товара
+@app.route('/admin/edit_product/<int:product_id>', methods=['GET', 'POST'])
+def edit_product(product_id):
+    # if not is_admin():
+    #     return abort(403)
+
+    product = Product.query.get_or_404(product_id)
+
+    if request.method == 'POST':
+        product.name = request.form['name']
+        product.price = float(request.form['price'])
+        product.desc = request.form['desc']
+        product.brand = request.form['brand']
+        product.country = request.form['country']
+        product.types = request.form['types']
+        product.photonum = request.form['photonum']
+        db.session.commit()
+        flash('Товар обновлён!', 'success')
+        return redirect(url_for('admin_panel'))
+
+    return render_template('edit_product.html', product=product)
+
+# Удаление товара
+@app.route('/admin/delete_product/<int:product_id>', methods=['POST'])
+def delete_product(product_id):
+    # if not is_admin():
+    #     return abort(403)
+
+    product = Product.query.get_or_404(product_id)
+    db.session.delete(product)
+    db.session.commit()
+    flash('Товар удалён!', 'info')
+    return redirect(url_for('admin_panel'))
 
 # Запуск приложения
 if __name__ == '__main__':

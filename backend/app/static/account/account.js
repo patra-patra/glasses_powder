@@ -33,7 +33,10 @@ document.addEventListener("DOMContentLoaded", function () {
             const form = document.getElementById(formId);
             const dataBlock = form.previousElementSibling;
 
-            dataBlock.style.display = "none";
+            if (dataBlock) {
+              dataBlock.style.display = "none";
+            }
+
             form.classList.remove("hidden");
         });
     });
@@ -92,7 +95,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const dataBlock = form.previousElementSibling;
 
             form.classList.add("hidden");
-            dataBlock.style.display = "block";
+            if (dataBlock) {
+              dataBlock.style.display = "block";
+            }
         });
     });
 
@@ -115,57 +120,53 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Обработка отправки форм
-    const forms = document.querySelectorAll("form");
-    forms.forEach((form) => {
-        form.addEventListener("submit", async function (e) {
-            e.preventDefault();
+    // Обработка профиля
+    const profileForm = document.getElementById("profile-form");
+    if (profileForm) {
+      profileForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
 
-            const formData = {
-                first_name: document.getElementById("firstname").value,
-                last_name: document.getElementById("lastname").value,
-                phone: document.getElementById("phone").value,
-                birthdate: document.getElementById("birthdate").value,
-            };
+        const formData = {
+          first_name: document.getElementById("firstname").value,
+          last_name: document.getElementById("lastname").value,
+          phone: document.getElementById("phone").value,
+          birthdate: document.getElementById("birthdate").value,
+        };
 
-            try {
-                const response = await fetch("/update_profile", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(formData),
-                });
+        try {
+          const response = await fetch("/update_profile", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          });
 
-                let result = {};
-                try {
-                    result = await response.json();
-                } catch {
-                    // JSON не удалось распарсить — оставляем пустым
-                }
+          const result = await response.json();
 
-                if (response.ok) {
-                    showNotification("Данные успешно сохранены!");
+          if (response.ok) {
+            showNotification("Данные успешно сохранены!");
+            // скрыть форму и показать блок с данными
+            const dataBlock = profileForm.previousElementSibling;
+            profileForm.classList.add("hidden");
+            if (dataBlock) dataBlock.style.display = "block";
 
-                    // Обновление данных на странице
-                    const dataBlock = form.previousElementSibling;
-                    form.classList.add("hidden");
-                    dataBlock.style.display = "block";
-
-                    dataBlock.querySelector(".data-row:nth-child(1) .data-value").textContent = formData.first_name;
-                    dataBlock.querySelector(".data-row:nth-child(2) .data-value").textContent = formData.last_name;
-                    dataBlock.querySelector(".data-row:nth-child(3) .data-value").textContent = formData.phone;
-                    dataBlock.querySelector(".data-row:nth-child(4) .data-value").textContent = formData.birthdate;
-                } else {
-                    showNotification("Ошибка: " + (result.error || "Не удалось обновить данные"));
-                }
-            } catch (err) {
-                console.error(err);
-                // Показываем ошибку, если она есть, иначе общее сообщение
-                showNotification("Произошла ошибка: " + (err.message || "Ошибка сети"));
+            if (dataBlock) {
+              dataBlock.querySelector(".data-row:nth-child(1) .data-value").textContent = formData.first_name;
+              dataBlock.querySelector(".data-row:nth-child(2) .data-value").textContent = formData.last_name;
+              dataBlock.querySelector(".data-row:nth-child(3) .data-value").textContent = formData.phone;
+              dataBlock.querySelector(".data-row:nth-child(4) .data-value").textContent = formData.birthdate;
             }
-        });
-    });
+          } else {
+            showNotification("Ошибка: " + (result.error || "Не удалось обновить данные"));
+          }
+        } catch (err) {
+          console.error(err);
+          showNotification("Произошла ошибка: " + (err.message || "Ошибка сети"));
+        }
+      });
+    }
+
+// Обработка адреса — просто пусть отправляется как обычно (без JS)
+
 
     // Функция для отображения уведомления
     function showNotification(message) {

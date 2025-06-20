@@ -249,20 +249,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
         fetch('/login', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phone, password })
         })
-        .then(response => response.json())
+        .then(res => res.json())
         .then(data => {
-            if (data.message) {
-                // Успешный вход — перенаправляем
-                window.location.href = '/account';
-            } else if (data.error) {
-                alert('Ошибка входа: ' + data.error);
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            } else {
+                alert(data.error || data.message);
             }
         })
+
         .catch(err => {
             console.error('Ошибка при отправке запроса', err);
             alert('Ошибка сети. Попробуйте позже.');

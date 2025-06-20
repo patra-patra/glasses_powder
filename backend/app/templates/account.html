@@ -43,12 +43,9 @@
                             <li>
                                 <a href="#orders" data-tab="orders">
                                     <i class="fas fa-shopping-bag"></i> Мои заказы
-                                    <span class="badge">2</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#favorites" data-tab="favorites">
-                                    <i class="fas fa-heart"></i> Избранное
+                                    {% if orders|length > 0 %}
+                                        <span class="badge">{{ orders|length }}</span>
+                                    {% endif %}
                                 </a>
                             </li>
                             <li>
@@ -161,49 +158,74 @@
                                     <div class="order-header">
                                         <div class="order-info">
                                             <div class="order-number">Заказ №{{ order.id }}</div>
-                                            <div class="order-date">{{ order.created_at.strftime('%d.%m.%Y') }}</div>
+                                                <div class="order-date">Дата заказа: {{ order.created_at.strftime('%d.%m.%Y') }}</div>
+                                                <div class="delivery-date">Дата доставки: {{ order.delivered_at.strftime('%d.%m.%Y') if order.delivered_at else 'Не указана' }}</div>
+                                                <pre>{{ order.address }}</pre>
+                                                {% if order.delivery_address %}
+                                                    <div class="order-address">
+                                                        <strong>Адрес доставки:</strong>
+                                                        {{ order.delivery_address.street }}, {{ order.delivery_address.city }}
+                                                    </div>
+                                                {% endif %}
+
+
+
                                         </div>
-                                        <div class="order-status {{ 'completed' if order.status == 'доставлен' else 'processing' }}">
-                                            <span>{{ order.status.capitalize() }}</span>
+                                        {% set now = datetime.utcnow() %}
+                                        {% set is_delivered = order.delivered_at and order.delivered_at <= now %}
+                                        <div class="order-status {{ 'completed' if is_delivered else 'processing' }}">
+                                            <span>{{ 'Доставлен' if is_delivered else order.status.capitalize() }}</span>
                                         </div>
+
                                         <div class="order-price">
-                                            {% set total_price = 0 %}
-                                            {% for item in order.items %}
+                                            {% if order.price %}
+                                              <div class="order-price">{{ order.price }} ₽</div>
+                                            {% else %}
+                                              {% set total_price = 0 %}
+                                              {% for item in order.items %}
                                                 {% set item_price = item.price or 0 %}
                                                 {% set item_qty = item.quantity or 0 %}
                                                 {% set total_price = total_price + (item_price * item_qty) %}
-                                            {% endfor %}
-
-
-                                            <div class="order-price">{{ total_price }} ₽</div>
+                                              {% endfor %}
+                                              <div class="order-price">{{ total_price }} ₽</div>
+                                            {% endif %}
 
                                         </div>
                                     </div>
 
                                     <div class="order-products">
                                         {% for item in order.items %}
+                                            {% set item_price = item.price if item.price else (item.product.price if item.product.price else 0) %}
                                             <div class="order-product">
-                                                <img src="{% if item.product.url %}
-                                                            {{ item.product.url }}
+                                                <img src="{% if item.product.photonum %}
+                                                              {{ url_for('static', filename='img/products/' ~ item.product.photonum) }}
                                                           {% else %}
-                                                            {{ url_for('static', filename='img/products/' ~ item.product.photonum) }}
+                                                              {{ url_for('static', filename='img/products/no-image.jpg') }}
                                                           {% endif %}"
                                                      alt="{{ item.product.name }}">
+
+
                                                 <div class="product-details">
                                                     <h4>{{ item.product.name }}</h4>
                                                     {% if item.product.desc != 'no' %}
                                                         <p>{{ item.product.desc[:120] }}{% if item.product.desc|length > 120 %}...{% endif %}</p>
                                                     {% endif %}
                                                     <div class="product-qty">Количество: {{ item.quantity }}</div>
+                                                    <div class="product-price">
+                                                        {{ item.quantity }} × {{ item_price }} ₽ = <strong>{{ item_price * item.quantity }} ₽</strong>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         {% endfor %}
+
                                     </div>
 
 
                                     <div class="order-actions">
-                                        <button class="btn-outline">Подробнее</button>
-                                        <button class="btn-primary">Повторить заказ</button>
+                                        <form method="POST" action="{{ url_for('repeat_order', order_id=order.id) }}">
+                                            <button type="submit" class="btn-primary">Повторить заказ</button>
+                                        </form>
                                     </div>
                                 </div>
                             {% else %}
@@ -214,69 +236,55 @@
                     </div>
                 </div>
 
-                <!-- Избранное -->
-                <div class="tab-content" id="favorites">
-                    <div class="section-card">
-                        <div class="section-header">
-                            <h3>Избранные товары</h3>
-                        </div>
-                        <div class="favorites-grid">
-                            <div class="product-card" data-category="glasses">
-                                <div class="product-image">
-                                    <img src="{{ url_for('static', filename='img/glasses.jpg') }}" alt="Очки Sunmaster">
-                                    <button class="favorite-btn active">
-                                        <i class="fas fa-heart"></i>
-                                    </button>
-                                </div>
-                                <div class="product-info">
-                                    <h3>Очки Sunmaster</h3>
-                                    <p>Премиальные очки с поляризованными линзами</p>
-                                    <div class="product-bottom">
-                                        <div class="product-price">4 990 ₽</div>
-                                        <button class="btn-outline">В корзину</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="product-card" data-category="cosmetics">
-                                <div class="product-image">
-                                    <img src="{{ url_for('static', filename='img/category/eye.jpg') }}" alt="Палетка теней">
-                                    <button class="favorite-btn active">
-                                        <i class="fas fa-heart"></i>
-                                    </button>
-                                </div>
-                                <div class="product-info">
-                                    <h3>Палетка теней Shimmer</h3>
-                                    <p>Палетка из 12 оттенков с шиммером</p>
-                                    <div class="product-bottom">
-                                        <div class="product-price">2 490 ₽</div>
-                                        <button class="btn-outline">В корзину</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                     <!-- Адреса -->
                     <div class="tab-content" id="addresses">
                         <div class="section-card">
                             <div class="section-header">
                                 <h3>Мои адреса</h3>
-                                <button class="btn-primary">Добавить адрес</button>
+                                <button class="btn-primary" id="add-address-btn" type="button">Добавить адрес</button>
+
                             </div>
-                            <div class="address-list">
-                              {% for address in addresses %}
-                              <div class="address-item">
-                                <p><strong>Дом:</strong> {{ address.street }}</p>
-                                <p><strong>Город:</strong> {{ address.city }}</p>
-                                <p><strong>Индекс:</strong> {{ address.postal_code }}</p>
-                                <div class="address-actions">
-                                  <button class="btn-outline">Редактировать</button>
-                                  <button class="btn-secondary">Удалить</button>
+                            <form id="add-address-form" method="POST" action="{{ url_for('add_address') }}" class="hidden">
+                                <div class="form-group">
+                                    <label for="city">Город</label>
+                                    <input type="text" id="city" name="city" required>
                                 </div>
-                              </div>
-                              {% endfor %}
+                                <div class="form-group">
+                                    <label for="street">Улица</label>
+                                    <input type="text" id="street" name="street" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="default">Сделать адрес основным</label>
+                                    <input type="checkbox" id="default" name="default" value="1">
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-primary">Сохранить</button>
+                                    <button type="button" class="btn-secondary" id="cancel-add-address">Отмена</button>
+                                </div>
+                            </form>
+                            <div class="address-list">
+                                {% if addresses %}
+                                    <form method="POST" action="{{ url_for('update_default_address') }}">
+                                        {% for address in addresses %}
+                                            <div class="address-item">
+                                                <label>
+                                                    <input type="radio" name="default_address" value="{{ address.id }}" {% if address.default %}checked{% endif %}>
+                                                    <strong>Дом:</strong> {{ address.street }}, <strong>Город:</strong> {{ address.city }}
+                                                </label>
+                                                <div class="address-actions">
+                                                    <button class="btn-outline" type="button">Редактировать</button>
+                                                    <button class="btn-secondary" type="button">Удалить</button>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                        <button type="submit" class="btn-primary">Сохранить основной адрес</button>
+                                    </form>
+                                {% else %}
+                                    <p>У вас пока нет сохранённых адресов.</p>
+                                {% endif %}
                             </div>
+
+
                         </div>
                     </div>
 
@@ -311,6 +319,28 @@
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     <script src="{{ url_for('static', filename='account/account.js') }}"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const addAddressBtn = document.getElementById('add-address-btn');
+      const addAddressForm = document.getElementById('add-address-form');
+      const cancelAddAddressBtn = document.getElementById('cancel-add-address');
+
+      addAddressBtn.addEventListener('click', () => {
+        addAddressForm.classList.remove('hidden');
+      });
+
+      cancelAddAddressBtn.addEventListener('click', () => {
+        addAddressForm.classList.add('hidden');
+        addAddressForm.reset();
+      });
+
+      addAddressForm.addEventListener('submit', () => {
+      });
+    });
+
+
+
+    </script>
 </body>
 </html>
 
