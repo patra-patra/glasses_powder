@@ -2,6 +2,7 @@ import os
 import sys
 import re
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+from flask_login import login_required
 from flask_sqlalchemy import SQLAlchemy
 from flask import session  # ← это для сессии
 import random
@@ -583,6 +584,41 @@ def product_detail(product_id):
     return render_template('product.html', product=product)
 
 
+#==========Повторить заказ==========
+@app.route('/repeat_order/<int:order_id>', methods=['POST'])
+def repeat_order(order_id):
+    user_id = session.get('user_id')
+    if not user_id:
+        flash("Вы не авторизованы.", "error")
+        return redirect(url_for('reg'))
+
+    original_order = Order.query.get_or_404(order_id)
+
+    if original_order.user_id != user_id:
+        flash("Вы не можете повторить чужой заказ.", "error")
+        return redirect(url_for('account'))
+
+    new_order = Order(
+        user_id=user_id,
+        delivery_address_id=original_order.delivery_address_id,
+        created_at=datetime.utcnow(),
+        delivered_at=datetime.utcnow() + timedelta(days=random.randint(1, 10)),
+        status='в пути'
+    )
+    db.session.add(new_order)
+    db.session.flush()
+
+    for item in original_order.items:
+        db.session.add(OrderItem(
+            order_id=new_order.id,
+            product_id=item.product_id,
+            quantity=item.quantity,
+            price=item.price
+        ))
+
+    db.session.commit()
+    flash("Заказ успешно повторён!", "success")
+    return redirect(url_for('account'))
 
 
 # Запуск приложения

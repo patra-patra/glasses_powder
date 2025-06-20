@@ -14,6 +14,16 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/sign.png') }}">
 </head>
 <body>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
     {% include 'header.html' %}
 
     <main class="account-main">
@@ -202,8 +212,10 @@
 
 
                                     <div class="order-actions">
-                                        <button class="btn-outline">Подробнее</button>
-                                        <button class="btn-primary">Повторить заказ</button>
+                                        <form method="post" action="{{ url_for('repeat_order', order_id=order.id) }}">
+                                            <button type="submit" class="btn-primary">Повторить заказ</button>
+                                        </form>
+
                                     </div>
                                 </div>
                             {% else %}
@@ -215,24 +227,20 @@
                 </div>
 
                 <!-- Избранное -->
-               
+
                     <!-- Адреса -->
                     <div class="tab-content" id="addresses">
                         <div class="section-card">
                             <div class="section-header">
-                                <h3>Мои адреса</h3>
-                                <button class="btn-primary">Добавить адрес</button>
+                                <h3>Мой адрес</h3>
                             </div>
                             <div class="address-list">
+
                               {% for address in addresses %}
                               <div class="address-item">
                                 <p><strong>Дом:</strong> {{ address.street }}</p>
                                 <p><strong>Город:</strong> {{ address.city }}</p>
                                 <p><strong>Индекс:</strong> {{ address.postal_code }}</p>
-                                <div class="address-actions">
-                                  <button class="btn-outline">Редактировать</button>
-                                  <button class="btn-secondary">Удалить</button>
-                                </div>
                               </div>
                               {% endfor %}
                             </div>
