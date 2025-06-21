@@ -11,7 +11,7 @@
             </label>
             <ul>
                 <li>
-                    <a href="{{ url_for('catalog', category='cosmetics') }}" class="has-submenu">Каталог</a>
+                    <a href="{{ url_for('catalog') }}" class="has-submenu">Каталог</a>
                 </li>
                 <li>
                     <a href="{{ url_for('catalog', category='cosmetics') }}" class="has-submenu">Косметика</a>
@@ -34,8 +34,10 @@
                 <li>
                     <a href="{{ url_for('cart') }}" class="cart-link" title="Корзина">
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-text">Корзина</span>
+                        <span class="cart-text">Корзина{% if g.cart_quantity > 0 %} ({{ g.cart_quantity }}){% endif %}</span>
                     </a>
+
+
                 </li>
                 <!--<li>
         <a class="cart-link" id="searchMenu" title="Поиск">-->
@@ -64,13 +66,5 @@
             </ul>
         </nav>
 
-        <div class="search-block" id="searchBlock">
-            <form class="search-form">
-                <input type="text" placeholder="Поиск товаров..." class="search-input">
-                <button type="submit" class="search-button">
-                    <i class="fas fa-search"></i>
-                </button>
-            </form>
-        </div>
     </div>
 </header>

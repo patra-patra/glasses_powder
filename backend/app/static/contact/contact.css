@@ -1,4 +1,4 @@
-﻿﻿    /* Основные стили страницы контактов */
+﻿  /* Основные стили страницы контактов */
 .contact-page {
     padding: 120px 0 60px;
 }
@@ -27,10 +27,8 @@
 
 /* Контактная информация */
 .contact-info {
-    background-color: white;
     padding: 30px;
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
     flex: 1; /* Чтобы блок растягивался и заполнял доступное пространство */
 }
 
@@ -72,7 +70,44 @@
         .contact-item a:hover {
             color: var(--primary-color);
         }
+.nav ul {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
 
+.nav a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    position: relative;
+    padding: 5px 0;
+}
+
+    .nav a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        transition: var(--transition);
+    }
+
+    .nav a:hover::after {
+        width: 100%;
+    }
+
+.nav-toggle {
+    display: none;
+}
+
+.nav-toggle-label {
+    display: none;
+}
 /* Социальные сети в контактах */
 .contact-info .social-links {
     margin-top: 15px;

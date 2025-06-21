@@ -1,3 +1,4 @@
+<script>
 document.addEventListener("DOMContentLoaded", function () {
     const cartItemsContainer = document.getElementById("cart-items");
     const cartEmptyMessage = document.querySelector(".cart-empty");
@@ -6,12 +7,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const checkoutButton = document.getElementById("checkout");
 
     function getCart() {
-        //const cart = localStorage.getItem("beautyVisionCart");
+        const cart = localStorage.getItem("beautyVisionCart");
         return cart ? JSON.parse(cart) : {};
     }
 
     function saveCart(cart) {
-        //localStorage.setItem("beautyVisionCart", JSON.stringify(cart));
+        localStorage.setItem("beautyVisionCart", JSON.stringify(cart));
     }
 
     function formatPrice(price) {
@@ -21,11 +22,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return price.toLocaleString("ru-RU") + " ₽";
     }
 
-
     function renderCart() {
         const cart = getCart();
         const items = Object.values(cart);
-
         cartItemsContainer.innerHTML = "";
 
         if (items.length === 0) {
@@ -58,39 +57,41 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         totalPriceElement.textContent = formatPrice(totalPrice);
-        checkoutButton.disabled = items.length === 0;
-    }
-
-    function updateQuantity(id, change) {
-        const cart = getCart();
-        if (cart[id]) {
-            cart[id].quantity += change;
-            if (cart[id].quantity <= 0) {
-                delete cart[id];
-            }
-            saveCart(cart);
-            renderCart();
-        }
     }
 
     cartItemsContainer.addEventListener("click", function (event) {
-        const target = event.target;
+        const button = event.target;
+        const id = button.dataset.id;
+        if (!id) return;
 
-        if (target.classList.contains("decrease")) {
-            updateQuantity(target.dataset.id, -1);
-        } else if (target.classList.contains("increase")) {
-            updateQuantity(target.dataset.id, 1);
+        const cart = getCart();
+        const item = cart[id];
+        if (!item) return;
+
+        if (button.classList.contains("increase")) {
+            item.quantity++;
+        } else if (button.classList.contains("decrease")) {
+            item.quantity--;
+            if (item.quantity <= 0) {
+                delete cart[id];
+            }
         }
+
+        saveCart(cart);
+        renderCart();
     });
 
-    checkoutButton.addEventListener("click", function () {
+    checkoutButton?.addEventListener("click", function () {
         const cart = getCart();
-        if (Object.keys(cart).length === 0) return;
+        if (Object.keys(cart).length === 0) {
+            alert("Корзина пуста!");
+            return;
+        }
 
-        alert("Спасибо за заказ! В ближайшее время с вами свяжется наш менеджер.");
-//        localStorage.removeItem("beautyVisionCart");
-        renderCart();
+        // TODO: отправка на сервер через fetch или редирект на оформление
+        alert("Оформление заказа (заглушка)");
     });
 
     renderCart();
 });
+</script>

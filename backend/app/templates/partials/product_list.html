@@ -1,0 +1,26 @@
+{# templates/partials/products_list.html #}
+{% for product in products.items %}
+    <div class="product-card" data-category="{{ product.category }}">
+        <div class="product-image">
+            <a href="{{ url_for('product_page', product_id=product.id) }}">
+                <img src="{{ url_for('static', filename='img/products/' ~ product.photonum) }}" alt="{{ product.name }}">
+            </a>
+        </div>
+        <div class="product-info">
+            <h3>
+              <a href="{{ url_for('product_page', product_id=product.id) }}">{{ product.name }}</a>
+            </h3>
+
+            {% if product.desc != 'no' %}
+                <p>{{ product.desc[:120] }}{% if product.desc|length > 120 %}...{% endif %}</p>
+            {% endif %}
+            <div class="product-bottom">
+                <div class="product-price">{{ product.price }} ₽</div>
+                <form action="{{ url_for('add_to_cart') }}" method="POST">
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <button type="submit">В корзину</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endfor %}

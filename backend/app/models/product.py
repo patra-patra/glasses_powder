@@ -2,6 +2,8 @@ import os
 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from flask_login import UserMixin
+
 
 db = SQLAlchemy()
 
@@ -22,6 +24,8 @@ class Product(db.Model):
     massa = db.Column(db.String, default="no")
     struct = db.Column(db.String, default="no")
     use = db.Column(db.String, default="no")
+    old_price = db.Column(db.Float)
+    discount_percent = db.Column(db.Integer)
 
     def to_dict(self):
         return {
@@ -52,7 +56,8 @@ class UserDeliveryAddress(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     city = db.Column(db.String, nullable=False)
     street = db.Column(db.String, nullable=False)
-    postal_code = db.Column(db.String(20))
+    default = db.Column(db.Integer, default=0)
+
 
     user = db.relationship("User", backref="delivery_addresses")
 
@@ -65,7 +70,7 @@ class Order(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     delivered_at = db.Column(db.DateTime)
     status = db.Column(db.String, default="новый")
-    price = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Float, nullable=False)
 
     user = db.relationship("User", back_populates="orders")
     delivery_address = db.relationship("UserDeliveryAddress")

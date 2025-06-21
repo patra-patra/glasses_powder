@@ -1,15 +1,16 @@
 /* Îáùèå ñòèëè êàðòî÷åê */
+
 .product-card {
     background: white;
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-md);
     transition: transform 0.3s, box-shadow 0.3s;
+}
 
-    width: 100%; /* карточка займет всю ширину ячейки grid */
-    max-width: 300px;
-    box-sizing: border-box; /* чтобы паддинги/бордеры не ломали размеры */
-    display: block; /* по умолчанию, но можно явно */
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
 }
 
 .product-image {

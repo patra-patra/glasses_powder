@@ -82,26 +82,41 @@
                         {% for product in new_products %}
                             <div class="product-card" data-category="{{ product.category or 'default' }}">
                                 <div class="product-image">
-                                    <img src="{{ url_for('static', filename='img/products/' ~ product.photonum) }}" alt="{{ product.name }}">
+                                    <a href="{{ url_for('product_page', product_id=product.id) }}">
+                                        <img src="{{ url_for('static', filename='img/products/' ~ product.photonum) }}" alt="{{ product.name }}">
+                                    </a>
                                     <div class="product-badges">
                                         <span class="product-badge">Новинка</span>
                                     </div>
                                 </div>
                                 <div class="product-info">
-                                    <h3>{{ product.name }}</h3>
+                                    <h3>
+                                      <a href="{{ url_for('product_page', product_id=product.id) }}">{{ product.name }}</a>
+                                    </h3>
+
                                     {% if product.desc != 'no' %}
                                         <p>{{ product.desc[:120] }}{% if product.desc|length > 120 %}...{% endif %}</p>
                                     {% endif %}
                                     <div class="product-bottom">
                                         <div class="product-price">{{ product.price }} ₽</div>
                                         <form action="{{ url_for('add_to_cart') }}" method="POST">
-                                          <input type="hidden" name="product_id" value="{{ product.id }}">
-                                          <button type="submit">В корзину</button>
+                                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                                             <div class="product-actions">
+                                                <form action="{{ url_for('add_to_cart') }}" method="POST" id="main-add-to-cart-form">
+                                                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                                                    <button type="submit" class="btn btn-primary add-to-cart">
+                                                        <i class="fas fa-shopping-cart"></i> Добавить в корзину
+                                                    </button>
+                                                </form>
+
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         {% endfor %}
+
+
                     </div>
                 </div>
             </div>
@@ -174,7 +189,7 @@
                         <div class="category-info">
                             <h3>Для лица</h3>
                             <p>Тональные средства, румяна, хайлайтеры</p>
-                            <a href="{{ url_for('catalog_category', category='Товары для лица') }}" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog_category', category='Товары для лица') }}" >Смотреть все</a>
                         </div>
                     </div>
                     <div class="category-card" data-category="eyes">
@@ -185,7 +200,7 @@
                         <div class="category-info">
                             <h3>Для глаз</h3>
                             <p>Тени, тушь, подводки, карандаши</p>
-                            <a href="{{ url_for('catalog_category', category='Товары для глаз') }}" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog_category', category='Товары для глаз') }}" >Смотреть все</a>
                         </div>
                     </div>
                     <div class="category-card" data-category="lips">
@@ -196,7 +211,7 @@
                         <div class="category-info">
                             <h3>Для губ</h3>
                             <p>Помады, блески, карандаши, бальзамы</p>
-                            <a href="{{ url_for('catalog_category', category='Товары для губ') }}" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog_category', category='Товары для губ') }}" >Смотреть все</a>
                         </div>
                     </div>
                     <div class="category-card" data-category="skincare">
@@ -207,7 +222,7 @@
                         <div class="category-info">
                             <h3>Брови</h3>
                             <p>Карандаши, тени, гели, краски</p>
-                            <a href="{{ url_for('catalog_category', category='Товары для бровей') }}" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog_category', category='Товары для бровей') }}" >Смотреть все</a>
                         </div>
                     </div>
                 </div>
@@ -230,7 +245,7 @@
                         <div class="category-info">
                             <h3>Женские</h3>
                             <p>Изящные, подчеркивающие индивидуальность.</p>
-                            <a href="{{ url_for('catalog', type='Женские') }}" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog', type='Женские') }}" >Смотреть все</a>
                         </div>
                     </div>
                     <div class="category-card" data-category="optical">
@@ -241,7 +256,7 @@
                         <div class="category-info">
                             <h3>Мужские</h3>
                             <p>Стильные и функциональные, на все случаи.</p>
-                            <a href="{{ url_for('catalog', type='Мужские') }}" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog', type='Мужские') }}" >Смотреть все</a>
                         </div>
                     </div>
                     <div class="category-card" data-category="computer">
@@ -252,7 +267,7 @@
                         <div class="category-info">
                             <h3>Италия</h3>
                             <p>Эталон стиля, качества и изысканности.</p>
-                            <a href="{{ url_for('catalog', country='ИТАЛИЯ', type=['Мужские', 'Женские', 'Унисекс']) }}" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog', country='ИТАЛИЯ', type=['Мужские', 'Женские', 'Унисекс']) }}" >Смотреть все</a>
                         </div>
                     </div>
                     <div class="category-card" data-category="sport">
@@ -263,7 +278,7 @@
                         <div class="category-info">
                             <h3>Германия</h3>
                             <p>Прочные и легкие модели, деловые и повседневные.</p>
-                            <a href="{{ url_for('catalog', country='ГЕРМАНИЯ', type=['Мужские', 'Женские', 'Унисекс']) }}" class="btn-outline">Смотреть все</a>
+                            <a href="{{ url_for('catalog', country='ГЕРМАНИЯ', type=['Мужские', 'Женские', 'Унисекс']) }}" >Смотреть все</a>
                         </div>
                     </div>
                 </div>
@@ -389,6 +404,29 @@
             localStorage.setItem("beautyVisionCart", JSON.stringify(cart));
             alert(`Товар "${title}" добавлен в корзину`);
         }
+    });
+
+        // Добавление в корзину
+    const addToCartBtn = document.querySelector('.add-to-cart');
+
+    addToCartBtn.addEventListener('click', function() {
+        const productName = document.querySelector('.product-title').textContent;
+        const productPrice = document.querySelector('.product-price').textContent;
+        const productQuantity = quantityInput.value;
+        const productColor = document.querySelector('input[name="color"]:checked').value;
+        const productSize = document.querySelector('input[name="size"]:checked').value;
+
+        // Здесь можно добавить логику добавления товара в корзину
+        console.log('Товар добавлен в корзину:', {
+            name: productName,
+            price: productPrice,
+            quantity: productQuantity,
+            color: productColor,
+            size: productSize
+        });
+
+        // Показываем уведомление
+        alert('Товар добавлен в корзину!');
     });
 
     </script>
