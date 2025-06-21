@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Админ - панель</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='product-cards.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu_style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/sign.png') }}">
+</head>
+<body>
+
+    <header class="admin-header">
+        <h1>Админ-панель</h1>
+        <div class="admin-buttons">
+            <a href="{{ url_for('add_product') }}" class="btn btn-primary">Добавить товар</a>
+            <a href="{{ url_for('logout') }}" class="btn btn-secondary">Выйти</a>
+        </div>
+    </header>
+
+    <main class="admin-main">
+        <nav class="admin-categories">
+    <ul class="admin-menu">
+        <li><a href="#" data-category="все">Все</a></li>
+        <li>
+            <a href="#" data-category="Очки">Очки</a>
+            <ul>
+                <li><a href="#" data-subcategory="Мужские">Мужские</a></li>
+                <li><a href="#" data-subcategory="Женские">Женские</a></li>
+                <li><a href="#" data-subcategory="Унисекс">Унисекс</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" data-category="Косметика">Косметика</a>
+            <ul>
+                <li><a href="#" data-subcategory="Товары для лица">Лицо</a></li>
+                <li><a href="#" data-subcategory="Товары для губ">Губы</a></li>
+                <li><a href="#" data-subcategory="Товары для бровей">Брови</a></li>
+                <li><a href="#" data-subcategory="Товары для глаз">Глаза</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+
+
+        <div class="admin-products">
+            <div class="product-grid">
+                {% for product in products %}
+                <div class="product-card-admin" data-category="{{ product.types }}">
+                    <div class="product-image-admin">
+                        <img src="{{ url_for('static', filename='img/products/' ~ product.photonum) }}" alt="{{ product.name }}">
+                    </div>
+                    <div class="product-info-admin">
+                        <h3>{{ product.name }}</h3>
+                        <p>{{ product.price }} ₽</p>
+                        <div class="admin-actions">
+                            <a href="{{ url_for('edit_product', product_id=product.id) }}" title="Редактировать"><i class="fas fa-edit"></i></a>
+                            <form action="{{ url_for('delete_product', product_id=product.id) }}" method="POST" style="display:inline;">
+                                <button type="submit" onclick="return confirm('Удалить товар?')" title="Удалить"><i class="fas fa-trash-alt"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+
+    <script>
+// Связь категорий с типами товаров из базы
+const categoryMap = {
+    'очки': ['мужские', 'женские', 'унисекс'],
+    'косметика': ['товары для лица', 'товары для губ', 'товары для бровей', 'товары для глах']
+};
+
+// Основные ссылки на категории и подкатегории
+const categoryLinks = document.querySelectorAll('.admin-menu [data-category]');
+const subcategoryLinks = document.querySelectorAll('.admin-menu [data-subcategory]');
+
+// Обработка кликов по основным категориям
+categoryLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const category = link.dataset.category.toLowerCase();
+
+        document.querySelectorAll('.product-card-admin').forEach(card => {
+            const productCategory = card.dataset.category?.toLowerCase() || '';
+
+            if (category === 'все') {
+                card.style.display = '';
+            } else if (categoryMap[category]) {
+                // Проверка по списку подкатегорий
+                const matches = categoryMap[category].some(sub => productCategory.includes(sub));
+                card.style.display = matches ? '' : 'none';
+            } else {
+                // На случай, если категория без маппинга
+                card.style.display = productCategory.includes(category) ? '' : 'none';
+            }
+        });
+    });
+});
+
+// Обработка кликов по подкатегориям
+subcategoryLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const subcategory = link.dataset.subcategory.toLowerCase();
+
+        document.querySelectorAll('.product-card-admin').forEach(card => {
+            const productCategory = card.dataset.category?.toLowerCase() || '';
+            card.style.display = productCategory.includes(subcategory) ? '' : 'none';
+        });
+    });
+});
+</script>
+
+
+</body>
+</html>
