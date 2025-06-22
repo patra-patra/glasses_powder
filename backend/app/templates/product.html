@@ -152,7 +152,7 @@
                                 <div class="product-price">{{ rec.price }} ₽</div>
                                 <form action="{{ url_for('add_to_cart') }}" method="POST" class="add-to-cart-form">
                                     <input type="hidden" name="product_id" value="{{ rec.id }}">
-                                    <button type="submit" class="btn-add-to-cart">В корзину</button>
+                                    <button type="submit" class="btn-primary add-to-cart">В корзину</button>
                                 </form>
                             </div>
 

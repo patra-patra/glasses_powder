@@ -704,7 +704,7 @@ def search():
 
 #=========Админ=============
 
-UPLOAD_FOLDER = 'static/uploads'  # Папка, где будут храниться загруженные изображения
+UPLOAD_FOLDER = 'static/img/products'  # Папка, где будут храниться загруженные изображения
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -769,6 +769,12 @@ def add_product():
         # Попытка загрузки изображения через input type="file"
         file = request.files.get('image')
         manual_image_name = request.form.get('image_name', '').strip()  # имя, введённое вручную
+
+        # Загружаем файл, если пользователь загрузил изображение
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file.save(filepath)
+        photonum = filename
 
         if file and allowed_file(file.filename):
             # Загружаем файл, если пользователь загрузил изображение

@@ -137,7 +137,7 @@
                                                     <div class="product-price">{{ product.price }} ₽</div>
                                                     <form action="{{ url_for('add_to_cart') }}" method="POST">
                                                         <input type="hidden" name="product_id" value="{{ product.id }}">
-                                                        <button type="submit">В корзину</button>
+                                                        <button type="submit" class="btn-primary add-to-cart">В корзину</button>
                                                     </form>
                                                 </div>
                                             </div>

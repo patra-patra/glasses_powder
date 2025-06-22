@@ -1,4 +1,3 @@
-/* Îáùèå ñòèëè êàðòî÷åê */
 .product-card {
     background: white;
     border-radius: var(--radius-lg);
@@ -11,6 +10,7 @@
     box-sizing: border-box; /* чтобы паддинги/бордеры не ломали размеры */
     display: block; /* по умолчанию, но можно явно */
 }
+
 
 .product-image {
     position: relative;
@@ -93,7 +93,6 @@
     color: white;
 }
 
-/* Àäàïòèâíûå ñòèëè äëÿ êàðòî÷åê */
 @media (max-width: 768px) {
     .product-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -111,4 +110,39 @@
         gap: 12px;
         align-items: flex-start;
     }
+}
+
+
+new {
+
+}
+
+.btn-primary.add-to-cart {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 4px 6px rgba(224, 122, 95, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-primary.add-to-cart:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(224, 122, 95, 0.3);
+}
+
+.btn-primary.add-to-cart:active {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 6px rgba(224, 122, 95, 0.2);
+}
+
+.btn-primary.add-to-cart i {
+    margin-right: 6px;
 }
