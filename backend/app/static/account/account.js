@@ -7,21 +7,58 @@ document.addEventListener("DOMContentLoaded", function () {
         link.addEventListener("click", function (e) {
             e.preventDefault();
 
-            //Убираем активный класс у всех пунктов меню и содержимого вкладок
+            //Убираем активный класс у всех пунктов меню
             tabLinks.forEach((item) =>
                 item.parentElement.classList.remove("active")
             );
-            tabContents.forEach((item) => item.classList.remove("active"));
 
-            //Добавляем активный класс выбранному пункту меню и соответствующей вкладке
+            //Добавляем активный класс выбранному пункту меню
             this.parentElement.classList.add("active");
             const tabId = this.getAttribute("data-tab");
-            document.getElementById(tabId).classList.add("active");
+
+            // Скрываем все существующие вкладки
+            tabContents.forEach((item) => {
+                item.classList.remove("active");
+                item.style.display = "none";
+            });
+
+            // Скрываем список адресов
+            const addressList = document.querySelector(".address-list");
+            if (addressList) {
+                addressList.style.display = "none";
+            }
+
+            // Показываем нужный контент
+            if (tabId === "addresses") {
+                // Показываем список адресов
+                if (addressList) {
+                    addressList.style.display = "block";
+                    console.log("Address list is now visible");
+                } else {
+                    console.log("Address list element not found");
+                }
+            } else {
+                // Показываем соответствующую вкладку
+                const targetTab = document.getElementById(tabId);
+                if (targetTab) {
+                    targetTab.classList.add("active");
+                    targetTab.style.display = "block";
+                }
+            }
 
             //Прокручиваем страницу вверх
             window.scrollTo({ top: 0, behavior: "smooth" });
         });
     });
+
+    // Инициализация: скрываем список адресов при загрузке страницы
+    const addressList = document.querySelector(".address-list");
+    if (addressList) {
+        addressList.style.display = "none";
+        console.log("Address list hidden on page load");
+    } else {
+        console.log("Address list not found on page load");
+    }
 
     //Функционал редактирования личных данных
     const editBtns = document.querySelectorAll(".edit-btn");
@@ -34,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const dataBlock = form.previousElementSibling;
 
             if (dataBlock) {
-              dataBlock.style.display = "none";
+                dataBlock.style.display = "none";
             }
 
             form.classList.remove("hidden");
@@ -43,50 +80,62 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const changePasswordForm = document.getElementById("change-password-form");
 
-     changePasswordForm.addEventListener("submit", function (e) {
-        e.preventDefault();
+    if (changePasswordForm) {
+        changePasswordForm.addEventListener("submit", function (e) {
+            e.preventDefault();
 
-        const currentPassword = document.getElementById("current-password").value;
-        const newPassword = document.getElementById("new-password").value;
-        const confirmPassword = document.getElementById("confirm-password").value;
+            const currentPassword =
+                document.getElementById("current-password").value;
+            const newPassword = document.getElementById("new-password").value;
+            const confirmPassword =
+                document.getElementById("confirm-password").value;
 
-        if (newPassword !== confirmPassword) {
-            showNotification("Пароли не совпадают");
-            return;
-        }
-
-        fetch("/change_password", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                current_password: currentPassword,
-                new_password: newPassword,
-            }),
-        })
-        .then(async (res) => {
-            let data;
-            try {
-                data = await res.json();
-            } catch {
-                data = {};
+            if (newPassword !== confirmPassword) {
+                showNotification("Пароли не совпадают");
+                return;
             }
-            return { ok: res.ok, data };
-        })
-        .then(({ ok, data }) => {
-            if (!ok) {
-                showNotification("Ошибка: " + (data.error || "Не удалось изменить пароль"));
-            } else {
-                showNotification(data.message || "Пароль успешно изменён");
-                changePasswordForm.reset();
-            }
-        })
-        .catch((err) => {
-            console.error(err);
-            showNotification("Произошла ошибка: " + (err.message || "Неизвестная ошибка"));
+
+            fetch("/change_password", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    current_password: currentPassword,
+                    new_password: newPassword,
+                }),
+            })
+                .then(async (res) => {
+                    let data;
+                    try {
+                        data = await res.json();
+                    } catch {
+                        data = {};
+                    }
+                    return { ok: res.ok, data };
+                })
+                .then(({ ok, data }) => {
+                    if (!ok) {
+                        showNotification(
+                            "Ошибка: " +
+                                (data.error || "Не удалось изменить пароль")
+                        );
+                    } else {
+                        showNotification(
+                            data.message || "Пароль успешно изменён"
+                        );
+                        changePasswordForm.reset();
+                    }
+                })
+                .catch((err) => {
+                    console.error(err);
+                    showNotification(
+                        "Произошла ошибка: " +
+                            (err.message || "Неизвестная ошибка")
+                    );
+                });
         });
-    });
+    }
 
     cancelBtns.forEach((btn) => {
         btn.addEventListener("click", function () {
@@ -96,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             form.classList.add("hidden");
             if (dataBlock) {
-              dataBlock.style.display = "block";
+                dataBlock.style.display = "block";
             }
         });
     });
@@ -121,48 +170,61 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     //Обработка профиля
-    const profileForm = document.getElementById("profile-form");
+    const profileForm = document.getElementById("personal-form");
     if (profileForm) {
-      profileForm.addEventListener("submit", async function (e) {
-        e.preventDefault();
+        profileForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
 
-        const formData = {
-          first_name: document.getElementById("firstname").value,
-          last_name: document.getElementById("lastname").value,
-          phone: document.getElementById("phone").value,
-          birthdate: document.getElementById("birthdate").value,
-        };
+            const formData = {
+                first_name: document.getElementById("firstname").value,
+                last_name: document.getElementById("lastname").value,
+                phone: document.getElementById("phone").value,
+                birthdate: document.getElementById("birthdate").value,
+            };
 
-        try {
-          const response = await fetch("/update_profile", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-          });
+            try {
+                const response = await fetch("/update_profile", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(formData),
+                });
 
-          const result = await response.json();
+                const result = await response.json();
 
-          if (response.ok) {
-            showNotification("Данные успешно сохранены!");
-            //скрыть форму и показать блок с данными
-            const dataBlock = profileForm.previousElementSibling;
-            profileForm.classList.add("hidden");
-            if (dataBlock) dataBlock.style.display = "block";
+                if (response.ok) {
+                    showNotification("Данные успешно сохранены!");
+                    //скрыть форму и показать блок с данными
+                    const dataBlock = profileForm.previousElementSibling;
+                    profileForm.classList.add("hidden");
+                    if (dataBlock) dataBlock.style.display = "block";
 
-            if (dataBlock) {
-              dataBlock.querySelector(".data-row:nth-child(1) .data-value").textContent = formData.first_name;
-              dataBlock.querySelector(".data-row:nth-child(2) .data-value").textContent = formData.last_name;
-              dataBlock.querySelector(".data-row:nth-child(3) .data-value").textContent = formData.phone;
-              dataBlock.querySelector(".data-row:nth-child(4) .data-value").textContent = formData.birthdate;
+                    if (dataBlock) {
+                        dataBlock.querySelector(
+                            ".data-row:nth-child(1) .data-value"
+                        ).textContent = formData.first_name;
+                        dataBlock.querySelector(
+                            ".data-row:nth-child(2) .data-value"
+                        ).textContent = formData.last_name;
+                        dataBlock.querySelector(
+                            ".data-row:nth-child(3) .data-value"
+                        ).textContent = formData.phone;
+                        dataBlock.querySelector(
+                            ".data-row:nth-child(4) .data-value"
+                        ).textContent = formData.birthdate;
+                    }
+                } else {
+                    showNotification(
+                        "Ошибка: " +
+                            (result.error || "Не удалось обновить данные")
+                    );
+                }
+            } catch (err) {
+                console.error(err);
+                showNotification(
+                    "Произошла ошибка: " + (err.message || "Ошибка сети")
+                );
             }
-          } else {
-            showNotification("Ошибка: " + (result.error || "Не удалось обновить данные"));
-          }
-        } catch (err) {
-          console.error(err);
-          showNotification("Произошла ошибка: " + (err.message || "Ошибка сети"));
-        }
-      });
+        });
     }
 
     //Функция для отображения уведомления
