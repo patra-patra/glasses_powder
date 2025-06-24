@@ -250,3 +250,148 @@
 .edit-form .form-group {
     margin-bottom: 15px;
 }
+
+.admin-orders {
+    width: 100%;
+    padding: 20px;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.orders-table th, .orders-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    vertical-align: top;
+
+}
+
+.orders-table th {
+    background-color: #f4f4f4;
+    font-weight: 600;
+}
+
+.orders-table td:last-child {
+    text-align: center;
+}
+
+.orders-table ul {
+    margin: 0;
+    padding-left: 16px;
+}
+
+.status-dropdown {
+    position: relative;
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.status-dropdown .status-options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    min-width: 140px;
+    z-index: 999;
+}
+
+.status-dropdown .status-options li a {
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+}
+
+.status-dropdown .status-options li a:hover {
+    background-color: #f0f0f0;
+}
+
+.status-dropdown.active .status-options {
+    display: block;
+}
+
+.status-toggle {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.status-dropdown {
+    position: relative;
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.status-dropdown .status-options li a {
+    display: block;
+    padding: 8px 12px;
+    color: #333;
+    text-decoration: none;
+}
+
+.status-dropdown .status-options li a:hover {
+    background-color: #f0f0f0;
+}
+
+.status-dropdown.active .status-options {
+    display: block;
+}
+
+.status-toggle {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: underline;
+}
+form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+form select[name="status"] {
+  padding: 6px 10px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+form select[name="status"]:focus {
+  outline: none;
+  border-color: #e07a5f;
+  box-shadow: 0 0 4px rgba(0,123,255,0.5);
+}
+
+/* Кнопка */
+form button.btn-small {
+  padding: 6px 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #e07a5f; /* синий основной */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+form button.btn-small:hover {
+  background-color: #b56576; /* темнее при наведении */
+}
+
