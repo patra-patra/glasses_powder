@@ -68,8 +68,10 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="filter-btn">Применить</button>
-                        <a href="{{ url_for('catalog') }}" class="btn btn-primary reset-filters">Сбросить фильтры</a>
+                        <div class="filter-buttons">
+                            <button type="submit" class="filter-btn">Применить</button>
+                            <a href="{{ url_for('catalog') }}" class="filter-btn-bot">Сбросить фильтры</a>
+                        </div>
                     </form>
 
                 </aside>
