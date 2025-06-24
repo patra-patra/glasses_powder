@@ -7,14 +7,13 @@
 .product-main {
     display: flex;
     gap: 40px;
-    margin-bottom: 60px;
+    margin-bottom: 10px;
 }
 
 .product-tabs {
   display: flex;
   flex-direction: column;
   max-width: 900px;
-  margin: 0 auto;
 }
 
 .tabs-header {
@@ -40,7 +39,7 @@
 
 .tabs-content {
   min-height: 150px;
-  padding: 10px 0;
+  padding: 0;
 }
 
 .tab-panel {
@@ -61,7 +60,6 @@
     height: 450px;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    margin-bottom: 15px;
     box-shadow: var(--shadow-md);
 }
 
@@ -153,7 +151,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 25px;
+    margin-bottom: 2px;
 }
 
 .product-price {
@@ -359,7 +357,7 @@
     padding: 20px;
     background: var(--gray-100);
     border-radius: var(--radius-lg);
-    margin-bottom: 30px;
+
 }
 
 .info-item {
@@ -430,6 +428,7 @@
 
 .product-full-description {
     line-height: 1.8;
+    margin-bottom: 20px;
 }
 
 .product-full-description h3 {
