@@ -1,9 +1,8 @@
-﻿  /* Основные стили страницы контактов */
+﻿
 .contact-page {
     padding: 120px 0 60px;
 }
 
-/* Контентная часть */
 .contact-content {
     display: flex;
     flex-wrap: wrap;
@@ -22,14 +21,13 @@
 .contact-form-wrapper {
     flex: 1;
     min-width: 300px;
-    display: flex; /* Добавляем flex для растягивания дочернего элемента */
+    display: flex;
 }
 
-/* Контактная информация */
 .contact-info {
     padding: 30px;
     border-radius: var(--radius-md);
-    flex: 1; /* Чтобы блок растягивался и заполнял доступное пространство */
+    flex: 1;
 }
 
     .contact-info h3 {
@@ -108,7 +106,7 @@
 .nav-toggle-label {
     display: none;
 }
-/* Социальные сети в контактах */
+
 .contact-info .social-links {
     margin-top: 15px;
 }
@@ -140,7 +138,6 @@
             color: white;
         }
 
-/* Карта */
 .contact-map {
     border-radius: var(--radius-md);
     overflow: hidden;
@@ -154,15 +151,14 @@
         border: none;
     }
 
-/* Форма обратной связи */
 .contact-form {
     background-color: white;
     padding: 30px;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
-    display: flex; /* Добавляем flex для организации контента внутри */
+    display: flex;
     flex-direction: column;
-    flex: 1; /* Растягиваем на всю высоту */
+    flex: 1;
 }
 
     .contact-form h3 {
@@ -221,7 +217,6 @@
         color: var(--text-light);
     }
 
-/* FAQ секция */
 .faq-section {
     margin-top: 30px;
     padding-top: 30px;
@@ -284,8 +279,6 @@
     margin: 0;
 }
 
-
-/* Улучшенные стили для кнопок формы контактов */
 .contact-form .btn-primary {
     display: inline-block;
     width: 100%;
@@ -343,7 +336,6 @@
         opacity: 0.7;
     }
 
-    /* Анимация при отправке формы */
     .contact-form .btn-primary.sending {
         position: relative;
         pointer-events: none;
@@ -373,7 +365,6 @@
     }
 }
 
-/* Медиа-запросы для адаптивности */
 @media (max-width: 768px) {
     .contact-form .btn-primary {
         padding: 12px 20px;
@@ -381,8 +372,6 @@
     }
 }
 
-
-/* Адаптивные стили */
 @media (max-width: 768px) {
     .contact-content {
         flex-direction: column;

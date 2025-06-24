@@ -11,7 +11,6 @@ function showEmptyMessage(show) {
     }
 }
 
-// Ïðèìåð èñïîëüçîâàíèÿ ïðè ïîèñêå
 //document.querySelector('.search-form').addEventListener('submit', function (e) {
 //    e.preventDefault();
 //    const searchQuery = document.querySelector('.search-input').value.toLowerCase();

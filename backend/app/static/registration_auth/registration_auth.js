@@ -1,37 +1,37 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Карусель
+    //Карусель
     let currentSlide = 0;
     const slides = document.querySelectorAll('.carousel-slide');
     const dots = document.querySelectorAll('.carousel-dot');
     const totalSlides = slides.length;
 
-    // Функция для переключения слайдов
+    //Функция для переключения слайдов
     function showSlide(index) {
-        // Убираем активный класс со всех слайдов и точек
+        //Убираем активный класс со всех слайдов и точек
         slides.forEach(slide => slide.classList.remove('active'));
         dots.forEach(dot => dot.classList.remove('active'));
 
-        // Добавляем активный класс к текущему слайду и точке
+        //Добавляем активный класс к текущему слайду и точке
         slides[index].classList.add('active');
         dots[index].classList.add('active');
 
         currentSlide = index;
     }
 
-    // Автоматическое переключение слайдов
+    //Автоматическое переключение слайдов
     setInterval(() => {
         currentSlide = (currentSlide + 1) % totalSlides;
         showSlide(currentSlide);
     }, 5000);
 
-    // Обработчик клика по точкам
+    //Обработчик клика по точкам
     dots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
             showSlide(index);
         });
     });
 
-    // Переключение между формами
+    //Переключение между формами
     const loginBtn = document.querySelector('.login-btn');
     const registerBtn = document.querySelector('.register-btn');
     const switchToRegister = document.querySelector('.switch-to-register');
@@ -42,26 +42,26 @@ document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.querySelector('.login-form');
     const registerForm = document.querySelector('.register-form');
 
-    // Изначально все формы скрыты, виден только блок приветствия
+    //Изначально все формы скрыты, виден только блок приветствия
     welcomeBlock.classList.remove('hidden');
     loginForm.classList.remove('form-active');
     registerForm.classList.remove('form-active');
 
-    // Функция для показа формы входа
+    //Функция для показа формы входа
     function showLoginForm() {
         welcomeBlock.classList.add('hidden');
         registerForm.classList.remove('form-active');
         loginForm.classList.add('form-active');
     }
 
-    // Функция для показа формы регистрации
+    //Функция для показа формы регистрации
     function showRegisterForm() {
         welcomeBlock.classList.add('hidden');
         loginForm.classList.remove('form-active');
         registerForm.classList.add('form-active');
     }
 
-    // Обработчики событий для кнопок
+    //Обработчики событий для кнопок
     loginBtn.addEventListener('click', showLoginForm);
     registerBtn.addEventListener('click', showRegisterForm);
     switchToRegister.addEventListener('click', function (e) {
@@ -73,11 +73,11 @@ document.addEventListener('DOMContentLoaded', function () {
         showLoginForm();
     });
 
-    // Функция для создания маски телефона
+    //Функция для создания маски телефона
     function setupPhoneInput(inputElement, errorElement) {
-        // Обработка нажатия клавиш
+        //Обработка нажатия клавиш
         inputElement.addEventListener('keydown', function (e) {
-            // Разрешаем: backspace, delete, tab, escape, enter, цифры
+            //Разрешаем: backspace, delete, tab, escape, enter, цифры
             if (
                 e.key === 'Backspace' ||
                 e.key === 'Delete' ||
@@ -86,38 +86,38 @@ document.addEventListener('DOMContentLoaded', function () {
                 e.key === 'Enter' ||
                 (e.key >= '0' && e.key <= '9')
             ) {
-                // Разрешаем стандартное поведение
+                //Разрешаем стандартное поведение
                 return;
             } else {
-                // Запрещаем ввод других символов
+                //Запрещаем ввод других символов
                 e.preventDefault();
             }
         });
 
-        // Форматирование при вводе
+        //Форматирование при вводе
         inputElement.addEventListener('input', function (e) {
             let cursorPosition = e.target.selectionStart;
             const initialLength = e.target.value.length;
 
-            // Удаляем все нецифровые символы
+            //Удаляем все нецифровые символы
             let value = e.target.value.replace(/\D/g, '');
 
-            // Ограничиваем до 11 цифр (российский номер)
+            //Ограничиваем до 11 цифр (российский номер)
             if (value.length > 11) {
                 value = value.substring(0, 11);
             }
 
-            // Если первая цифра 8, заменяем на 7
+            //Если первая цифра 8, заменяем на 7
             if (value.length > 0 && value[0] === '8') {
                 value = '7' + value.substring(1);
             }
 
-            // Добавляем 7 в начало, если первая цифра не 7
+            //Добавляем 7 в начало, если первая цифра не 7
             if (value.length > 0 && value[0] !== '7') {
                 value = '7' + value;
             }
 
-            // Форматируем номер с разделителями
+            //Форматируем номер с разделителями
             let formattedValue = '';
 
             if (value.length > 0) {
@@ -140,28 +140,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 formattedValue += '-' + value.substring(9, 11);
             }
 
-            // Устанавливаем новое значение
+            //Устанавливаем новое значение
             e.target.value = formattedValue;
 
-            // Корректируем позицию курсора после форматирования
+            //Корректируем позицию курсора после форматирования
             const newLength = formattedValue.length;
             const diff = newLength - initialLength;
 
-            // Если мы удаляем символы, перемещаем курсор после разделителя
+            //Если мы удаляем символы, перемещаем курсор после разделителя
             if (diff < 0 && cursorPosition > 0) {
                 cursorPosition = Math.max(0, cursorPosition + diff);
 
-                // Проверяем, не находится ли курсор на разделителе
+                //Проверяем, не находится ли курсор на разделителе
                 const nextChar = formattedValue.charAt(cursorPosition);
                 if (nextChar === ' ' || nextChar === '(' || nextChar === ')' || nextChar === '-') {
                     cursorPosition = Math.max(0, cursorPosition - 1);
                 }
             }
-            // Если добавляем символы, перемещаем курсор вперед
+            //Если добавляем символы, перемещаем курсор вперед
             else if (diff > 0) {
                 cursorPosition += diff;
 
-                // Если после форматирования курсор на разделителе, перемещаем его вперед
+                //Если после форматирования курсор на разделителе, перемещаем его вперед
                 if (cursorPosition < formattedValue.length) {
                     const nextChar = formattedValue.charAt(cursorPosition);
                     if (nextChar === ' ' || nextChar === '(' || nextChar === ')' || nextChar === '-') {
@@ -170,11 +170,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
-            // Устанавливаем позицию курсора
+            //Устанавливаем позицию курсора
             e.target.setSelectionRange(cursorPosition, cursorPosition);
         });
 
-        // Установка значения по умолчанию и начальной подсказки
+        //Установка значения по умолчанию и начальной подсказки
         inputElement.addEventListener('focus', function (e) {
             if (!e.target.value) {
                 e.target.value = '+7 (';
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Валидация номера при потере фокуса
+        //Валидация номера при потере фокуса
         inputElement.addEventListener('blur', function (e) {
             const phonePattern = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
 
@@ -201,17 +201,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Настройка ввода телефона для формы регистрации
+    //Настройка ввода телефона для формы регистрации
     const registerPhoneInput = document.getElementById('register-phone');
     const registerPhoneError = document.getElementById('phone-error');
     setupPhoneInput(registerPhoneInput, registerPhoneError);
 
-    // Настройка ввода телефона для формы входа
+    //Настройка ввода телефона для формы входа
     const loginPhoneInput = document.getElementById('login-phone');
     const loginPhoneError = document.getElementById('login-phone-error');
     setupPhoneInput(loginPhoneInput, loginPhoneError);
 
-    // Валидация совпадения паролей
+    //Валидация совпадения паролей
     const passwordInput = document.getElementById('register-password');
     const confirmPasswordInput = document.getElementById('register-confirm-password');
     const passwordError = document.getElementById('password-error');
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Обработка отправки форм
+    //Обработка отправки форм
     const loginFormElement = document.getElementById('login-form');
     const registerFormElement = document.getElementById('registration-form');
 
@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function () {
     loginFormElement.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        // Валидация телефона
+        //Валидация телефона
         const phonePattern = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
         if (!phonePattern.test(loginPhoneInput.value)) {
             loginPhoneError.textContent = 'Введите корректный номер телефона';
@@ -273,10 +273,10 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('Отправка формы регистрации');
 
     const messageContainer = document.getElementById('register-message');
-    messageContainer.textContent = ''; // очистка перед новой попыткой
+    messageContainer.textContent = ''; //очистка перед новой попыткой
     messageContainer.classList.remove('success');
 
-    // Валидация телефона перед отправкой
+    //Валидация телефона перед отправкой
     const phonePattern = /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/;
     const registerPhoneInput = document.getElementById('register-phone');
     const registerPhoneError = document.getElementById('phone-error');
@@ -300,12 +300,12 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
-    // Формируем FormData из формы
+    //Формируем FormData из формы
     const formData = new FormData(registerFormElement);
 
     fetch('/register', {
         method: 'POST',
-        body: formData // отправляем formData без указания Content-Type
+        body: formData //отправляем formData без указания Content-Type
     })
     .then(res => res.json())
     .then(data => {

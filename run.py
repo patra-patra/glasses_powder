@@ -1,26 +1,26 @@
 import os
 import sys
-import re
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from flask import session  # ← это для сессии
-import random
-from datetime import timedelta, datetime
-
 from werkzeug.utils import secure_filename
-
-# Добавляем путь к backend
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-from backend.app.models.utils import get_all_products
 from backend.app.models.product import db, init_db, User, Product, Order, UserDeliveryAddress, OrderItem, ContactMessage
-from flask import abort
+from flask import session, abort
+from sqlalchemy import func, desc
+from flask import session, request, jsonify
+from flask import render_template, request, redirect, url_for, flash
+from datetime import datetime, timedelta
+from flask import g, session
+from flask import Flask, request, redirect, url_for, flash
+from flask_login import current_user, login_required
+from sqlalchemy import or_
+from random import sample
+from flask import request, flash
+from datetime import timedelta
+from sqlalchemy.sql.expression import func
+import random
 
-# Путь к БД
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 DB_PATH = os.path.join(BASE_DIR, "backend", "app", "db", "products.db")
 
-# Создание Flask-приложения
 app = Flask(
     __name__,
     static_folder=os.path.join(BASE_DIR, "backend", "app", "static"),
@@ -28,23 +28,16 @@ app = Flask(
 )
 app.secret_key = 'supersecretkey'
 
-# Настройки базы данных
 app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{DB_PATH}"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Инициализация базы
 db.init_app(app)
 
 with app.app_context():
-    # Таблицы уже есть, не вызываем db.create_all()
     pass
-
-# Главная страница
-from sqlalchemy.sql.expression import func
 
 @app.route('/')
 def home():
-    # Выбираем 4 случайных товара из базы данных
     new_products = Product.query.order_by(func.random()).limit(4).all()
 
     return render_template('index.html', new_products=new_products)
@@ -63,11 +56,7 @@ def account():
     orders = Order.query.filter_by(user_id=user_id).order_by(Order.created_at.desc()).all()
     addresses = UserDeliveryAddress.query.filter_by(user_id=user.id).all()
 
-    # 👇 Добавляем orders
     return render_template('account.html', user=user, addresses=addresses, orders=orders, datetime=datetime)
-
-from flask import request, flash
-from datetime import timedelta
 
 @app.route('/repeat_order/<int:order_id>', methods=['POST'])
 def repeat_order(order_id):
@@ -81,12 +70,10 @@ def repeat_order(order_id):
         return redirect(url_for('account'))
 
     try:
-        # Пересчёт цены, если в старом заказе она отсутствует
         order_price = old_order.price
         if not order_price or order_price == 0:
             order_price = sum(item.price * item.quantity for item in old_order.items)
 
-        # Устанавливаем дату доставки: например, +2 дня от текущей
         delivered_at = datetime.utcnow() + timedelta(days=2)
 
         new_order = Order(
@@ -118,9 +105,6 @@ def repeat_order(order_id):
 
     return redirect(url_for('account'))
 
-
-
-
 @app.template_filter('sum')
 def sum_total(items, attribute='price', multiply='quantity'):
     total = 0
@@ -129,10 +113,6 @@ def sum_total(items, attribute='price', multiply='quantity'):
         qty = getattr(item, multiply) or 0
         total += value * qty
     return total
-from flask import request, redirect, url_for, flash, session
-
-from flask import request, redirect, url_for, flash
-from flask_login import login_required, current_user
 
 @app.route('/update_default_address', methods=['POST'])
 @login_required
@@ -144,10 +124,8 @@ def update_default_address():
         flash("Выберите адрес для установки по умолчанию.", "error")
         return redirect(url_for('account'))
 
-    # Сбросить у всех адресов дефолт в 0
     UserDeliveryAddress.query.filter_by(user_id=user_id).update({'default': 0})
 
-    # Установить выбранный адрес дефолтным (1)
     address = UserDeliveryAddress.query.filter_by(id=default_address_id, user_id=user_id).first()
     if not address:
         flash("Адрес не найден.", "error")
@@ -159,33 +137,23 @@ def update_default_address():
     flash("Основной адрес успешно обновлен.", "success")
     return redirect(url_for('account'))
 
-
-
-
 @app.route('/catalog/<category>')
 def catalog_category(category):
-    # Просто редиректим на /catalog с параметром type=category
     return redirect(url_for('catalog', type=category))
-
-from flask import render_template, request, redirect, url_for, flash
-from datetime import datetime
 
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
-        # Проверка согласия на обработку данных
         if not request.form.get('consent'):
             flash('Вы должны согласиться на обработку персональных данных.', 'error')
             return redirect(url_for('contact'))
 
-        # Сбор данных из формы
         name = request.form.get('name')
         email = request.form.get('email')
         phone = request.form.get('phone')
         subject = request.form.get('subject')
         message = request.form.get('message')
 
-        # Сохранение в БД
         new_message = ContactMessage(
             name=name,
             email=email,
@@ -202,29 +170,18 @@ def contact():
 
     return render_template('contact.html')
 
-
 @app.route('/reg')
 def reg():
     return render_template('registration_auth.html')
-
-from flask import session, g
-
-from flask import g, session
 
 @app.before_request
 def load_cart_quantity():
     cart = session.get('cart', {})
     g.cart_quantity = sum(cart.values()) if cart else 0
 
-
-
 @app.context_processor
 def inject_session():
     return dict(session=session)
-
-from flask import session, request, jsonify
-
-from flask import request, redirect, url_for, session
 
 @app.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
@@ -243,13 +200,11 @@ def add_to_cart():
     session['cart'] = cart
     session.modified = True
 
-    # Получаем URL страницы, с которой пришёл запрос, чтобы остаться на ней
     referer = request.headers.get("Referer")
     if referer:
         return redirect(referer)
     else:
         return redirect(url_for('home'))
-
 
 @app.route('/cart')
 def cart():
@@ -262,8 +217,6 @@ def cart():
             try:
                 product_ids.append(int(key))
             except ValueError:
-                # Можно залогировать или очистить некорректный ключ
-                # print(f"Невалидный ключ в корзине: {key}")
                 continue
 
         products_db = Product.query.filter(Product.id.in_(product_ids)).all()
@@ -282,22 +235,17 @@ def cart():
 
     return render_template('cart.html', products=products, total_price=total_price)
 
-
-from flask import request, session, redirect, url_for, flash
-from datetime import datetime, timedelta
-import random
-
 @app.route('/create_order', methods=['POST'])
 def create_order():
     user_id = session.get('user_id')
     if not user_id:
         flash("Пожалуйста, войдите в аккаунт, чтобы оформить заказ.")
-        return redirect(url_for('reg'))  # Или 'login', если есть такая страница
+        return redirect(url_for('reg'))
 
     cart = session.get('cart', {})
     if not cart:
         flash("Ваша корзина пуста.")
-        return redirect(url_for('cart'))  # Можно на страницу корзины
+        return redirect(url_for('cart'))
 
     address = UserDeliveryAddress.query.filter_by(user_id=user_id).first()
     if not address:
@@ -315,7 +263,7 @@ def create_order():
         status="в пути"
     )
     db.session.add(order)
-    db.session.flush()  # чтобы получить order.id
+    db.session.flush()
 
     total_price = 0.0
 
@@ -350,8 +298,6 @@ def create_order():
     flash("Заказ успешно оформлен!")
     return redirect(url_for('account'))
 
-from flask import request, redirect, url_for, session
-
 @app.route('/update_cart', methods=['POST'])
 def update_cart():
     product_id = request.form.get('product_id')
@@ -377,7 +323,6 @@ def update_cart():
 @app.route('/register', methods=['POST'])
 def register():
     try:
-        # Получаем данные
         first_name = request.form.get('first_name')
         last_name = request.form.get('last_name')
         phone = request.form.get('phone')
@@ -385,12 +330,9 @@ def register():
         birthdate_str = request.form.get('birthdate')
         birthdate = datetime.strptime(birthdate_str, '%Y-%m-%d').date() if birthdate_str else None
 
-
-        # Адрес
         street = request.form.get('street')
         city = request.form.get('city')
 
-        # Создаём пользователя
         user = User(
             first_name=first_name,
             last_name=last_name,
@@ -399,12 +341,11 @@ def register():
             birthdate=birthdate
         )
         db.session.add(user)
-        db.session.commit()  # После commit у user должен быть id
+        db.session.commit()
 
-        print(user)  # Проверь, что user не None
-        print(user.id)  # Проверь, что id есть
+        print(user)
+        print(user.id)
 
-        # Создаём адрес
         address = UserDeliveryAddress(
             user_id=user.id,
             street=street,
@@ -417,7 +358,6 @@ def register():
 
         print("Зарегистрирован:", user.id)
 
-        # Возвращаем JSON
         return redirect(url_for('account'))
 
     except Exception as e:
@@ -426,8 +366,8 @@ def register():
 
 @app.route('/logout')
 def logout():
-    session.clear()  # очищаем все данные сессии, в том числе user_id
-    return redirect(url_for('reg'))  # перенаправляем на страницу регистрации/входа
+    session.clear()
+    return redirect(url_for('reg'))
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -444,12 +384,10 @@ def login():
 
     session['user_id'] = user.id
 
-    # Проверка, админ ли пользователь
-    if user.id == 1:  # или user.is_admin, если есть такое поле
+    if user.id == 1:
         return jsonify({'message': 'Админ вошёл', 'redirect': url_for('admin_panel')})
     else:
         return jsonify({'message': 'Успешный вход', 'redirect': url_for('account')})
-
 
 @app.route('/update_profile', methods=['POST'])
 def update_profile():
@@ -474,7 +412,7 @@ def change_password():
         return jsonify({'error': 'Пользователь не авторизован'}), 401
 
     data = request.get_json()
-    print("Data from request:", data)  # <-- для отладки
+    print("Data from request:", data)
 
     if not data:
         return jsonify({'error': 'Нет данных'}), 400
@@ -495,14 +433,6 @@ def change_password():
 
     return jsonify({'message': 'Пароль успешно обновлён'}), 200
 
-
-from flask import request, redirect, url_for, flash
-from flask_login import current_user, login_required
-
-
-from flask import Flask, request, redirect, url_for, flash
-from flask_login import current_user, login_required
-
 @app.route('/add_address', methods=['POST'])
 @login_required
 def add_address():
@@ -512,9 +442,8 @@ def add_address():
     print("Form data:", request.form)
     if not city or not street:
         flash('Пожалуйста, заполните все обязательные поля')
-        return redirect(url_for('account'))  # или куда у вас личный кабинет
+        return redirect(url_for('account'))
 
-    # Если новый адрес нужно сделать основным, сбросим у остальных default=0
     if default:
         for addr in current_user.delivery_addresses:
             addr.default = 0
@@ -533,10 +462,7 @@ def add_address():
     print("Current user ID:", current_user.id)
 
     flash('Адрес успешно добавлен')
-    return redirect(url_for('account'))  # или куда хотите
-
-
-from sqlalchemy import or_
+    return redirect(url_for('account'))
 
 @app.route('/catalog')
 def catalog():
@@ -554,7 +480,6 @@ def catalog():
 
     query = Product.query
 
-    # 🔍 Поисковый запрос
     if query_text:
         query = query.filter(
             or_(
@@ -566,7 +491,6 @@ def catalog():
             )
         )
 
-    # 🎯 Тип или категория
     if product_type:
         query = query.filter(Product.types == product_type)
     elif category == 'cosmetics':
@@ -578,7 +502,6 @@ def catalog():
             'Мужские', 'Женские', 'Унисекс'
         ]))
 
-    # 🧼 Фильтры
     if selected_brands:
         query = query.filter(Product.brand.in_(selected_brands))
 
@@ -593,7 +516,6 @@ def catalog():
     if max_price is not None:
         query = query.filter(Product.price <= max_price)
 
-    # 📊 Сортировка
     if sort == 'price':
         query = query.order_by(Product.price.asc() if order == 'asc' else Product.price.desc())
     elif sort == 'popularity':
@@ -604,14 +526,12 @@ def catalog():
             .order_by(func.coalesce(func.sum(OrderItem.quantity), 0).desc())
         )
     elif sort == 'new':
-        query = query.order_by(Product.id.desc())  # или по полю created_at, если есть
+        query = query.order_by(Product.id.desc())
     else:
         query = query.order_by(Product.id.desc())
 
-    # 📄 Пагинация
     products = query.paginate(page=page, per_page=per_page)
 
-    # 🏷 Уникальные бренды и страны
     all_brands = db.session.query(Product.brand).distinct().all()
     all_countries = db.session.query(Product.country).distinct().all()
 
@@ -635,13 +555,11 @@ def catalog():
         min_price=min_price,
         max_price=max_price,
         current_type=product_type,
-        query=query_text,  # ← важно
+        query=query_text,
         sort=sort,
         order=order,
         category=category
     )
-
-from sqlalchemy import func, desc
 
 def get_products_sorted_by_popularity(include_zero_orders=True):
     query = (
@@ -658,9 +576,6 @@ def get_products_sorted_by_popularity(include_zero_orders=True):
         for product, total_orders in query.all()
     ]
 
-
-from flask import request
-
 @app.route('/search')
 def search():
     query = request.args.get('q', '').strip()
@@ -671,7 +586,6 @@ def search():
 
     products_query = Product.query
 
-    # Фильтр по category/type, как в catalog
     if product_type:
         products_query = products_query.filter(Product.types == product_type)
     elif category == 'cosmetics':
@@ -689,22 +603,36 @@ def search():
             (Product.name.ilike(search_term)) | (Product.desc.ilike(search_term))
         )
 
-    # Сортировка
     if sort == 'price':
         products_query = products_query.order_by(Product.price.asc() if order == 'asc' else Product.price.desc())
     elif sort == 'new':
         products_query = products_query.order_by(Product.id.desc())
-    else:  # popularity — тут можно улучшить
+    else:
         products_query = products_query.order_by(Product.id.desc())
 
     products = products_query.limit(100).all()
 
     return render_template('partials/product_list.html', products=products)
 
+@app.route('/product/<int:product_id>')
+def product_page(product_id):
+    product = Product.query.get_or_404(product_id)
 
-#=========Админ=============
+    same_category_products = Product.query.filter(Product.types == product.types, Product.id != product.id).all()
 
-UPLOAD_FOLDER = 'static/img/products'  # Папка, где будут храниться загруженные изображения
+    recommended = sample(same_category_products, min(4, len(same_category_products)))
+
+    return render_template('product.html', product=product, recommended=recommended)
+
+def generate_discount(product):
+    multiplier = random.uniform(1.1, 1.66)
+    old_price = round(product.price * multiplier, 2)
+    discount_percent = round(100 * (old_price - product.price) / old_price)
+
+    product.old_price = old_price
+    product.discount_percent = discount_percent
+
+UPLOAD_FOLDER = 'static/img/products'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -713,15 +641,13 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def is_admin():
-    return session.get('user_id') == 1  # например, id 1 — админ
+    return session.get('user_id') == 1
 
-# Панель администратора
 @app.route('/admin')
 def admin_panel():
     products = Product.query.all()
     orders = Order.query.order_by(Order.created_at.desc()).all()
 
-    # Категории из БД
     cosmetics_subcategories = db.session.query(Product.types).filter(
         Product.types.in_([
             'Товары для лица', 'Товары для губ', 'Товары для бровей', 'Товары для глаз'
@@ -745,15 +671,13 @@ def admin_panel():
         glasses_subcategories=glasses_subcategories
     )
 
-
-# Добавление товара (форма и обработка)
 @app.route('/admin/add_product', methods=['GET', 'POST'])
 def add_product():
     if not is_admin():
         return abort(403)
 
     photonum = None
-    DEFAULT_IMAGE = 'default.jpg'  # имя дефолтной картинки в static/uploads/
+    DEFAULT_IMAGE = 'default.jpg'
 
     if request.method == 'POST':
         name = request.form['name']
@@ -763,35 +687,29 @@ def add_product():
         country = request.form['country']
         types = request.form['types']
 
-        # Убедимся, что папка для загрузок существует
         os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-        # Попытка загрузки изображения через input type="file"
         file = request.files.get('image')
-        manual_image_name = request.form.get('image_name', '').strip()  # имя, введённое вручную
+        manual_image_name = request.form.get('image_name', '').strip()
 
-        # Загружаем файл, если пользователь загрузил изображение
         filename = secure_filename(file.filename)
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
         photonum = filename
 
         if file and allowed_file(file.filename):
-            # Загружаем файл, если пользователь загрузил изображение
             filename = secure_filename(file.filename)
             filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(filepath)
             photonum = filename
         elif manual_image_name:
-            # Пользователь указал имя изображения вручную
             secure_name = secure_filename(manual_image_name)
             manual_image_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_name)
             if os.path.exists(manual_image_path):
-                photonum = secure_name  # файл существует — используем
+                photonum = secure_name
             else:
-                photonum = DEFAULT_IMAGE  # файла нет — дефолт
+                photonum = DEFAULT_IMAGE
         else:
-            # Ни загрузки, ни имени — дефолт
             photonum = DEFAULT_IMAGE
 
         new_product = Product(
@@ -811,8 +729,6 @@ def add_product():
 
     return render_template('add_product.html')
 
-
-# Редактирование товара
 @app.route('/admin/edit_product/<int:product_id>', methods=['GET', 'POST'])
 def edit_product(product_id):
     if not is_admin():
@@ -834,7 +750,6 @@ def edit_product(product_id):
 
     return render_template('edit_product.html', product=product)
 
-# Удаление товара
 @app.route('/admin/delete_product/<int:product_id>', methods=['POST'])
 def delete_product(product_id):
     if not is_admin():
@@ -844,45 +759,8 @@ def delete_product(product_id):
     db.session.delete(product)
     db.session.commit()
     flash('Товар удалён!', 'info')
+
     return redirect(url_for('admin_panel'))
 
-
-
-
-from flask import render_template
-
-import random
-
-from random import sample
-
-
-@app.route('/product/<int:product_id>')
-def product_page(product_id):
-    product = Product.query.get_or_404(product_id)
-
-    # Получаем все товары той же категории, кроме текущего
-    same_category_products = Product.query.filter(Product.types == product.types, Product.id != product.id).all()
-
-    # Берем случайные 4, если меньше 4 — все
-    recommended = sample(same_category_products, min(4, len(same_category_products)))
-
-    return render_template('product.html', product=product, recommended=recommended)
-
-from flask import session, abort
-
-
-
-import random
-
-def generate_discount(product):
-    # Множитель от 1.1 до 1.66 (соответствует 10%–40% скидке)
-    multiplier = random.uniform(1.1, 1.66)
-    old_price = round(product.price * multiplier, 2)
-    discount_percent = round(100 * (old_price - product.price) / old_price)
-
-    product.old_price = old_price
-    product.discount_percent = discount_percent
-
-# Запуск приложения
 if __name__ == '__main__':
     app.run(debug=True)

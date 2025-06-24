@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Переключение вкладок в личном кабинете
+    //Переключение вкладок в личном кабинете
     const tabLinks = document.querySelectorAll(".account-nav a[data-tab]");
     const tabContents = document.querySelectorAll(".tab-content");
 
@@ -7,23 +7,23 @@ document.addEventListener("DOMContentLoaded", function () {
         link.addEventListener("click", function (e) {
             e.preventDefault();
 
-            // Убираем активный класс у всех пунктов меню и содержимого вкладок
+            //Убираем активный класс у всех пунктов меню и содержимого вкладок
             tabLinks.forEach((item) =>
                 item.parentElement.classList.remove("active")
             );
             tabContents.forEach((item) => item.classList.remove("active"));
 
-            // Добавляем активный класс выбранному пункту меню и соответствующей вкладке
+            //Добавляем активный класс выбранному пункту меню и соответствующей вкладке
             this.parentElement.classList.add("active");
             const tabId = this.getAttribute("data-tab");
             document.getElementById(tabId).classList.add("active");
 
-            // Прокручиваем страницу вверх
+            //Прокручиваем страницу вверх
             window.scrollTo({ top: 0, behavior: "smooth" });
         });
     });
 
-    // Функционал редактирования личных данных
+    //Функционал редактирования личных данных
     const editBtns = document.querySelectorAll(".edit-btn");
     const cancelBtns = document.querySelectorAll(".cancel-btn");
 
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Функционал добавления адреса
+    //Функционал добавления адреса
     const addAddressBtn = document.getElementById("add-address-btn");
     const addressForm = document.getElementById("address-form");
     const cancelAddressBtn = document.getElementById("cancel-address-btn");
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (addAddressBtn && addressForm) {
         addAddressBtn.addEventListener("click", function () {
             addressForm.classList.remove("hidden");
-            // Прокручиваем к форме
+            //Прокручиваем к форме
             addressForm.scrollIntoView({ behavior: "smooth" });
         });
     }
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Обработка профиля
+    //Обработка профиля
     const profileForm = document.getElementById("profile-form");
     if (profileForm) {
       profileForm.addEventListener("submit", async function (e) {
@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           if (response.ok) {
             showNotification("Данные успешно сохранены!");
-            // скрыть форму и показать блок с данными
+            //скрыть форму и показать блок с данными
             const dataBlock = profileForm.previousElementSibling;
             profileForm.classList.add("hidden");
             if (dataBlock) dataBlock.style.display = "block";
@@ -165,15 +165,12 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
-// Обработка адреса — просто пусть отправляется как обычно (без JS)
-
-
-    // Функция для отображения уведомления
+    //Функция для отображения уведомления
     function showNotification(message) {
-        // Проверяем, существует ли уже уведомление
+        //Проверяем, существует ли уже уведомление
         let notification = document.querySelector(".cart-notification");
 
-        // Если нет, создаем новое
+        //Если нет, создаем новое
         if (!notification) {
             notification = document.createElement("div");
             notification.className = "cart-notification";
@@ -182,12 +179,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         notification.textContent = message;
 
-        // Показываем уведомление
+        //Показываем уведомление
         setTimeout(() => {
             notification.classList.add("show");
         }, 100);
 
-        // Скрываем через 2 секунды
+        //Скрываем через 2 секунды
         setTimeout(() => {
             notification.classList.remove("show");
             setTimeout(() => {
@@ -198,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 2000);
     }
 
-    // Функционал поиска
+    //Функционал поиска
     const searchMenu = document.getElementById("searchMenu");
     const searchBlock = document.getElementById("searchBlock");
 
@@ -213,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 searchBlock.style.display = "block";
             } else {
                 searchBlock.style.display = "none";
-                // Очищаем поле ввода при закрытии
+                //Очищаем поле ввода при закрытии
                 const searchInput = searchBlock.querySelector(".search-input");
                 if (searchInput) {
                     searchInput.value = "";
@@ -221,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Закрываем поиск при клике вне поисковой строки
+        //Закрываем поиск при клике вне поисковой строки
         document.addEventListener("click", function (e) {
             if (
                 !searchMenu.contains(e.target) &&

@@ -5,10 +5,10 @@
     box-shadow: var(--shadow-md);
     transition: transform 0.3s, box-shadow 0.3s;
 
-    width: 100%; /* карточка займет всю ширину ячейки grid */
+    width: 100%; /*карточка займет всю ширину ячейки grid */
     max-width: 300px;
-    box-sizing: border-box; /* чтобы паддинги/бордеры не ломали размеры */
-    display: block; /* по умолчанию, но можно явно */
+    box-sizing: border-box; /*чтобы паддинги/бордеры не ломали размеры */
+    display: block; /*по умолчанию, но можно явно */
 }
 
 

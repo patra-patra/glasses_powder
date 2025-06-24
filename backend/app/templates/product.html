@@ -19,9 +19,9 @@
 
     <main class="product-page">
         <div class="container">
-            <!-- Основная информация о товаре -->
+            <!--Основная информация о товаре-->
             <div class="product-main">
-                <!-- Галерея изображения товара -->
+                <!--Галерея изображения товара-->
                 <div class="product-gallery">
                     <div class="product-main-image">
                         <img src="{{ url_for('static', filename='img/products/' ~ product.photonum) }}" alt="{{ product.name }}" id="main-product-image">
@@ -29,8 +29,7 @@
                     </div>
                 </div>
 
-
-                <!-- Информация о товаре -->
+                <!--Информация о товаре-->
                 <div class="product-info-block">
                     <h1 class="product-title">{{ product.name }}</h1>
                     <div class="product-sku">Артикул: {{ product.id }}</div>
@@ -45,8 +44,6 @@
                         {% endif %}
                     </div>
 
-
-
                     <div class="product-full-description">
                       {% if product.desc and product.desc != "no" and product.desc|length > 10 %}
                         {{ product.desc }}
@@ -55,9 +52,7 @@
                       {% endif %}
                     </div>
 
-
-
-                    <!-- Кнопки действий -->
+                    <!--Кнопки действий-->
                     <div class="product-actions">
                         <form action="{{ url_for('add_to_cart') }}" method="POST" id="main-add-to-cart-form">
                             <input type="hidden" name="product_id" value="{{ product.id }}">
@@ -65,11 +60,9 @@
                                 <i class="fas fa-shopping-cart"></i> Добавить в корзину
                             </button>
                         </form>
-
                     </div>
 
-
-                    <!-- Дополнительная информация -->
+                    <!--Дополнительная информация-->
                     <div class="product-additional-info">
                         <div class="info-item">
                             <i class="fas fa-truck"></i>
@@ -123,7 +116,7 @@
               </div>
             </div>
 
-            <!-- Рекомендуемые товары -->
+            <!--Рекомендуемые товары-->
             <div class="recommended-products">
                 <div class="section-header">
                     <h2>Вам также может понравиться</h2>
@@ -159,7 +152,6 @@
                             </div>
                         </a>
                     </div>
-
                     {% endfor %}
                 </div>
             </div>
@@ -170,7 +162,6 @@
     {% include 'partials/footer.html' %}
 
     <script>
-      // Скрипт переключения вкладок (если нужно)
       document.querySelectorAll('.tab-btn').forEach(button => {
         button.addEventListener('click', () => {
           document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -183,25 +174,20 @@
     </script>
     <script>
           document.addEventListener('DOMContentLoaded', function() {
-        // Переключение миниатюр в галерее
         const thumbnails = document.querySelectorAll('.thumbnail');
         const mainImage = document.getElementById('main-product-image');
 
         thumbnails.forEach(thumbnail => {
             thumbnail.addEventListener('click', function() {
-                // Удаляем активный класс у всех миниатюр
                 thumbnails.forEach(item => item.classList.remove('active'));
 
-                // Добавляем активный класс текущей миниатюре
                 this.classList.add('active');
 
-                // Обновляем основное изображение
                 const imageUrl = this.getAttribute('data-image');
                 mainImage.src = imageUrl;
             });
         });
 
-        // Управление количеством товара
         const minusBtn = document.querySelector('.quantity-btn.minus');
         const plusBtn = document.querySelector('.quantity-btn.plus');
         const quantityInput = document.querySelector('.quantity-input');
@@ -220,26 +206,21 @@
             }
         });
 
-        // Переключение вкладок
         const tabButtons = document.querySelectorAll('.tab-btn');
         const tabPanels = document.querySelectorAll('.tab-panel');
 
         tabButtons.forEach(button => {
             button.addEventListener('click', function() {
-                // Удаляем активный класс у всех кнопок и панелей
                 tabButtons.forEach(btn => btn.classList.remove('active'));
                 tabPanels.forEach(panel => panel.classList.remove('active'));
 
-                // Добавляем активный класс текущей кнопке
                 this.classList.add('active');
 
-                // Активируем соответствующую панель
                 const tabId = this.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
             });
         });
 
-        // Добавление в корзину
         const addToCartBtn = document.querySelector('.add-to-cart');
 
         addToCartBtn.addEventListener('click', function() {
@@ -249,7 +230,6 @@
             const productColor = document.querySelector('input[name="color"]:checked').value;
             const productSize = document.querySelector('input[name="size"]:checked').value;
 
-            // Здесь можно добавить логику добавления товара в корзину
             console.log('Товар добавлен в корзину:', {
                 name: productName,
                 price: productPrice,
@@ -258,11 +238,9 @@
                 size: productSize
             });
 
-            // Показываем уведомление
             alert('Товар добавлен в корзину!');
         });
 
-        // Кнопка избранного
         const wishlistBtn = document.querySelector('.wishlist');
 
         wishlistBtn.addEventListener('click', function() {
@@ -285,7 +263,6 @@
             alert('Ошибка: product_id не задан');
             return;
         }
-        // далее отправка
     });
     </script>
 
@@ -314,7 +291,7 @@
 
     document.querySelectorAll('.btn-add-to-cart').forEach(button => {
         button.addEventListener('click', event => {
-            event.preventDefault(); // отменяем отправку формы
+            event.preventDefault();
             const form = button.closest('.add-to-cart-form');
             const productId = form.dataset.productId;
 

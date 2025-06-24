@@ -39,14 +39,7 @@
 
 
                 </li>
-                <!--<li>
-        <a class="cart-link" id="searchMenu" title="Поиск">-->
-                <!--<i class="fas fa-search"></i>-->
-                <!--<span class="cart-text">Поиск</span>-->
-                <!--</a>
-    </li>-->
                 {% if session.user_id %}
-                <!-- Пользователь вошел -->
                 <li>
                     <a href="{{ url_for('account') }}" class="cart-link" id="searchMenu3" title="Кабинет">
                         <i class="fas fa-user"></i>
@@ -54,7 +47,6 @@
                     </a>
                 </li>
                 {% else %}
-                <!-- Гость -->
                 <li>
                     <a href="{{ url_for('reg') }}" class="cart-link" id="searchMenu2" title="Вход/регистрация">
                         <i class="fas fa-user"></i>

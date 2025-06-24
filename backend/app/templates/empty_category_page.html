@@ -19,7 +19,7 @@
     <main class="category-main">
         <div class="container">
             <div class="category-layout">
-                <!-- Левая колонка с фильтрами -->
+                <!--Левая колонка с фильтрами-->
                 <aside class="filter-sidebar">
                     <h3>Фильтры</h3>
 
@@ -74,33 +74,24 @@
 
                 </aside>
 
-
-
-                <!-- Поиск -->
+                <!--Поиск-->
                 <div class="products-content">
-                    <!-- Поисковая строка -->
+                    <!--Поисковая строка-->
                     <div class="search-block-category">
                         <form class="search-form" id="search-form" method="GET" action="{{ url_for('catalog') }}">
 
                             <input type="text" name="q" id="search-input" placeholder="Поиск товаров..." class="search-input" autocomplete="off" value="{{ request.args.get('q', '') }}">
-                            <!-- Сохраняем другие параметры как скрытые поля -->
+                            <!--Сохраняем другие параметры как скрытые поля-->
                             <input type="hidden" name="type" value="{{ request.args.get('type', '') }}">
                             <input type="hidden" name="sort" value="{{ request.args.get('sort', 'popularity') }}">
                             <input type="hidden" name="order" value="{{ request.args.get('order', 'desc') }}">
                             <button type="submit" class="search-button">
                                 <i class="fas fa-search"></i>
                             </button>
-
                         </form>
-
                     </div>
 
-
-
-
-
-
-                    <!-- Сортировка -->
+                    <!--Сортировка-->
                     <div class="sort-block">
                         <span>Сортировать:</span>
                         <div class="sort-options">
@@ -110,9 +101,6 @@
                             <button class="sort-btn {% if request.args.get('sort') == 'new' %}active{% endif %}" data-sort="new" data-order="desc">По новизне</button>
                         </div>
                     </div>
-
-
-
 
                     <div id="products-container">
                         {% if products.items %}
@@ -143,7 +131,6 @@
                                             </div>
                                         </div>
                                     {% endfor %}
-
                                 </div>
                             </div>
                         {% else %}
@@ -174,30 +161,7 @@
                                 <a href="{{ url_for('catalog', **new_args) }}">&raquo;</a>
                             {% endif %}
                         </div>
-
-
                     </div>
-
-<!--
-
-                    <div class="pagination">
-                        {% if products.has_prev %}
-                            <a href="{{ url_for('catalog', page=products.prev_num, type=current_type, brand=selected_brands, country=selected_country, min_price=min_price, max_price=max_price, sort=request.args.get('sort'), order=request.args.get('order')) }}">&laquo;</a>
-                        {% endif %}
-
-                        {% for p in range(1, products.pages + 1) %}
-                            <a href="{{ url_for('catalog', page=p, type=current_type, brand=selected_brands, country=selected_country, min_price=min_price, max_price=max_price, sort=request.args.get('sort'), order=request.args.get('order')) }}" class="{% if p == products.page %}active{% endif %}">
-                                {{ p }}
-                            </a>
-                        {% endfor %}
-
-                        {% if products.has_next %}
-                            <a href="{{ url_for('catalog', page=products.next_num, type=current_type, brand=selected_brands, country=selected_country, min_price=min_price, max_price=max_price, sort=request.args.get('sort'), order=request.args.get('order')) }}">&raquo;</a>
-                        {% endif %}
-                    </div>-->
-
-
-
                 </div>
             </div>
         </div>
@@ -236,7 +200,6 @@
         });
     });
 
-        // Добавление в корзину
     const addToCartBtn = document.querySelector('.add-to-cart');
 
     addToCartBtn.addEventListener('click', function() {
@@ -246,7 +209,6 @@
         const productColor = document.querySelector('input[name="color"]:checked').value;
         const productSize = document.querySelector('input[name="size"]:checked').value;
 
-        // Здесь можно добавить логику добавления товара в корзину
         console.log('Товар добавлен в корзину:', {
             name: productName,
             price: productPrice,
@@ -255,27 +217,9 @@
             size: productSize
         });
 
-        // Показываем уведомление
         alert('Товар добавлен в корзину!');
     });
     </script>
-
-<!--    <script>
-    document.querySelectorAll('.sort-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-
-            urlParams.set('sort', button.getAttribute('data-sort'));
-            urlParams.set('order', button.getAttribute('data-order'));
-            urlParams.set('page', 1); // при изменении сортировки возвращаемся на первую страницу
-
-            // Оставляем остальные параметры (type, q, brand и т.д.) как есть
-
-            // Перенаправляем
-            window.location.search = urlParams.toString();
-        });
-    });
-    </script>-->
 
     <script>
     function onCountryChange() {
@@ -328,9 +272,6 @@
     });
 
     </script>
-
-
-
 
 </body>
 </html>

@@ -8,7 +8,7 @@ print("DB_PATH =", DB_PATH)
 print("Файл существует?", os.path.exists(DB_PATH))
 print("Абсолютный путь:", os.path.abspath(DB_PATH))
 
-def get_all_products(): #для всех продуктов
+def get_all_products():
     print("Exists DB file?", os.path.exists(DB_PATH))
     print("DB_PATH =", DB_PATH)
     conn = sqlite3.connect(DB_PATH)
@@ -24,7 +24,7 @@ def get_all_products(): #для всех продуктов
     return products
 
 
-def get_products_by_type(types): #для типов продуктов (Женские, Мужские, Унисекс, Товары для лица, Товары для глаз, Товары для бровей, Товары для губ)
+def get_products_by_type(types):
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
@@ -45,7 +45,6 @@ def get_filtered_products(brand=None, types=None, sort_by=None, search=None):
     query = "SELECT * FROM products WHERE 1=1"
     params = []
 
-    #фильтрация
     if brand:
         query += " AND brand = ?"
         params.append(brand)
@@ -54,12 +53,10 @@ def get_filtered_products(brand=None, types=None, sort_by=None, search=None):
         query += " AND types = ?"
         params.append(types)
 
-    #поиск по name
     if search:
         query += " AND name LIKE ?"
         params.append(f"%{search}%")
 
-    #сортировка
     if sort_by == "price_asc":
         query += " ORDER BY price ASC"
     elif sort_by == "price_desc":

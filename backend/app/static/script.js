@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Функционал корзины
+    //Функционал корзины
     function getCart() {
         const cart = localStorage.getItem("beautyVisionCart");
         return cart ? JSON.parse(cart) : {};

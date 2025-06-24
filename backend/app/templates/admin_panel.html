@@ -73,53 +73,52 @@
     </main>
 
     <script>
-// Связь категорий с типами товаров из базы
-const categoryMap = {
-    'очки': ['мужские', 'женские', 'унисекс'],
-    'косметика': ['товары для лица', 'товары для губ', 'товары для бровей', 'товары для глах']
-};
+    //Связь категорий с типами товаров из базы
+    const categoryMap = {
+        'очки': ['мужские', 'женские', 'унисекс'],
+        'косметика': ['товары для лица', 'товары для губ', 'товары для бровей', 'товары для глаз']
+    };
 
-// Основные ссылки на категории и подкатегории
-const categoryLinks = document.querySelectorAll('.admin-menu [data-category]');
-const subcategoryLinks = document.querySelectorAll('.admin-menu [data-subcategory]');
+    //Основные ссылки на категории и подкатегории
+    const categoryLinks = document.querySelectorAll('.admin-menu [data-category]');
+    const subcategoryLinks = document.querySelectorAll('.admin-menu [data-subcategory]');
 
-// Обработка кликов по основным категориям
-categoryLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const category = link.dataset.category.toLowerCase();
+    //Обработка кликов по основным категориям
+    categoryLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const category = link.dataset.category.toLowerCase();
 
-        document.querySelectorAll('.product-card-admin').forEach(card => {
-            const productCategory = card.dataset.category?.toLowerCase() || '';
+            document.querySelectorAll('.product-card-admin').forEach(card => {
+                const productCategory = card.dataset.category?.toLowerCase() || '';
 
-            if (category === 'все') {
-                card.style.display = '';
-            } else if (categoryMap[category]) {
-                // Проверка по списку подкатегорий
-                const matches = categoryMap[category].some(sub => productCategory.includes(sub));
-                card.style.display = matches ? '' : 'none';
-            } else {
-                // На случай, если категория без маппинга
-                card.style.display = productCategory.includes(category) ? '' : 'none';
-            }
+                if (category === 'все') {
+                    card.style.display = '';
+                } else if (categoryMap[category]) {
+                    //Проверка по списку подкатегорий
+                    const matches = categoryMap[category].some(sub => productCategory.includes(sub));
+                    card.style.display = matches ? '' : 'none';
+                } else {
+                    //На случай, если категория без маппинга
+                    card.style.display = productCategory.includes(category) ? '' : 'none';
+                }
+            });
         });
     });
-});
 
-// Обработка кликов по подкатегориям
-subcategoryLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const subcategory = link.dataset.subcategory.toLowerCase();
+    //Обработка кликов по подкатегориям
+    subcategoryLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const subcategory = link.dataset.subcategory.toLowerCase();
 
-        document.querySelectorAll('.product-card-admin').forEach(card => {
-            const productCategory = card.dataset.category?.toLowerCase() || '';
-            card.style.display = productCategory.includes(subcategory) ? '' : 'none';
+            document.querySelectorAll('.product-card-admin').forEach(card => {
+                const productCategory = card.dataset.category?.toLowerCase() || '';
+                card.style.display = productCategory.includes(subcategory) ? '' : 'none';
+            });
         });
     });
-});
-</script>
-
+    </script>
 
 </body>
 </html>

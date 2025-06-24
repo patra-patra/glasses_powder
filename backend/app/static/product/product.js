@@ -1,23 +1,23 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Переключение миниатюр в галерее
+    //Переключение миниатюр в галерее
     const thumbnails = document.querySelectorAll('.thumbnail');
     const mainImage = document.getElementById('main-product-image');
 
     thumbnails.forEach(thumbnail => {
         thumbnail.addEventListener('click', function() {
-            // Удаляем активный класс у всех миниатюр
+            //Удаляем активный класс у всех миниатюр
             thumbnails.forEach(item => item.classList.remove('active'));
 
-            // Добавляем активный класс текущей миниатюре
+            //Добавляем активный класс текущей миниатюре
             this.classList.add('active');
 
-            // Обновляем основное изображение
+            //Обновляем основное изображение
             const imageUrl = this.getAttribute('data-image');
             mainImage.src = imageUrl;
         });
     });
 
-    // Управление количеством товара
+    //Управление количеством товара
     const minusBtn = document.querySelector('.quantity-btn.minus');
     const plusBtn = document.querySelector('.quantity-btn.plus');
     const quantityInput = document.querySelector('.quantity-input');
@@ -36,26 +36,26 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Переключение вкладок
+    //Переключение вкладок
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabPanels = document.querySelectorAll('.tab-panel');
 
     tabButtons.forEach(button => {
         button.addEventListener('click', function() {
-            // Удаляем активный класс у всех кнопок и панелей
+            //Удаляем активный класс у всех кнопок и панелей
             tabButtons.forEach(btn => btn.classList.remove('active'));
             tabPanels.forEach(panel => panel.classList.remove('active'));
 
-            // Добавляем активный класс текущей кнопке
+            //Добавляем активный класс текущей кнопке
             this.classList.add('active');
 
-            // Активируем соответствующую панель
+            //Активируем соответствующую панель
             const tabId = this.getAttribute('data-tab');
             document.getElementById(tabId).classList.add('active');
         });
     });
 
-    // Добавление в корзину
+    //Добавление в корзину
     const addToCartBtn = document.querySelector('.add-to-cart');
 
     addToCartBtn.addEventListener('click', function() {
@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const productColor = document.querySelector('input[name="color"]:checked').value;
         const productSize = document.querySelector('input[name="size"]:checked').value;
 
-        // Здесь можно добавить логику добавления товара в корзину
         console.log('Товар добавлен в корзину:', {
             name: productName,
             price: productPrice,
@@ -74,11 +73,11 @@ document.addEventListener('DOMContentLoaded', function() {
             size: productSize
         });
 
-        // Показываем уведомление
+        //Показываем уведомление
         alert('Товар добавлен в корзину!');
     });
 
-    // Кнопка избранного
+    //Кнопка избранного
     const wishlistBtn = document.querySelector('.wishlist');
 
     wishlistBtn.addEventListener('click', function() {

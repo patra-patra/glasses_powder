@@ -85,7 +85,7 @@
 }
 .admin-actions a i,
 .admin-actions button i {
-    font-size: 30px; /* Увеличивает иконки */
+    font-size: 30px;
     color: #e07a5f;
 }
 .admin-actions a,
@@ -222,13 +222,13 @@
 }
 
 .admin-menu a[data-category="все"] {
-    background-color: #e07a5f; /* Ярко-оранжевый */
+    background-color: #e07a5f;
     color: white;
     font-weight: 600;
 }
 
 .admin-menu a[data-category="все"]:hover {
-    background-color: #b56576; /* Темнее при наведении */
+    background-color: #b56576;
 }
 
 .preview-image {

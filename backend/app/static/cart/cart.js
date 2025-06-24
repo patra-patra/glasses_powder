@@ -88,7 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // TODO: отправка на сервер через fetch или редирект на оформление
         alert("Оформление заказа (заглушка)");
     });
 

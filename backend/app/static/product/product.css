@@ -1,12 +1,9 @@
-/* Стили для страницы товара */
-
 .product-page {
     padding: 120px 0 60px;
     background-color: var(--bg-color);
     font-family: 'Montserrat', sans-serif;
 }
 
-/* Основной блок товара */
 .product-main {
     display: flex;
     gap: 40px;
@@ -16,7 +13,7 @@
 .product-tabs {
   display: flex;
   flex-direction: column;
-  max-width: 900px; /* или сколько у тебя нужно */
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -42,7 +39,7 @@
 }
 
 .tabs-content {
-  min-height: 150px; /* Минимальная высота, чтобы не сдвигалось */
+  min-height: 150px;
   padding: 10px 0;
 }
 
@@ -54,8 +51,6 @@
   display: block;
 }
 
-
-/* Галерея изображений */
 .product-gallery {
     width: 50%;
     position: relative;
@@ -112,7 +107,6 @@
     box-shadow: var(--shadow-md);
 }
 
-/* Информация о товаре */
 .product-info-block {
     width: 50%;
     padding: 20px 0;
@@ -189,7 +183,6 @@
     color: var(--text-color);
 }
 
-/* Опции товара */
 .product-options {
     margin-bottom: 30px;
 }
@@ -288,7 +281,6 @@
     border-color: var(--primary-color);
 }
 
-/* Кнопки действий */
 .product-actions {
     display: flex;
     gap: 15px;
@@ -363,7 +355,6 @@
     color: var(--primary-color);
 }
 
-/* Дополнительная информация */
 .product-additional-info {
     padding: 20px;
     background: var(--gray-100);
@@ -387,7 +378,6 @@
     font-size: 1.1rem;
 }
 
-/* Вкладки */
 .product-tabs {
     margin-bottom: 60px;
 }
@@ -438,7 +428,6 @@
     display: block;
 }
 
-/* Полное описание */
 .product-full-description {
     line-height: 1.8;
 }
@@ -457,7 +446,6 @@
     margin-bottom: 10px;
 }
 
-/* Характеристики */
 .product-characteristics {
     display: flex;
     flex-wrap: wrap;
@@ -492,7 +480,6 @@
     font-weight: 500;
 }
 
-/* Отзывы */
 .reviews-summary {
     display: flex;
     gap: 40px;
@@ -596,7 +583,6 @@
     margin-top: 30px;
 }
 
-/* Рекомендуемые товары */
 .recommended-products {
     margin-bottom: 60px;
 }
@@ -607,7 +593,6 @@
     gap: 20px;
 }
 
-/* Адаптивность */
 @media (max-width: 992px) {
     .product-main {
         flex-direction: column;

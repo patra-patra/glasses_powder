@@ -119,17 +119,6 @@
                                 <label for="consent">Я согласен на обработку персональных данных</label>
                             </div>
 
-<!--                            {% with messages = get_flashed_messages(with_categories=true) %}-->
-<!--                              {% if messages %}-->
-<!--                                <ul class="flashes">-->
-<!--                                  {% for category, message in messages %}-->
-<!--                                    <li class="{{ category }}">{{ message }}</li>-->
-<!--                                  {% endfor %}-->
-<!--                                </ul>-->
-<!--                              {% endif %}-->
-<!--                            {% endwith %}-->
-
-
                             <button type="submit" class="btn btn-primary">Отправить сообщение</button>
                         </form>
                     </div>
@@ -200,7 +189,7 @@
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     <script src="{{ url_for('static', filename='contact/contact.js') }}"></script>
     <script>
-        // Простой JS для FAQ — сворачивание/разворачивание ответов
+        //Простой JS для FAQ — сворачивание/разворачивание ответов
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const answer = question.nextElementSibling;

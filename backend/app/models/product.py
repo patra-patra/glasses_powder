@@ -2,8 +2,6 @@ import os
 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from flask_login import UserMixin
-
 
 db = SQLAlchemy()
 
@@ -42,7 +40,7 @@ class User(db.Model):
     last_name = db.Column(db.String, nullable=False)
     phone = db.Column(db.String, unique=True, nullable=False)
     email = db.Column(db.String, unique=True)
-    password = db.Column(db.String, nullable=False)  # убедимся, что обязательное поле
+    password = db.Column(db.String, nullable=False)
     birthdate = db.Column(db.String)
     gender = db.Column(db.String)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -99,9 +97,8 @@ class ContactMessage(db.Model):
     message = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-#Подключение к уже существующей БД:
 def init_db(app):
-    BASE_DIR = os.path.abspath(os.path.dirname(__file__)) #путь к папке, где этот файл
+    BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
     db_path = os.path.join(BASE_DIR, 'db', 'products.db')
     db_uri = f"sqlite:///{db_path}"

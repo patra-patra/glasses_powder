@@ -1,6 +1,3 @@
-/* Ñòèëè äëÿ ëè÷íîãî êàáèíåòà */
-
-/* Îñíîâíàÿ ñòðóêòóðà ñòðàíèöû ëè÷íîãî êàáèíåòà */
 .account-main {
     padding-top: 90px;
     padding-bottom: 80px;
@@ -37,7 +34,6 @@
     gap: 30px;
 }
 
-/* Áîêîâàÿ ïàíåëü */
 .account-sidebar {
     flex: 0 0 280px;
     background: white;
@@ -196,7 +192,6 @@
     padding: 0 6px;
 }
 
-/* Îñíîâíàÿ îáëàñòü êîíòåíòà */
 .account-content {
     flex: 1;
 }
@@ -215,14 +210,14 @@
     box-shadow: var(--shadow-md);
     margin-bottom: 30px;
     overflow: hidden;
-    padding-top: 0; /* ßâíî óêàçûâàåì îòñóòñòâèå âåðõíåãî îòñòóïà */
+    padding-top: 0;
 }
 
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px; /* Óìåíüøåí îòñòóï ñâåðõó è ñíèçó */
+    padding: 15px 30px;
     border-bottom: 1px solid var(--gray-200);
 }
 
@@ -259,9 +254,8 @@
         font-size: 0.8rem;
     }
 
-/* Ïðîôèëü - ëè÷íûå äàííûå */
 .personal-info {
-    padding: 0px 30px 30px 30px; /* Óìåíüøåí îòñòóï ñâåðõó */
+    padding: 0px 30px 30px 30px;
 }
 
 .profile-data {
@@ -392,13 +386,11 @@ button.btn-danger {
         color: white;
     }
 
-/* Ôîðìà ïàðîëÿ */
 .password-form {
     padding: 30px;
     max-width: 500px;
 }
 
-/* Çàêàçû */
 .orders-list {
     padding: 20px;
 }
@@ -510,7 +502,6 @@ button.btn-danger {
     border-top: 1px solid var(--gray-200);
 }
 
-/* Èçáðàííîå */
 .favorites-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -601,7 +592,6 @@ button.btn-danger {
     color: var(--primary-color);
 }
 
-/* Àäðåñà */
 .addresses-list {
     padding: 0 20px;
 }
@@ -731,7 +721,6 @@ button.btn-danger {
         cursor: pointer;
     }
 
-/* Íàñòðîéêè */
 .settings-list {
     padding: 20px 30px;
 }
@@ -775,7 +764,6 @@ button.btn-danger {
         margin-bottom: 15px;
     }
 
-/* Ïåðåêëþ÷àòåëü */
 .switch {
     position: relative;
     display: inline-block;
@@ -831,7 +819,6 @@ input:checked + .slider:before {
         border-radius: 50%;
     }
 
-/* Àäàïòèâíûå ñòèëè */
 @media (max-width: 992px) {
     .account-wrapper {
         flex-direction: column;

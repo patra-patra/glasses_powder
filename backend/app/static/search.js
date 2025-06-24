@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let justOpened = false;
 
-    // Показать поиск при клике по пункту меню
+    //Показать поиск при клике по пункту меню
     searchMenu.addEventListener('click', function (e) {
         e.preventDefault();
         searchBlock.style.display = 'block';
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
         justOpened = true;
     });
 
-    // Закрытие поиска при клике вне поисковой формы
+    //Закрытие поиска при клике вне поисковой формы
     document.addEventListener('click', function (e) {
         if (justOpened) {
             justOpened = false;
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Предотвращаем закрытие при клике внутри блока
+    //Предотвращаем закрытие при клике внутри блока
     searchBlock.addEventListener('click', function (e) {
         e.stopPropagation();
     });

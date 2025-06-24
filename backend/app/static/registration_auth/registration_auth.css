@@ -1,24 +1,22 @@
-/* Îñíîâíûå ñòèëè äëÿ ñòðàíèöû àâòîðèçàöèè/ðåãèñòðàöèè */
 .auth-container {
     display: flex;
-    padding-top: 0; /* Óáèðàåì îòñòóï îò õåäåðà */
+    padding-top: 0;
     background-color: var(--bg-color);
     position: relative;
-    min-height: 100vh; /* Îáíîâëÿåì ìèíèìàëüíóþ âûñîòó */
+    min-height: 100vh;
 }
 
-/* Ñòèëè äëÿ êàðóñåëè */
 .auth-carousel {
     width: 50%;
     position: relative;
     overflow: hidden;
-    height: 100vh; /* Îáíîâëÿåì âûñîòó êàðóñåëè */
+    height: 100vh;
     min-height: 600px;
-    margin-top: 0; /* ßâíî óêàçûâàåì îòñóòñòâèå îòñòóïà ñâåðõó */
+    margin-top: 0;
 }
 
 .header + .auth-container .auth-carousel {
-    margin-top: 0; /* Äîïîëíèòåëüíî óáåæäàåìñÿ, ÷òî îòñòóïà íåò */
+    margin-top: 0;
 }
 
 .carousel-slide {
@@ -68,7 +66,6 @@
     transform: scale(1.2);
 }
 
-/* Ñòèëè äëÿ êîíòåíòíîé ÷àñòè */
 .auth-content {
     width: 50%;
     display: flex;
@@ -76,8 +73,8 @@
     justify-content: center;
     padding: 40px;
     position: relative;
-    min-height: 100vh; /* Îáíîâëÿåì ìèíèìàëüíóþ âûñîòó */
-    padding-top: 80px; /* Äîáàâëÿåì îòñòóï ñâåðõó äëÿ êîíòåíòà, ÷òîáû ó÷åñòü âûñîòó øàïêè */
+    min-height: 100vh;
+    padding-top: 80px;
 }
 
 .auth-welcome {
@@ -117,7 +114,6 @@
     font-size: 1.1rem;
 }
 
-/* Îáíîâëåííûå ñòèëè äëÿ êíîïîê ïðèâåòñòâåííîãî ýêðàíà */
 .auth-welcome .auth-buttons {
     display: flex;
     gap: 15px;
@@ -131,24 +127,24 @@
     padding: 14px 20px;
     font-weight: 500;
     font-size: 0.95rem;
-    background: #ebebeb; /* Ñâåòëî-ñåðûé ôîí */
+    background: #ebebeb;
     color: var(--text-color);
     border: none;
     border-radius: var(--radius-sm);
     box-shadow: none;
     transition: background-color 0.3s ease;
-    text-transform: none; /* Îòêëþ÷àåì âñå çàãëàâíûå áóêâû, åñëè îíè áûëè */
+    text-transform: none;
 }
 
 .auth-welcome .auth-buttons .btn-primary:hover,
 .auth-welcome .auth-buttons .btn-secondary:hover {
-    background: #e0e0e0; /* Íåìíîãî òåìíåå ïðè íàâåäåíèè */
+    background: #e0e0e0;
     transform: none;
     box-shadow: none;
 }
 
 .auth-welcome .auth-buttons .btn-primary:before {
-    display: none; /* Îòêëþ÷àåì ýôôåêò ãðàäèåíòà */
+    display: none;
 }
 
 .auth-welcome .auth-buttons .btn-secondary {
@@ -169,7 +165,6 @@
     font-weight: 600;
 }
 
-/* Ñòèëè äëÿ ôîðì */
 .auth-forms {
     position: absolute;
     top: 0;
@@ -361,7 +356,6 @@ button[type="submit"]:hover {
     transform: translateY(-2px);
 }
 
-/* Ñòèëè äëÿ ñêðîëëáàðà â ôîðìå ðåãèñòðàöèè */
 .register-form::-webkit-scrollbar {
     width: 8px;
 }
@@ -380,7 +374,6 @@ button[type="submit"]:hover {
     background-color: var(--primary-light);
 }
 
-/* Àäàïòèâíàÿ âåðñòêà */
 @media (max-width: 992px) {
     .auth-container {
         flex-direction: column;
@@ -404,7 +397,6 @@ button[type="submit"]:hover {
         display: block;
     }
 
-    /* Êëþ÷åâîå èçìåíåíèå: ïîëíîå èçìåíåíèå ïîäõîäà ê âåðñòêå íà ìîáèëüíûõ */
     .auth-welcome,
     .login-form,
     .register-form {
@@ -487,7 +479,6 @@ button[type="submit"]:hover {
         gap: 10px;
     }
 
-    /* Ñîêðàùàåì ðàçìåðû è îòñòóïû äëÿ êîìïàêòíîñòè */
     .form-group {
         margin-bottom: 15px;
     }

@@ -70,7 +70,7 @@
             </div>
         </section>
 
-        <!-- Секция с новинками -->
+        <!--Секция с новинками-->
         <section id="new-arrivals" class="new-arrivals">
             <div class="container">
                 <div class="section-header">
@@ -108,20 +108,16 @@
                                                         <i class="fas fa-shopping-cart"></i>В корзину
                                                     </button>
                                                 </form>
-
                                             </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         {% endfor %}
-
-
                     </div>
                 </div>
             </div>
         </section>
-
 
         <section class="promotions">
             <div class="container">
@@ -173,7 +169,7 @@
             </div>
         </section>
 
-        <!-- Секция Косметики -->
+        <!--Секция Косметики-->
         <section class="products cosmetics-section">
             <div class="container">
                 <div class="section-header">
@@ -229,7 +225,7 @@
             </div>
         </section>
 
-        <!-- Секция Очков -->
+        <!--Секция Очков-->
         <section class="products glasses-section">
             <div class="container">
                 <div class="section-header">
@@ -382,7 +378,6 @@
 
     {% include 'partials/footer.html' %}
 
-
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 
     <script>
@@ -406,7 +401,6 @@
         }
     });
 
-        // Добавление в корзину
     const addToCartBtn = document.querySelector('.add-to-cart');
 
     addToCartBtn.addEventListener('click', function() {
@@ -416,7 +410,6 @@
         const productColor = document.querySelector('input[name="color"]:checked').value;
         const productSize = document.querySelector('input[name="size"]:checked').value;
 
-        // Здесь можно добавить логику добавления товара в корзину
         console.log('Товар добавлен в корзину:', {
             name: productName,
             price: productPrice,
@@ -425,7 +418,6 @@
             size: productSize
         });
 
-        // Показываем уведомление
         alert('Товар добавлен в корзину!');
     });
 
