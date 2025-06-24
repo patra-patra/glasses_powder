@@ -645,6 +645,8 @@ def is_admin():
 
 @app.route('/admin')
 def admin_panel():
+    if session.get('user_id') != 1:
+        abort(403)
     products = Product.query.all()
     orders = Order.query.order_by(Order.created_at.desc()).all()
 
@@ -761,6 +763,26 @@ def delete_product(product_id):
     flash('Товар удалён!', 'info')
 
     return redirect(url_for('admin_panel'))
+
+@app.route('/admin/orders')
+def admin_orders():
+    if session.get('user_id') != 1:
+        abort(403)
+
+    orders = Order.query.order_by(Order.created_at.desc()).all()
+
+    return render_template('admin_orders.html', orders=orders)
+
+@app.route('/admin/update_order_status/<int:order_id>', methods=['POST'])
+def update_order_status(order_id):
+    if session.get('user_id') != 1:
+        abort(403)
+
+    new_status = request.form.get('status')
+    order = Order.query.get_or_404(order_id)
+    order.status = new_status
+    db.session.commit()
+    return redirect(url_for('admin_orders'))
 
 if __name__ == '__main__':
     app.run(debug=True)
