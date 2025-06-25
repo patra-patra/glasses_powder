@@ -1,4 +1,4 @@
-<script>
+
 document.addEventListener("DOMContentLoaded", function () {
     const cartItemsContainer = document.getElementById("cart-items");
     const cartEmptyMessage = document.querySelector(".cart-empty");
@@ -93,4 +93,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
     renderCart();
 });
-</script>
+
