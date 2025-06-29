@@ -240,13 +240,13 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Здесь код для обработки входа
-        const phone = loginPhoneInput.value;
-        const password = document.getElementById('login-password').value;
+        //// Здесь код для обработки входа
+        //const phone = loginPhoneInput.value;
+        //const password = document.getElementById('login-password').value;
 
-        console.log('Выполняется вход:', { phone, password });
-        // В реальном приложении здесь был бы запрос к серверу
-        alert('Форма входа отправлена успешно!');
+        ////console.log('Выполняется вход:', { phone, password });
+        ////// В реальном приложении здесь был бы запрос к серверу
+        ////alert('Форма входа отправлена успешно!');
     });
 
     registerFormElement.addEventListener('submit', function (e) {
@@ -269,20 +269,8 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // Сбор данных формы
-        const formData = {
-            name: document.getElementById('register-name').value,
-            lastname: document.getElementById('register-lastname').value,
-            email: document.getElementById('register-email').value,
-            phone: registerPhoneInput.value,
-            birthdate: document.getElementById('register-birthdate').value,
-            city: document.getElementById('register-city').value,
-            address: document.getElementById('register-address').value,
-            password: passwordInput.value
-        };
-
-        console.log('Данные регистрации:', formData);
-        // В реальном приложении здесь был бы запрос к серверу
-        alert('Регистрация успешно завершена!');
+        //console.log('Данные регистрации:', formData);
+        //// В реальном приложении здесь был бы запрос к серверу
+        //alert('Регистрация успешно завершена!');
     });
 });

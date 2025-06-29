@@ -14,7 +14,9 @@
 <body>
     <header class="header">
         <div class="container">
-            <h1 class="logo">Очки & Пудра</h1>
+            <a href="../index.html" class="logo">
+                <h1 class="logo">Очки & Пудра</h1>
+            </a>
             <nav class="nav">
                 <input type="checkbox" id="nav-toggle" class="nav-toggle">
                 <label for="nav-toggle" class="nav-toggle-label">
@@ -22,49 +24,46 @@
                 </label>
                 <ul>
                     <li>
-                        <a href="category_page/empty_category_page.html" class="has-submenu">Косметика</a>
+                        <a href="category_page\empty_category_page.html" class="has-submenu">Каталог</a>
+                    </li>
+                    <li>
+                        <a href="category_page\empty_category_page.html" class="has-submenu">Косметика</a>
                         <ul class="sub-menu">
-                            <li><a href="category_page/empty_category_page.html">Лицо</a></li>
-                            <li>
-                                <a href="category_page/empty_category_page.html" class="has-submenu">Глаза</a>
-                            </li>
-                            <li><a href="category_page/empty_category_page.html">Брови</a></li>
-                            <li><a href="category_page/empty_category_page.html">Губы</a></li>
+                            <li><a href="category_page\empty_category_page.html">Лицо</a></li>
+                            <li><a href="category_page\empty_category_page.html">Глаза</a></li>
+                            <li><a href="category_page\empty_category_page.html">Брови</a></li>
+                            <li><a href="category_page\empty_category_page.html">Губы</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="category_page/empty_category_page.html" class="has-submenu">Очки</a>
+                        <a href="category_page\empty_category_page.html" class="has-submenu">Очки</a>
                         <ul class="sub-menu">
-                            <li><a href="category_page/empty_category_page.html">Солнцезащитные</a></li>
-                            <li><a href="category_page/empty_category_page.html">Оптические</a></li>
-                            <li><a href="category_page/empty_category_page.html">Компьютерные</a></li>
-                            <li><a href="category_page/empty_category_page.html">Спортивные</a></li>
+                            <li><a href="category_page\empty_category_page.html">Мужские</a></li>
+                            <li><a href="category_page\empty_category_page.html">Женские</a></li>
+                            <li><a href="category_page\empty_category_page.html">Унисекс</a></li>
                         </ul>
                     </li>
-                    <li><a href="contact/contact.html">Контакты</a></li>
+                    <li><a href="contact\contact.html">Контакты</a></li>
                     <li>
-                        <a href="cart/cart.html" class="cart-link" title="Корзина">
+                        <a href="cart\cart.html" class="cart-link" title="Корзина">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="cart-text">Корзина</span>
                         </a>
                     </li>
+                    <!--<li>
+                    <a href="" class="cart-link" id="searchMenu3" title="Кабинет">
+                        <i class="fas fa-user"></i>
+                        <span class="cart-text">Кабинет</span>
+                    </a>
+                </li>-->
                     <li>
-                        <a class="cart-link" id="searchMenu" title="Поиск">
-                            <i class="fas fa-search"></i>
-                            <span class="cart-text">Поиск</span>
+                        <a href="registration_auth\regitsration_auth.html" class="cart-link" id="searchMenu2" title="Вход/регистрация">
+                            <i class="fas fa-user"></i>
+                            <span class="cart-text">Вход / регистрация</span>
                         </a>
                     </li>
                 </ul>
             </nav>
-            <!-- Поисковая строка -->
-            <div class="search-block" id="searchBlock">
-                <form class="search-form">
-                    <input type="text" placeholder="Поиск товаров..." class="search-input">
-                    <button type="submit" class="search-button">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-            </div>
         </div>
     </header>
 
@@ -103,21 +102,21 @@
                     <form id="login-form">
                         <div class="form-group">
                             <label for="login-phone">Телефон</label>
-                            <input type="tel" id="login-phone" placeholder="+7 (___) ___-__-__" required>
+                            <input name="phone" type="tel" id="login-phone" placeholder="+7 (___) ___-__-__" required />
                             <span class="form-error" id="login-phone-error"></span>
                         </div>
                         <div class="form-group">
                             <label for="login-password">Пароль</label>
-                            <input type="password" id="login-password" required>
+                            <input name="password" type="password" id="login-password" required />
                         </div>
                         <div class="form-options">
                             <label class="remember-me">
-                                <input type="checkbox" id="remember-me">
+                                <input type="checkbox" id="remember-me" />
                                 <span>Запомнить меня</span>
                             </label>
                             <a href="#" class="forgot-password">Забыли пароль?</a>
                         </div>
-                        <button type="submit" class="btn-primary">Войти</button>
+                        <button href="account\account.html" type="submit" class="btn-primary">Войти</button>
                     </form>
                     <div class="form-footer">
                         <p>Нет аккаунта? <a href="#" class="switch-to-register">Зарегистрироваться</a></p>
@@ -130,54 +129,54 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="register-name">Имя</label>
-                                <input type="text" id="register-name" required>
+                                <input name="first_name" type="text" id="register-name" required />
                             </div>
                             <div class="form-group">
                                 <label for="register-lastname">Фамилия</label>
-                                <input type="text" id="register-lastname" required>
+                                <input name="last_name" type="text" id="register-lastname" required />
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="register-phone">Телефон</label>
-                            <input type="tel" id="register-phone" placeholder="+7 (___) ___-__-__" required>
+                            <input name="phone" type="tel" id="register-phone" placeholder="+7 (___) ___-__-__" required />
                             <span class="form-error" id="phone-error"></span>
                         </div>
 
                         <div class="form-group">
                             <label for="register-birthdate">Дата рождения</label>
-                            <input type="date" id="register-birthdate" required>
+                            <input name="birthdate" type="date" id="register-birthdate" required />
                         </div>
 
                         <div class="form-group">
                             <label for="register-city">Город</label>
-                            <input type="text" id="register-city" required>
+                            <input name="city" type="text" id="register-city" required />
                         </div>
 
                         <div class="form-group">
                             <label for="register-address">Адрес</label>
-                            <textarea id="register-address" rows="2" required></textarea>
+                            <input name="street" type="text" id="register-street" required />
                         </div>
 
                         <div class="form-group">
                             <label for="register-password">Пароль</label>
-                            <input type="password" id="register-password" required>
+                            <input name="password" type="password" id="register-password" required />
                         </div>
 
                         <div class="form-group">
                             <label for="register-confirm-password">Подтвердите пароль</label>
-                            <input type="password" id="register-confirm-password" required>
+                            <input name="password" type="password" id="register-confirm-password" required />
                             <span class="form-error" id="password-error"></span>
                         </div>
 
                         <div class="form-agreement">
                             <label class="agreement">
-                                <input type="checkbox" required>
+                                <input type="checkbox" required />
                                 <span>Я согласен с <a href="#">условиями использования</a> и <a href="#">политикой конфиденциальности</a></span>
                             </label>
                         </div>
 
-                        <button type="submit" class="btn-primary">Зарегистрироваться</button>
+                        <button href="account/account.html" type="submit" class="btn-primary">Зарегистрироваться</button>
                     </form>
                     <div class="form-footer">
                         <p>Уже есть аккаунт? <a href="#" class="switch-to-login">Войти</a></p>
@@ -191,8 +190,8 @@
         <div class="container">
             <div class="footer-columns">
                 <div class="footer-column">
-                    <h3>Beauty Shop</h3>
-                    <p>Ваш источник красоты и стиля. Мы предлагаем лучшие косметические продукты и стильные оправы для создания вашего неповторимого образа.</p>
+                    <h3 class="logo">Очки & Пудра</h3>
+                    <p>Ваш источник лучших косметических средств и стильных очков.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-instagram"></i></a>
                         <a href="#"><i class="fab fa-telegram"></i></a>
@@ -202,26 +201,23 @@
                 <div class="footer-column">
                     <h4>Навигация</h4>
                     <ul>
-                        <li><a href="#">Главная</a></li>
-                        <li><a href="#">Косметика</a></li>
-                        <li><a href="#">Очки</a></li>
-                        <li><a href="#">Акции</a></li>
-                        <li><a href="#">О нас</a></li>
-                        <li><a href="#">Контакты</a></li>
+                        <li><a href="{{ url_for('catalog', category='cosmetics') }}">Косметика</a></li>
+                        <li><a href="{{ url_for('catalog', category='glasses') }}">Очки</a></li>
+                        <li><a href="#blog">Блог</a></li>
+                        <li><a href="{{ url_for('contact') }}">Контакты</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h4>Контакты</h4>
                     <ul class="contact-info">
-                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Примерная, 123</li>
-                        <li><i class="fas fa-phone"></i> +7 (123) 456-7890</li>
-                        <li><i class="fas fa-envelope"></i> info@beautyshop.ru</li>
-                        <li><i class="fas fa-clock"></i> Пн-Пт: 9:00 - 20:00</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, Мясницкая ул., 13 строение 2</li>
+                        <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
+                        <li><i class="fas fa-envelope"></i> info@beautyvision.ru</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2023 Beauty Shop. Все права защищены.</p>
+                <p>&copy; 2025 Очки & Пудра. Все права защищены.</p>
             </div>
         </div>
     </footer>

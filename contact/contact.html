@@ -6,6 +6,7 @@
     <title>Контакты — Очки и Пудра</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="contact.css">
+    <link rel="stylesheet" href="../menu_style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
@@ -15,22 +16,52 @@
 <body>
     <header class="header">
         <div class="container">
-            <h1 class="logo"><a href="../index.html">Очки & Пудра</a></h1>
+            <a href="..\index.html" class="logo">
+                <h1 class="logo">Очки & Пудра</h1>
+            </a>
             <nav class="nav">
                 <input type="checkbox" id="nav-toggle" class="nav-toggle">
                 <label for="nav-toggle" class="nav-toggle-label">
                     <span></span>
                 </label>
                 <ul>
-                    <li><a href="../index.html#about">О нас</a></li>
-                    <li><a href="../index.html#cosmetics">Косметика</a></li>
-                    <li><a href="../index.html#glasses">Очки</a></li>
-                    <li><a href="../index.html#bestsellers">Бестселлеры</a></li>
-                    <li><a href="contact.html" class="active">Контакты</a></li>
                     <li>
-                        <a href="../cart/cart.html" class="cart-link" title="Корзина">
+                        <a href="..\category_page\empty_category_page.html" class="has-submenu">Каталог</a>
+                    </li>
+                    <li>
+                        <a href="..\category_page\empty_category_page.html" class="has-submenu">Косметика</a>
+                        <ul class="sub-menu">
+                            <li><a href="..\category_page\empty_category_page.html">Лицо</a></li>
+                            <li><a href="..\category_page\empty_category_page.html">Глаза</a></li>
+                            <li><a href="..\category_page\empty_category_page.html">Брови</a></li>
+                            <li><a href="..\category_page\empty_category_page.html">Губы</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="..\category_page\empty_category_page.html" class="has-submenu">Очки</a>
+                        <ul class="sub-menu">
+                            <li><a href="..\category_page\empty_category_page.html">Мужские</a></li>
+                            <li><a href="..\category_page\empty_category_page.html">Женские</a></li>
+                            <li><a href="..\category_page\empty_category_page.html">Унисекс</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="contact.html">Контакты</a></li>
+                    <li>
+                        <a href="..\cart\cart.html" class="cart-link" title="Корзина">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="cart-text">Корзина</span>
+                        </a>
+                    </li>
+                    <li>
+                    <a href="" class="cart-link" id="searchMenu3" title="Кабинет">
+                        <i class="fas fa-user"></i>
+                        <span class="cart-text">Кабинет</span>
+                    </a>
+                </li>
+                    <li>
+                        <a href="registration_auth\regitsration_auth.html" class="cart-link" id="searchMenu2" title="Вход/регистрация">
+                            <i class="fas fa-user"></i>
+                            <span class="cart-text">Вход / регистрация</span>
                         </a>
                     </li>
                 </ul>
@@ -47,7 +78,7 @@
 
             <div class="contact-content">
                 <div class="contact-info-wrapper">
-                    <div class="contact-info">
+                    <div class="contact-infoo">
                         <h3>Наши контакты</h3>
                         <div class="contact-item">
                             <i class="fas fa-map-marker-alt"></i>
@@ -194,7 +225,7 @@
         <div class="container">
             <div class="footer-columns">
                 <div class="footer-column">
-                    <h3 class="logo">Beauty & Vision</h3>
+                    <h3 class="logo">Очки & Пудра</h3>
                     <p>Ваш источник лучших косметических средств и стильных очков.</p>
                     <div class="social-links">
                         <a href="#"><i class="fab fa-instagram"></i></a>
@@ -205,16 +236,15 @@
                 <div class="footer-column">
                     <h4>Навигация</h4>
                     <ul>
-                        <li><a href="#about">О нас</a></li>
-                        <li><a href="#cosmetics">Косметика</a></li>
-                        <li><a href="#glasses">Очки</a></li>
+                        <li><a href="{{ url_for('catalog', category='cosmetics') }}">Косметика</a></li>
+                        <li><a href="{{ url_for('catalog', category='glasses') }}">Очки</a></li>
                         <li><a href="#blog">Блог</a></li>
-                        <li><a href="#contact">Контакты</a></li>
+                        <li><a href="{{ url_for('contact') }}">Контакты</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h4>Контакты</h4>
-                    <ul class="contact--info">
+                    <ul class="contact-info">
                         <li><i class="fas fa-map-marker-alt"></i> Москва, Мясницкая ул., 13 строение 2</li>
                         <li><i class="fas fa-phone"></i> +7 (999) 123-45-67</li>
                         <li><i class="fas fa-envelope"></i> info@beautyvision.ru</li>
@@ -222,7 +252,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Beauty & Vision. Все права защищены.</p>
+                <p>&copy; 2025 Очки & Пудра. Все права защищены.</p>
             </div>
         </div>
     </footer>

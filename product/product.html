@@ -85,117 +85,50 @@
 
     <main class="product-page">
         <div class="container">
-            <!-- Основная информация о товаре -->
+            <!--Основная информация о товаре-->
             <div class="product-main">
-                <!-- Галерея изображений товара -->
+                <!--Галерея изображения товара-->
                 <div class="product-gallery">
                     <div class="product-main-image">
-                        <img src="../img/glasses.jpg" alt="Очки Sunmaster" id="main-product-image">
-                        <div class="product-badges">
-                            <span class="product-badge">Хит</span>
-                        </div>
-                    </div>
-                    <div class="product-thumbnails">
-                        <div class="thumbnail active" data-image="../img/glasses.jpg">
-                            <img src="../img/glasses.jpg" alt="Очки Sunmaster - вид 1">
-                        </div>
-                        <div class="thumbnail" data-image="../img/glasses.jpg">
-                            <img src="../img/glasses.jpg" alt="Очки Sunmaster - вид 2">
-                        </div>
-                        <div class="thumbnail" data-image="../img/glasses.jpg">
-                            <img src="../img/glasses.jpg" alt="Очки Sunmaster - вид 3">
-                        </div>
-                        <div class="thumbnail" data-image="../img/glasses.jpg">
-                            <img src="../img/glasses.jpg" alt="Очки Sunmaster - вид 4">
-                        </div>
+                        <img src="{{ url_for('static', filename='img/products/' ~ product.photonum) }}" alt="{{ product.name }}" id="main-product-image">
+
                     </div>
                 </div>
 
-                <!-- Информация о товаре -->
+                <!--Информация о товаре-->
                 <div class="product-info-block">
-                    <h1 class="product-title">Очки Sunmaster</h1>
-                    <div class="product-meta">
-                        <div class="product-sku">Артикул: SM-2025-B</div>
-                        <div class="product-rating">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                            <span class="rating-count">32 отзыва</span>
-                        </div>
-                    </div>
+                    <h1 class="product-title">{{ product.name }}</h1>
+                    <div class="product-sku">Артикул: {{ product.id }}</div>
 
                     <div class="product-price-block">
-                        <div class="product-price">4 990 ₽</div>
-                        <div class="product-old-price">6 500 ₽</div>
-                        <div class="product-discount">-23%</div>
+                        {% if product.old_price %}
+                        <div class="product-old-price">{{ product.old_price }} ₽</div>
+                        <div class="product-price">{{ product.price }} ₽</div>
+                        <div class="product-discount">-{{ product.discount_percent }}%</div>
+                        {% else %}
+                        <div class="product-price">{{ product.price }} ₽</div>
+                        {% endif %}
                     </div>
 
-                    <div class="product-description">
-                        <p>Премиальные солнцезащитные очки с поляризованными линзами, обеспечивающие 100% защиту от УФ-лучей. Легкая и прочная оправа из высококачественных материалов гарантирует комфорт при длительном ношении.</p>
+                    <div class="product-full-description">
+                        {% if product.desc and product.desc != "no" and product.desc|length > 10 %}
+                        {{ product.desc }}
+                        {% else %}
+                        Описание отсутствует
+                        {% endif %}
                     </div>
 
-                    <!-- Выбор параметров товара -->
-                    <div class="product-options">
-                        <div class="option-group">
-                            <h3>Цвет</h3>
-                            <div class="color-options">
-                                <label class="color-option">
-                                    <input type="radio" name="color" value="black" checked>
-                                    <span class="color-circle" style="background-color: #000;"></span>
-                                    <span class="color-name">Черный</span>
-                                </label>
-                                <label class="color-option">
-                                    <input type="radio" name="color" value="brown">
-                                    <span class="color-circle" style="background-color: #5d4037;"></span>
-                                    <span class="color-name">Коричневый</span>
-                                </label>
-                                <label class="color-option">
-                                    <input type="radio" name="color" value="blue">
-                                    <span class="color-circle" style="background-color: #1e3a8a;"></span>
-                                    <span class="color-name">Синий</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div class="option-group">
-                            <h3>Размер</h3>
-                            <div class="size-options">
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="s">
-                                    <span>S</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="m" checked>
-                                    <span>M</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="l">
-                                    <span>L</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Кнопки действий -->
+                    <!--Кнопки действий-->
                     <div class="product-actions">
-                        <div class="quantity-selector">
-                            <button class="quantity-btn minus">-</button>
-                            <input type="number" value="1" min="1" max="10" class="quantity-input">
-                            <button class="quantity-btn plus">+</button>
-                        </div>
-                        <button class="btn btn-primary add-to-cart">
-                            <i class="fas fa-shopping-cart"></i> Добавить в корзину
-                        </button>
-                        <button class="btn-icon wishlist">
-                            <i class="far fa-heart"></i>
-                        </button>
+                        <form action="{{ url_for('add_to_cart') }}" method="POST" id="main-add-to-cart-form">
+                            <input type="hidden" name="product_id" value="{{ product.id }}">
+                            <button type="submit" class="btn btn-primary add-to-cart">
+                                <i class="fas fa-shopping-cart"></i> Добавить в корзину
+                            </button>
+                        </form>
                     </div>
 
-                    <!-- Дополнительная информация -->
+                    <!--Дополнительная информация-->
                     <div class="product-additional-info">
                         <div class="info-item">
                             <i class="fas fa-truck"></i>
@@ -213,282 +146,82 @@
                 </div>
             </div>
 
-            <!-- Вкладки с дополнительной информацией -->
             <div class="product-tabs">
                 <div class="tabs-header">
                     <button class="tab-btn active" data-tab="description">Описание</button>
-                    <button class="tab-btn" data-tab="characteristics">Характеристики</button>
-                    <button class="tab-btn" data-tab="reviews">Отзывы (32)</button>
+                    <button class="tab-btn" data-tab="additional-info">Дополнительная информация</button>
                 </div>
 
                 <div class="tabs-content">
                     <div class="tab-panel active" id="description">
                         <div class="product-full-description">
-                            <p>Солнцезащитные очки Sunmaster — это идеальное сочетание стиля, комфорта и функциональности. Модель разработана с учетом последних тенденций моды и инновационных технологий в области оптики.</p>
-                            
-                            <h3>Особенности модели:</h3>
-                            <ul>
-                                <li>Поляризованные линзы премиум-класса, устраняющие блики и повышающие четкость изображения</li>
-                                <li>100% защита от UVA и UVB лучей</li>
-                                <li>Легкая и прочная оправа из высококачественного ацетата</li>
-                                <li>Эргономичный дизайн, обеспечивающий комфорт при длительном ношении</li>
-                                <li>Противоскользящие носовые упоры</li>
-                                <li>Стильный дизайн, подходящий как для повседневного использования, так и для особых случаев</li>
-                            </ul>
-                            
-                            <p>Очки Sunmaster станут незаменимым аксессуаром в солнечные дни, защищая ваши глаза и подчеркивая индивидуальный стиль. Они идеально подходят для вождения, отдыха на природе, пляжного отдыха и городских прогулок.</p>
-                            
-                            <p>В комплекте: очки, фирменный чехол, салфетка из микрофибры для ухода за линзами, гарантийный талон.</p>
+                            {{ product.desc if product.desc and product.desc != "no" else "Описание отсутствует" }}
                         </div>
                     </div>
 
-                    <div class="tab-panel" id="characteristics">
-                        <div class="product-characteristics">
-                            <div class="characteristic-group">
-                                <h3>Основные характеристики</h3>
-                                <div class="characteristic-item">
-                                    <div class="characteristic-name">Бренд</div>
-                                    <div class="characteristic-value">Sunmaster</div>
-                                </div>
-                                <div class="characteristic-item">
-                                    <div class="characteristic-name">Страна производства</div>
-                                    <div class="characteristic-value">Италия</div>
-                                </div>
-                                <div class="characteristic-item">
-                                    <div class="characteristic-name">Материал оправы</div>
-                                    <div class="characteristic-value">Ацетат</div>
-                                </div>
-                                <div class="characteristic-item">
-                                    <div class="characteristic-name">Материал линз</div>
-                                    <div class="characteristic-value">Поликарбонат</div>
-                                </div>
-                                <div class="characteristic-item">
-                                    <div class="characteristic-name">Поляризация</div>
-                                    <div class="characteristic-value">Да</div>
-                                </div>
-                                <div class="characteristic-item">
-                                    <div class="characteristic-name">Защита от УФ</div>
-                                    <div class="characteristic-value">100% (UV400)</div>
-                                </div>
-                            </div>
-                            
-                            <div class="characteristic-group">
-                                <h3>Размеры</h3>
-                                <div class="characteristic-item">
-                                    <div class="characteristic-name">Ширина линзы</div>
-                                    <div class="characteristic-value">54 мм</div>
-                                </div>
-                                <div class="characteristic-item">
-                                    <div class="characteristic-name">Высота линзы</div>
-                                    <div class="characteristic-value">45 мм</div>
-                                </div>
-                                <div class="characteristic-item">
-                                    <div class="characteristic-name">Длина дужки</div>
-                                    <div class="characteristic-value">145 мм</div>
-                                </div>
-                                <div class="characteristic-item">
-                                    <div class="characteristic-name">Ширина переносицы</div>
-                                    <div class="characteristic-value">18 мм</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tab-panel" id="reviews">
-                        <div class="product-reviews">
-                            <div class="reviews-summary">
-                                <div class="average-rating">
-                                    <div class="rating-number">4.5</div>
-                                    <div class="rating-stars">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star-half-alt"></i>
-                                    </div>
-                                    <div class="rating-count">32 отзыва</div>
-                                </div>
-                                
-                                <div class="rating-bars">
-                                    <div class="rating-bar-item">
-                                        <div class="rating-label">5 звезд</div>
-                                        <div class="rating-bar">
-                                            <div class="rating-fill" style="width: 70%;"></div>
-                                        </div>
-                                        <div class="rating-percent">70%</div>
-                                    </div>
-                                    <div class="rating-bar-item">
-                                        <div class="rating-label">4 звезды</div>
-                                        <div class="rating-bar">
-                                            <div class="rating-fill" style="width: 20%;"></div>
-                                        </div>
-                                        <div class="rating-percent">20%</div>
-                                    </div>
-                                    <div class="rating-bar-item">
-                                        <div class="rating-label">3 звезды</div>
-                                        <div class="rating-bar">
-                                            <div class="rating-fill" style="width: 5%;"></div>
-                                        </div>
-                                        <div class="rating-percent">5%</div>
-                                    </div>
-                                    <div class="rating-bar-item">
-                                        <div class="rating-label">2 звезды</div>
-                                        <div class="rating-bar">
-                                            <div class="rating-fill" style="width: 3%;"></div>
-                                        </div>
-                                        <div class="rating-percent">3%</div>
-                                    </div>
-                                    <div class="rating-bar-item">
-                                        <div class="rating-label">1 звезда</div>
-                                        <div class="rating-bar">
-                                            <div class="rating-fill" style="width: 2%;"></div>
-                                        </div>
-                                        <div class="rating-percent">2%</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="review-form-toggle">
-                                <button class="btn btn-secondary">Оставить отзыв</button>
-                            </div>
-                            
-                            <div class="review-list">
-                                <div class="review-item">
-                                    <div class="review-header">
-                                        <div class="reviewer-info">
-                                            <div class="reviewer-name">Анна К.</div>
-                                            <div class="review-date">15 марта 2025</div>
-                                        </div>
-                                        <div class="review-rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <div class="review-content">
-                                        <p>Отличные очки! Ношу их уже месяц, очень довольна покупкой. Линзы действительно качественные, глаза не устают даже при длительном ношении. Оправа прочная и при этом легкая. Рекомендую!</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="review-item">
-                                    <div class="review-header">
-                                        <div class="reviewer-info">
-                                            <div class="reviewer-name">Дмитрий В.</div>
-                                            <div class="review-date">2 марта 2025</div>
-                                        </div>
-                                        <div class="review-rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <div class="review-content">
-                                        <p>Хорошие очки, но есть небольшой недостаток - немного давят на переносицу. В остальном все отлично: стильный дизайн, хорошая защита от солнца, не бликуют.</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="review-item">
-                                    <div class="review-header">
-                                        <div class="reviewer-info">
-                                            <div class="reviewer-name">Елена М.</div>
-                                            <div class="review-date">20 февраля 2025</div>
-                                        </div>
-                                        <div class="review-rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star-half-alt"></i>
-                                        </div>
-                                    </div>
-                                    <div class="review-content">
-                                        <p>Очки превзошли мои ожидания! Очень стильные и качественные. Особенно порадовала поляризация - разница действительно заметна при ярком солнце и отражениях от воды. Чехол в комплекте тоже очень хороший.</p>
-                                    </div>
-                                </div>
-                                
-                                <div class="load-more">
-                                    <button class="btn btn-outline">Показать еще отзывы</button>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="tab-panel" id="additional-info">
+                        {% set field_names = {
+                        'types': 'Раздел',
+                        'material': 'Материал',
+                        'brand': 'Бренд',
+                        'country': 'Страна производства',
+                        'color': 'Цвет/Оттенок',
+                        'massa': 'Вес',
+                        'struct': 'Состав',
+                        'use': 'Способ применения'
+                        } %}
+                        <ul class="product-info-list">
+                            {% set skip_fields = ['id', 'name', 'price', 'old_price', 'discount_percent', 'desc', 'url', 'photonum'] %}
+                            {% for key, value in product.to_dict().items() %}
+                            {% if key not in skip_fields and value and value != "no" %}
+                            <li><strong>{{ field_names[key] if key in field_names else key|capitalize }}:</strong> {{ value }}</li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- Рекомендуемые товары -->
+            <!--Рекомендуемые товары-->
             <div class="recommended-products">
                 <div class="section-header">
                     <h2>Вам также может понравиться</h2>
                 </div>
-                
+
                 <div class="product-slider">
-                    <div class="product-card" data-category="glasses">
-                        <div class="product-image">
-                            <img src="../img/glasses.jpg" alt="Очки Blu-Block">
-                        </div>
-                        <div class="product-info">
-                            <h3>Очки Blu-Block</h3>
-                            <p>Защита от синего света для работы за компьютером</p>
-                            <div class="product-bottom">
-                                <div class="product-price">2 890 ₽</div>
-                                <button class="btn-outline">В корзину</button>
+                    {% for rec in recommended %}
+                    <div class="product-card" data-category="{{ rec.types }}">
+                        <a href="{{ url_for('product_page', product_id=rec.id) }}" class="product-card-link">
+                            <div class="product-image">
+                                <img src="{{ url_for('static', filename='img/products/' ~ rec.photonum) }}" alt="{{ rec.name }}">
+                                {% if rec.discount_percent %}
+                                <div class="product-badges">
+                                    <span class="product-badge">Скидка {{ rec.discount_percent }}%</span>
+                                </div>
+                                {% endif %}
                             </div>
-                        </div>
+                            <div class="product-info">
+                                <h3>{{ rec.name }}</h3>
+
+                                {% if rec.desc != 'no' %}
+                                <p>{{ rec.desc[:120] }}{% if rec.desc|length > 120 %}...{% endif %}</p>
+                                {% endif %}
+
+                                <div class="product-bottom">
+                                    <div class="product-price">{{ rec.price }} ₽</div>
+                                    <form action="{{ url_for('add_to_cart') }}" method="POST" class="add-to-cart-form">
+                                        <input type="hidden" name="product_id" value="{{ rec.id }}">
+                                        <button type="submit" class="btn-primary add-to-cart">В корзину</button>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </a>
                     </div>
-                    
-                    <div class="product-card" data-category="glasses">
-                        <div class="product-image">
-                            <img src="../img/glasses.jpg" alt="Очки Aviator Classic">
-                            <div class="product-badges">
-                                <span class="product-badge">Хит</span>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h3>Очки Aviator Classic</h3>
-                            <p>Классическая модель в стиле авиатор</p>
-                            <div class="product-bottom">
-                                <div class="product-price">3 990 ₽</div>
-                                <button class="btn-outline">В корзину</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card" data-category="glasses">
-                        <div class="product-image">
-                            <img src="../img/glasses.jpg" alt="Очки Urban Style">
-                        </div>
-                        <div class="product-info">
-                            <h3>Очки Urban Style</h3>
-                            <p>Современный городской стиль</p>
-                            <div class="product-bottom">
-                                <div class="product-price">4 290 ₽</div>
-                                <button class="btn-outline">В корзину</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="product-card" data-category="glasses">
-                        <div class="product-image">
-                            <img src="../img/glasses.jpg" alt="Очки Vintage">
-                            <div class="product-badges">
-                                <span class="product-badge">Новинка</span>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <h3>Очки Vintage</h3>
-                            <p>Ретро-дизайн с современными технологиями</p>
-                            <div class="product-bottom">
-                                <div class="product-price">5 490 ₽</div>
-                                <button class="btn-outline">В корзину</button>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
+
         </div>
     </main>
 
@@ -528,6 +261,7 @@
             </div>
         </div>
     </footer>
+
 
     <script src="product.js"></script>
     <script src="../script.js"></script>

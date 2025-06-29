@@ -16,21 +16,52 @@
 <body>
     <header class="header">
         <div class="container">
-            <h1 class="logo"><a href="../index.html">Очки & Пудра</a></h1>
+            <a href="../index.html" class="logo">
+                <h1 class="logo">Очки & Пудра</h1>
+            </a>
             <nav class="nav">
                 <input type="checkbox" id="nav-toggle" class="nav-toggle">
                 <label for="nav-toggle" class="nav-toggle-label">
                     <span></span>
                 </label>
                 <ul>
-                    <li><a href="../index.html#about">О нас</a></li>
-                    <li><a href="../index.html#cosmetics">Косметика</a></li>
-                    <li><a href="../index.html#glasses">Очки</a></li>
-                    <li><a href="../index.html#contact">Контакты</a></li>
                     <li>
-                        <a href="../cart/cart.html" class="cart-link" title="Корзина">
+                        <a href="empty_category_page.html" class="has-submenu">Каталог</a>
+                    </li>
+                    <li>
+                        <a href="empty_category_page.html" class="has-submenu">Косметика</a>
+                        <ul class="sub-menu">
+                            <li><a href="empty_category_page.html">Лицо</a></li>
+                            <li><a href="empty_category_page.html">Глаза</a></li>
+                            <li><a href="empty_category_page.html">Брови</a></li>
+                            <li><a href="empty_category_page.html">Губы</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="empty_category_page.html" class="has-submenu">Очки</a>
+                        <ul class="sub-menu">
+                            <li><a href="empty_category_page.html">Мужские</a></li>
+                            <li><a href="empty_category_page.html">Женские</a></li>
+                            <li><a href="empty_category_page.html">Унисекс</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="..\contact\contact.html">Контакты</a></li>
+                    <li>
+                        <a href="..\cart\cart.html" class="cart-link" title="Корзина">
                             <i class="fas fa-shopping-cart"></i>
                             <span class="cart-text">Корзина</span>
+                        </a>
+                    </li>
+                    <!--<li>
+                    <a href="" class="cart-link" id="searchMenu3" title="Кабинет">
+                        <i class="fas fa-user"></i>
+                        <span class="cart-text">Кабинет</span>
+                    </a>
+                </li>-->
+                    <li>
+                        <a href="registration_auth\regitsration_auth.html" class="cart-link" id="searchMenu2" title="Вход/регистрация">
+                            <i class="fas fa-user"></i>
+                            <span class="cart-text">Вход / регистрация</span>
                         </a>
                     </li>
                 </ul>
@@ -41,255 +72,282 @@
     <main class="category-main">
         <div class="container">
             <div class="category-layout">
-                <!-- Левая колонка с фильтрами -->
+                <!--Левая колонка с фильтрами-->
                 <aside class="filter-sidebar">
                     <h3>Фильтры</h3>
 
-                    <!--<div class="filter-group">
-                        <h4>Категория</h4>
-                        <div class="filter-options">
-                            <label class="filter-checkbox">
-                                <input type="checkbox" checked>
-                                <span>Все товары</span>
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox">
-                                <span>Косметика</span>
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox">
-                                <span>Очки</span>
-                            </label>
-                        </div>
-                    </div>-->
-
-                    <div class="filter-group">
-                        <h4>Цена</h4>
-                        <div class="price-slider">
-                            <div class="price-inputs">
-                                <input type="text" placeholder="от" class="price-input">
-                                <span>—</span>
-                                <input type="text" placeholder="до" class="price-input">
+                    <form id="filter-form">
+                        <div class="filter-group">
+                            <h4>Бренд</h4>
+                            <div class="filter-options brand-scroll" id="brand-filters">
+                                <label>
+                                    <input type="checkbox" name="brand" value="Maybelline">
+                                    Maybelline
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="brand" value="Ray-Ban">
+                                    Ray-Ban
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="brand" value="Dior">
+                                    Dior
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="brand" value="Gucci">
+                                    Gucci
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="brand" value="L'Oreal">
+                                    L'Oreal
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="brand" value="Prada">
+                                    Prada
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="brand" value="MAC">
+                                    MAC
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="brand" value="Persol">
+                                    Persol
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="brand" value="Chanel">
+                                    Chanel
+                                </label>
+                                <label>
+                                    <input type="checkbox" name="brand" value="Tom Ford">
+                                    Tom Ford
+                                </label>
                             </div>
-                            <button class="filter-btn">Применить</button>
                         </div>
-                    </div>
 
-                    <div class="filter-group">
-                        <h4>Бренд</h4>
-                        <div class="filter-options">
-                            <label class="filter-checkbox">
-                                <input type="checkbox">
-                                <span>Estelle</span>
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox">
-                                <span>Lumiere</span>
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox">
-                                <span>Vision Pro</span>
-                            </label>
-                            <label class="filter-checkbox">
-                                <input type="checkbox">
-                                <span>Beauty Glam</span>
-                            </label>
+                        <div class="filter-group">
+                            <h4>Цена</h4>
+                            <div class="price-slider">
+                                <div class="price-inputs">
+                                    <input type="text" id="min-price" placeholder="от" class="price-input">
+                                    <span>—</span>
+                                    <input type="text" id="max-price" placeholder="до" class="price-input">
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <button class="btn btn-primary reset-filters">Сбросить фильтры</button>
+                        <div class="filter-group">
+                            <label for="country-select">Страна производства:</label>
+                            <select id="country-select">
+                                <option value="">Все</option>
+                                <option value="США">США</option>
+                                <option value="Италия">Италия</option>
+                                <option value="Франция">Франция</option>
+                                <option value="Канада">Канада</option>
+                                <option value="Германия">Германия</option>
+                                <option value="Япония">Япония</option>
+                                <option value="Швейцария">Швейцария</option>
+                                <option value="Великобритания">Великобритания</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-buttons">
+                            <button type="button" id="apply-filters" class="filter-btn">Применить</button>
+                            <button type="button" id="reset-filters" class="filter-btn-bot">Сбросить фильтры</button>
+                        </div>
+                    </form>
+
                 </aside>
 
-                <!-- Правая колонка с содержимым -->
+                <!--Поиск-->
                 <div class="products-content">
-                    <!-- Поисковая строка -->
+                    <!--Поисковая строка-->
                     <div class="search-block-category">
-                        <form class="search-form">
-                            <input type="text" placeholder="Поиск товаров..." class="search-input">
+                        <form class="search-form" id="search-form">
+                            <input type="text" id="search-input" placeholder="Поиск товаров..." class="search-input" autocomplete="off">
                             <button type="submit" class="search-button">
                                 <i class="fas fa-search"></i>
                             </button>
                         </form>
                     </div>
 
-                    <!-- Сортировка -->
+                    <!--Сортировка-->
                     <div class="sort-block">
                         <span>Сортировать:</span>
                         <div class="sort-options">
-                            <button class="sort-btn active">По популярности</button>
-                            <button class="sort-btn">По цене</button>
-                            <button class="sort-btn">По новизне</button>
+                            <button class="sort-btn active" data-sort="popularity" data-order="desc">По популярности</button>
+                            <button class="sort-btn" data-sort="price" data-order="asc">По цене ↑</button>
+                            <button class="sort-btn" data-sort="price" data-order="desc">По цене ↓</button>
+                            <button class="sort-btn" data-sort="new" data-order="desc">По новизне</button>
                         </div>
                     </div>
 
-                    <!-- Сетка товаров -->
-                    <div class="product-grid">
+                    <div id="products-container">
+                        <div id="product-results">
+                            <div class="product-grid" id="product-grid">
+                                <!-- Товары будут добавлены динамически -->
+                                <!-- Заглушка для пустых результатов поиска -->
+                                <div class="empty-message" style="display: none; grid-column: 1 / -1;">
+                                    <i class="fas fa-box-open"></i>
+                                    <p>Извините, пока таких товаров мы еще не привезли, но они уже в пути</p>
+                                </div>
 
 
 
-                        <!-- Заглушка для пустых результатов поиска -->
-                        <div class="empty-message" style="display: none; grid-column: 1 / -1;">
-                            <i class="fas fa-box-open"></i>
-                            <p>Извините, пока таких товаров мы еще не привезли, но они уже в пути</p>
+                                <div class="product-card" data-category="cosmetics">
+                                    <div class="product-image">
+                                        <img src="../img/glasses.jpg" alt="Увлажняющая сыворотка">
+                                        <div class="product-badges">
+                                            <span class="product-badge">Новинка</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>Увлажняющая сыворотка</h3>
+                                        <p>С гиалуроновой кислотой и витамином C</p>
+                                        <div class="product-bottom">
+                                            <div class="product-price">2 790 ₽</div>
+                                            <button class="btn-outline">В корзину</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-card" data-category="glasses">
+                                    <div class="product-image">
+                                        <img src="../img/glasses.jpg" alt="Очки Sunmaster">
+                                        <div class="product-badges">
+                                            <span class="product-badge">Хит</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>Очки Sunmaster</h3>
+                                        <p>Премиальные очки с поляризованными линзами</p>
+                                        <div class="product-bottom">
+                                            <div class="product-price">4 990 ₽</div>
+                                            <button class="btn-outline">В корзину</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-card" data-category="cosmetics">
+                                    <div class="product-image">
+                                        <img src="../img/glasses.jpg" alt="Матовая помада">
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>Матовая помада</h3>
+                                        <p>Стойкая формула, не сушит губы</p>
+                                        <div class="product-bottom">
+                                            <div class="product-price">1 390 ₽</div>
+                                            <button class="btn-outline">В корзину</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-card" data-category="glasses">
+                                    <div class="product-image">
+                                        <img src="../img/glasses.jpg" alt="Очки Blu-Block">
+                                        <div class="product-badges">
+                                        </div>
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>Очки Blu-Block</h3>
+                                        <p>Защита от синего света для работы за компьютером</p>
+                                        <div class="product-bottom">
+                                            <div class="product-price">2 890 ₽</div>
+                                            <button class="btn-outline">В корзину</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-card" data-category="cosmetics">
+                                    <div class="product-image">
+                                        <img src="../img/glasses.jpg" alt="Палетка теней">
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>Палетка теней</h3>
+                                        <p>12 оттенков с матовым и шиммерным финишем</p>
+                                        <div class="product-bottom">
+                                            <div class="product-price">3 590 ₽</div>
+                                            <button class="btn-outline">В корзину</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-card" data-category="glasses">
+                                    <div class="product-image">
+                                        <img src="../img/glasses.jpg" alt="Солнцезащитные очки">
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>Солнцезащитные очки</h3>
+                                        <p>Классическая модель с градиентными линзами</p>
+                                        <div class="product-bottom">
+                                            <div class="product-price">5 990 ₽</div>
+                                            <button class="btn-outline">В корзину</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-card" data-category="glasses">
+                                    <div class="product-image">
+                                        <img src="../img/glasses.jpg" alt="Солнцезащитные очки">
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>Солнцезащитные очки</h3>
+                                        <p>Классическая модель с градиентными линзами</p>
+                                        <div class="product-bottom">
+                                            <div class="product-price">5 990 ₽</div>
+                                            <button class="btn-outline">В корзину</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-card" data-category="glasses">
+                                    <div class="product-image">
+                                        <img src="../img/glasses.jpg" alt="Солнцезащитные очки">
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>Солнцезащитные очки</h3>
+                                        <p>Классическая модель с градиентными линзами</p>
+                                        <div class="product-bottom">
+                                            <div class="product-price">5 990 ₽</div>
+                                            <button class="btn-outline">В корзину</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="product-card" data-category="glasses">
+                                    <div class="product-image">
+                                        <img src="../img/glasses.jpg" alt="Солнцезащитные очки">
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>Солнцезащитные очки</h3>
+                                        <p>Классическая модель с градиентными линзами</p>
+                                        <div class="product-bottom">
+                                            <div class="product-price">5 990 ₽</div>
+                                            <button class="btn-outline">В корзину</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-card" data-category="glasses">
+                                    <div class="product-image">
+                                        <img src="../img/glasses.jpg" alt="Солнцезащитные очки">
+                                    </div>
+                                    <div class="product-info">
+                                        <h3>Солнцезащитные очки</h3>
+                                        <p>Классическая модель с градиентными линзами</p>
+                                        <div class="product-bottom">
+                                            <div class="product-price">5 990 ₽</div>
+                                            <button class="btn-outline">В корзину</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-
-
-                        <div class="product-card" data-category="cosmetics">
-                            <div class="product-image">
-                                <img src="../img/glasses.jpg" alt="Увлажняющая сыворотка">
-                                <div class="product-badges">
-                                    <span class="product-badge">Новинка</span>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h3>Увлажняющая сыворотка</h3>
-                                <p>С гиалуроновой кислотой и витамином C</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">2 790 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
+                        <div class="pagination">
+                            <a href="#" class="active">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <a href="#">4</a>
+                            <a href="#" class="next"><i class="fas fa-chevron-right"></i></a>
                         </div>
-
-                        <div class="product-card" data-category="glasses">
-                            <div class="product-image">
-                                <img src="../img/glasses.jpg" alt="Очки Sunmaster">
-                                <div class="product-badges">
-                                    <span class="product-badge">Хит</span>
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h3>Очки Sunmaster</h3>
-                                <p>Премиальные очки с поляризованными линзами</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">4 990 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-card" data-category="cosmetics">
-                            <div class="product-image">
-                                <img src="../img/glasses.jpg" alt="Матовая помада">
-                            </div>
-                            <div class="product-info">
-                                <h3>Матовая помада</h3>
-                                <p>Стойкая формула, не сушит губы</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">1 390 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-card" data-category="glasses">
-                            <div class="product-image">
-                                <img src="../img/glasses.jpg" alt="Очки Blu-Block">
-                                <div class="product-badges">
-                                </div>
-                            </div>
-                            <div class="product-info">
-                                <h3>Очки Blu-Block</h3>
-                                <p>Защита от синего света для работы за компьютером</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">2 890 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-card" data-category="cosmetics">
-                            <div class="product-image">
-                                <img src="../img/glasses.jpg" alt="Палетка теней">
-                            </div>
-                            <div class="product-info">
-                                <h3>Палетка теней</h3>
-                                <p>12 оттенков с матовым и шиммерным финишем</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">3 590 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-card" data-category="glasses">
-                            <div class="product-image">
-                                <img src="../img/glasses.jpg" alt="Солнцезащитные очки">
-                            </div>
-                            <div class="product-info">
-                                <h3>Солнцезащитные очки</h3>
-                                <p>Классическая модель с градиентными линзами</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">5 990 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-card" data-category="glasses">
-                            <div class="product-image">
-                                <img src="../img/glasses.jpg" alt="Солнцезащитные очки">
-                            </div>
-                            <div class="product-info">
-                                <h3>Солнцезащитные очки</h3>
-                                <p>Классическая модель с градиентными линзами</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">5 990 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-card" data-category="glasses">
-                            <div class="product-image">
-                                <img src="../img/glasses.jpg" alt="Солнцезащитные очки">
-                            </div>
-                            <div class="product-info">
-                                <h3>Солнцезащитные очки</h3>
-                                <p>Классическая модель с градиентными линзами</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">5 990 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="product-card" data-category="glasses">
-                            <div class="product-image">
-                                <img src="../img/glasses.jpg" alt="Солнцезащитные очки">
-                            </div>
-                            <div class="product-info">
-                                <h3>Солнцезащитные очки</h3>
-                                <p>Классическая модель с градиентными линзами</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">5 990 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="product-card" data-category="glasses">
-                            <div class="product-image">
-                                <img src="../img/glasses.jpg" alt="Солнцезащитные очки">
-                            </div>
-                            <div class="product-info">
-                                <h3>Солнцезащитные очки</h3>
-                                <p>Классическая модель с градиентными линзами</p>
-                                <div class="product-bottom">
-                                    <div class="product-price">5 990 ₽</div>
-                                    <button class="btn-outline">В корзину</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Пагинация -->
-                    <div class="pagination">
-                        <a href="#" class="active">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#" class="next"><i class="fas fa-chevron-right"></i></a>
                     </div>
                 </div>
             </div>
