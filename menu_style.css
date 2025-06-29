@@ -1,16 +1,17 @@
 ﻿li > ul {
     display: none;
 }
+
 li:hover ul {
     display: block;
 }
 
-/* Базовые стили для выпадающего меню */
+/*Базовые стили для выпадающего меню */
 .nav ul li {
     position: relative;
 }
 
-/* Стили для подменю */
+/*Стили для подменю */
 .sub-menu {
     position: absolute;
     top: 100%;
@@ -25,51 +26,52 @@ li:hover ul {
     visibility: hidden;
     transform: translateY(10px);
     transition: all 0.3s ease;
+    flex-direction: column;
 }
 
-/* Показываем подменю при наведении */
+/*Показываем подменю при наведении */
 .nav ul li:hover > .sub-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-/* Стили для элементов подменю */
+/*Стили для элементов подменю */
 .sub-menu li {
     display: block;
     width: 100%;
     padding: 0;
 }
 
-.sub-menu li:hover {
-    background-color: var(--primary-light);
-}
+    .sub-menu li:hover {
+        background-color: var(--primary-light);
+    }
 
-.sub-menu li a,
-.sub-menu li {
-    display: block;
-    padding: 8px 16px;
-    color: var(--text-color);
-    font-size: 0.9rem;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: var(--transition);
-}
+    .sub-menu li a,
+    .sub-menu li {
+        display: block;
+        padding: 8px 16px;
+        color: var(--text-color);
+        font-size: 0.9rem;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: var(--transition);
+    }
 
-.sub-menu li a:hover,
-.sub-menu li:hover {
-    color: var(--primary-color);
-}
+        .sub-menu li a:hover,
+        .sub-menu li:hover {
+            color: var(--primary-color);
+        }
 
-/* Стили для вложенных подменю (третий уровень) */
+/*Стили для вложенных подменю (третий уровень) */
 .sub-menu .sub-menu {
     top: 0;
     left: 100%;
 }
 
-/* Индикатор наличия подменю (стрелка) */
+/*Индикатор наличия подменю (стрелка) */
 .has-submenu::after {
-    content: '\f107'; /* Unicode для иконки стрелки вниз */
+    content: '\f107'; /*Unicode для иконки стрелки вниз */
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     margin-left: 5px;
@@ -77,7 +79,7 @@ li:hover ul {
     transition: transform 0.3s ease;
 }
 
-/* Адаптивные стили для мобильных устройств */
+/*Адаптивные стили для мобильных устройств */
 @media (max-width: 768px) {
     .sub-menu {
         position: static;
@@ -91,11 +93,11 @@ li:hover ul {
         transition: max-height 0.3s ease;
     }
 
-    .nav ul li:hover > .sub-menu,
-    .sub-menu.show {
-        max-height: 500px;
-        padding: 8px 0 8px 20px;
-    }
+        .nav ul li:hover > .sub-menu,
+        .sub-menu.show {
+            max-height: 500px;
+            padding: 8px 0 8px 20px;
+        }
 
     .has-submenu::after {
         position: absolute;
@@ -110,60 +112,3 @@ li:hover ul {
         padding-left: 15px;
     }
 }
-
-/* Поиск */
-.search-block {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0;
-    top: 145%;
-    background-color: var( --primary-color);
-    width: 100%;
-    padding: 10px;
-    border-radius: 0 0 var(--radius-lg) var(--radius-lg);
-    margin-bottom: 20px;
-    margin-top: 0;
-    box-shadow: var(--shadow-lg);
-    z-index: 1000;
-    display: none;
-}
-
-.search-form {
-    position: relative;
-    width: 100%;
-}
-
-.search-input {
-    width: 100%;
-    padding: 13px 20px; /* Немного уменьшим высоту поля, если нужно */
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-lg);
-    font-size: 1rem;
-}
-    .search-input:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 0 3px rgba(224, 122, 95, 0.1);
-    }
-
-.search-button {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    bottom: 5px;
-    width: 50px;
-    border: none;
-    background: var(--primary-color);
-    color: white;
-    border-radius: var(--radius-lg);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-    .search-button:hover {
-        background: var(--secondary-color);
-    }
